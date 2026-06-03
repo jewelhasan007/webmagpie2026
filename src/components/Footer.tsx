@@ -45,7 +45,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             <div className="w-10 h-10 bg-[#D0E6FD]/20 rounded-xl flex items-center justify-center">
               <Rocket className="text-[#D0E6FD] w-6 h-6" />
             </div>
-            <span className="text-xl font-display font-bold text-white">ZOZOIT</span>
+            <span className="text-xl font-display font-bold text-white">ZOZOWeb</span>
           </Link>
           <p className="text-white/60 leading-relaxed">
             Empowering brands through innovative digital solutions. We build high-performance products that drive growth and engagement.
@@ -140,7 +140,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
 
       <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-[#D0E6FD]/10 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-white/40 text-sm">
-          © {new Date().getFullYear()} ZOZOTECH Digital Agency. All rights reserved.
+          © {new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.
         </p>
         <div className="flex gap-8 text-sm text-white/40">
           <a href="#" className="hover:text-[#D0E6FD] transition-colors">Privacy Policy</a>

@@ -88,9 +88,9 @@
 //                 </div>
 //                 <div>
 //                   <h4 className="text-white font-bold mb-1">Email Us</h4>
-//                    <p className="text-[#475569]">info@zozotech.com</p>
-//                   <p className="text-[#475569]">hello@zozotech.com</p>
-//                   <p className="text-[#475569]">support@zozotech.com</p>
+//                    <p className="text-[#475569]">info@ZOZOWeb.com</p>
+//                   <p className="text-[#475569]">hello@ZOZOWeb.com</p>
+//                   <p className="text-[#475569]">support@ZOZOWeb.com</p>
 //                 </div>
 //               </div>
 //             </div>
@@ -495,9 +495,9 @@ console.log('form value=', formData )
                 </div>
                 <div>
                   <h4 className="text-white font-bold mb-1">Email Us</h4>
-                   <p className="text-[#475569]">info@zozotech.com</p>
-                  <p className="text-[#475569]">hello@zozotech.com</p>
-                  <p className="text-[#475569]">support@zozotech.com</p>
+                   <p className="text-[#475569]">info@ZOZOWeb.com</p>
+                  <p className="text-[#475569]">hello@ZOZOWeb.com</p>
+                  <p className="text-[#475569]">support@ZOZOWeb.com</p>
                 </div>
               </div>
             </div>

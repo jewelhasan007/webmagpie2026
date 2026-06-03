@@ -21,7 +21,7 @@
 //   });
 //   // 2️⃣ Send email
 //   const info = await transporter.sendMail({
-//     from: `"ZoZoTECH" <${process.env.SMTP_USER}>`,
+//     from: `"ZOZOWeb" <${process.env.SMTP_USER}>`,
 //     to,       // string or array of emails
 //     subject,
 //     text,
@@ -43,7 +43,7 @@
 //   });
 
 //   const info = await transporter.sendMail({
-//     from: `"ZoZoTECH" <${process.env.SMTP_USER}>`,
+//     from: `"ZOZOWeb" <${process.env.SMTP_USER}>`,
 //     to,
 //     subject,
 //     text,
@@ -74,7 +74,7 @@ console.log("PASS:", process.env.SMTP_PASS);
   console.log("✅ SMTP Ready");
   
   const info = await transporter.sendMail({
-    from: `"ZoZoTECH" <${process.env.SMTP_USER}>`,
+    from: `"ZOZOWeb" <${process.env.SMTP_USER}>`,
     to,
     subject,
     text,

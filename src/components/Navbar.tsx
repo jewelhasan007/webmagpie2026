@@ -12,7 +12,7 @@ import { cn } from '../lib/utils';
 
 export const navLinks = [
   { name: 'Home', path: '/' },
-  { name: 'Why ZOZOIT', path: '/why' },
+  { name: 'Why ZOZOWeb', path: '/why' },
   {
     name: 'Services',
     path: '/services',
@@ -109,14 +109,14 @@ const Navbar = () => {
 
           <div className="flex flex-col leading-none">
             <span className="text-2xl font-extrabold text-white tracking-wide">
-              ZOZOIT
+              ZOZOWeb
             </span>
 
             <div className="relative h-[14px] overflow-hidden mt-1">
               <motion.div
                 animate={{ y: ['0%', '-100%'] }}
                 transition={{
-                  duration: 1,
+                  duration: 10,
                   repeat: Infinity,
                   ease: 'linear',
                 }}
