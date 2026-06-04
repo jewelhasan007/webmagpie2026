@@ -13,14 +13,33 @@ const app = express();
 
 app.use(express.json());
 
-const allowedOrigin = process.env.VITE_BASE_URL || "*";
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://zozoweb-z3bs-3d6gviga1-zigzag-mindeds-projects.vercel.app",
+  "https://zozoweb-z3bs.vercel.app",
+];
 
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
+app.options("*", cors());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 // DB connect
 connectDB();
@@ -34,6 +53,7 @@ app.get("/test", (req, res) => {
 });
 
 // Routes (IMPORTANT FIX)
+
 app.use("/contact", contactRoutes);
 app.use("/newsletter", newsletterRoutes);
 
