@@ -3,10 +3,9 @@ import mongoose from "mongoose";
 const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
-  throw new Error("MONGO_URI is missing in environment variables");
+  throw new Error("MONGO_URI missing in Vercel env variables");
 }
 
-// prevent multiple connections in serverless
 let cached = global.mongoose;
 
 if (!cached) {
@@ -17,9 +16,11 @@ const connectDB = async () => {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URI).then((mongoose) => {
-      return mongoose;
-    });
+    cached.promise = mongoose
+      .connect(MONGO_URI, {
+        serverSelectionTimeoutMS: 5000, // IMPORTANT: prevents hanging
+      })
+      .then((mongoose) => mongoose);
   }
 
   cached.conn = await cached.promise;

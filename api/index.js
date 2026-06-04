@@ -3,38 +3,24 @@ import cors from "cors";
 import serverless from "serverless-http";
 import connectDB from "../server/config/db.js";
 
-import contactRoutes from "../server/routes/contactRoutes.js";
 import newsletterRoutes from "../server/routes/newsletterRoutes.js";
 
 const app = express();
 
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// CORS
-app.use(cors({
-  origin: "*",
-  credentials: true,
-}));
+// DO NOT block request with DB connection
+let dbConnected = false;
 
-// IMPORTANT: await DB connection safely
-let isConnected = false;
-
-const dbMiddleware = async (req, res, next) => {
-  if (!isConnected) {
-    await connectDB();
-    isConnected = true;
+app.use(async (req, res, next) => {
+  if (!dbConnected) {
+    dbConnected = true;
+    connectDB().catch(console.error);
   }
   next();
-};
-
-app.use(dbMiddleware);
-
-// Routes (NO /api prefix here in Vercel)
-app.use("/contact", contactRoutes);
-app.use("/newsletter", newsletterRoutes);
-
-app.get("/test", (req, res) => {
-  res.json({ success: true });
 });
+
+app.use("/newsletter", newsletterRoutes);
 
 export default serverless(app);
