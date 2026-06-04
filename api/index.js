@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 });
 
 // DB connect
-connectDB();
+await connectDB();
 
 // Test route
 app.get("/test", (req, res) => {
