@@ -58,7 +58,7 @@ export const navLinks = [
 ];
 
 const brandTitles = [
-  'Creative Agency',
+  'E-Commerce Product Research',
   'Web Development',
   'Digital Marketing',
   'UI/UX Experience',
