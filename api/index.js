@@ -59,7 +59,7 @@ app.use("/newsletter", newsletterRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error("🔥 FULL ERROR:", err);
+  console.error("🔥 ERROR STACK:", err);
 
   res.status(500).json({
     success: false,
