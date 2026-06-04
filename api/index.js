@@ -11,10 +11,8 @@ const newsletterRoutes = require("../server/routes/newsletterRoutes");
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 
-// CORS setup (uses env safely)
 const allowedOrigin = process.env.VITE_BASE_URL || "*";
 
 app.use(
@@ -24,24 +22,24 @@ app.use(
   })
 );
 
-// DB connection (should be cached inside connectDB)
+// DB connect
 connectDB();
 
 // Test route
-app.get("/api/test", (req, res) => {
+app.get("/test", (req, res) => {
   res.json({
     success: true,
     message: "API Working",
   });
 });
 
-// Routes
-app.use("/api", contactRoutes);
-app.use("/api/newsletter", newsletterRoutes);
+// Routes (IMPORTANT FIX)
+app.use("/contact", contactRoutes);
+app.use("/newsletter", newsletterRoutes);
 
-// Global error handler
+// Error handler
 app.use((err, req, res, next) => {
-  console.error("Server Error:", err);
+  console.error(err);
 
   res.status(500).json({
     success: false,
@@ -49,7 +47,5 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Export for Vercel / serverless
-module.exports.handler = serverless(app);
-
-// deployment check
+// ✅ IMPORTANT FIX
+module.exports = serverless(app);
