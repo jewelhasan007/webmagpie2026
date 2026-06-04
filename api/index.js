@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const serverless = require("serverless-http");
@@ -9,18 +11,23 @@ const newsletterRoutes = require("../server/routes/newsletterRoutes");
 
 const app = express();
 
+// Middleware
 app.use(express.json());
+
+// CORS setup (uses env safely)
+const allowedOrigin = process.env.VITE_BASE_URL || "*";
 
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigin,
     credentials: true,
   })
 );
 
-// DB connection (make sure it's cached inside connectDB)
+// DB connection (should be cached inside connectDB)
 connectDB();
 
+// Test route
 app.get("/api/test", (req, res) => {
   res.json({
     success: true,
@@ -28,16 +35,19 @@ app.get("/api/test", (req, res) => {
   });
 });
 
+// Routes
 app.use("/api", contactRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 
-// Error handler
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error("Server Error:", err);
+
   res.status(500).json({
     success: false,
     message: "Server Error",
   });
 });
 
+// Export for Vercel / serverless
 module.exports.handler = serverless(app);

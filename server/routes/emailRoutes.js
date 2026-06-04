@@ -6,37 +6,7 @@ import Newsletter from "../models/Newsletter.js";
 
 const router = express.Router();
 
-// SEND EMAIL TO ALL SUBSCRIBERS
-// router.post("/send", async (req, res) => {
-//   try {
-//     const { subject, message } = req.body;
 
-//     if (!subject || !message) {
-//       return res.status(400).json({ error: "Subject and message required" });
-//     }
-
-//     // 1️⃣ Get all subscriber emails
-//     const subscribers = await Newsletter.find().select("email -_id");
-//     const emails = subscribers.map((sub) => sub.email);
-
-//     if (emails.length === 0) {
-//       return res.status(400).json({ error: "No subscribers found" });
-//     }
-
-//     // 2️⃣ Send email
-//     await sendEmail({
-//       to: emails, // send to all subscribers
-//       subject,
-//       text: message,
-//       html: `<p>${message}</p>`,
-//     });
-
-//     res.status(200).json({ success: true, message: "Emails sent successfully" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Server error" });
-//   }
-// });
 
 router.post("/send", async (req, res) => {
   try {
