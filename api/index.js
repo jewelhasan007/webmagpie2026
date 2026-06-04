@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const serverless = require("serverless-http");
 
-const connectDB = require("../server/config/db");
+import connectDB from "../server/config/db.js";
 
 const contactRoutes = require("../server/routes/contactRoutes");
 const newsletterRoutes = require("../server/routes/newsletterRoutes");
@@ -51,6 +51,8 @@ app.get("/test", (req, res) => {
     message: "API Working",
   });
 });
+
+
 
 // Routes (IMPORTANT FIX)
 
