@@ -53,6 +53,8 @@ const SubscriberList = () => {
 
   // Send email to all subscribers
  const handleSend = async () => {
+  console.log("handleSend called ✅"); // add this first line
+  console.log("subject:", subject, "message:", message);
   if (!subject || !message) {
     setStatus("⚠️ Please enter subject and message.");
     return;
@@ -184,6 +186,7 @@ const SubscriberList = () => {
           />
 
           <button
+          type="button"
             onClick={handleSend}
             className="px-4 py-2 bg-green-600 text-white rounded"
           >
