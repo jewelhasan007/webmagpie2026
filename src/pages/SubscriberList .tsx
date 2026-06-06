@@ -70,7 +70,7 @@ const SubscriberList = () => {
     });
 
     const data = await res.json();
-
+console.log("Response data:", data); // ✅ add this
     if (res.ok) {
       setStatus("✅ Emails sent successfully!");
       setSubject("");   // ✅ clear fields after success
