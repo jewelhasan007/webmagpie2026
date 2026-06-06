@@ -43,8 +43,7 @@ const KeyboardShortcut = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // ✅ Use Ctrl+Shift+Z to avoid browser conflicts
-      if (e.ctrlKey && e.shiftKey && (e.key === "Z" || e.key === "z")) {
+      if (e.ctrlKey && e.shiftKey && (e.key === "L" || e.key === "l")) {
         e.preventDefault();
         navigate("/admin/login");
       }
@@ -56,7 +55,6 @@ const KeyboardShortcut = () => {
 
   return null;
 };
-
 export default function App() {
 
   return (
