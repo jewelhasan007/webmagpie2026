@@ -24,6 +24,7 @@ import BlogDetails from './pages/BlogDetails';
 import ProcessDetail from './pages/ProcessDetails';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import RouteLoader from './components/RouteLoader';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -62,6 +63,7 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <KeyboardShortcut /> {/* ✅ inside Router */}
+       <RouteLoader /> {/* ✅ add this */}
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
