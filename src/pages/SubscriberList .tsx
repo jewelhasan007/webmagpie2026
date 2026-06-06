@@ -52,28 +52,35 @@ const SubscriberList = () => {
   };
 
   // Send email to all subscribers
-  const handleSend = async () => {
-    setStatus("Sending...");
+ const handleSend = async () => {
+  if (!subject || !message) {
+    setStatus("⚠️ Please enter subject and message.");
+    return;
+  }
 
-    try {
-      const res = await fetch(`${API}/api/newsletter/send`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, message }),
-      });
+  setStatus("Sending...");
 
-      const data = await res.json();
+  try {
+    const res = await fetch(`${API}/api/newsletter/send`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subject, message }),
+    });
 
-      if (res.ok) {
-        setStatus("Emails sent successfully!");
-      } else {
-        setStatus(data?.error || "Failed to send emails");
-      }
-    } catch (err) {
-      setStatus("Server error");
+    const data = await res.json();
+
+    if (res.ok) {
+      setStatus("✅ Emails sent successfully!");
+      setSubject("");   // ✅ clear fields after success
+      setMessage("");
+    } else {
+      setStatus(`❌ ${data?.error || "Failed to send emails"}`);
     }
-  };
-
+  } catch (err) {
+    console.error(err);
+    setStatus(`❌ Network error: ${err.message}`); // ✅ shows real error
+  }
+};
   return (
     <div className="pt-32 pb-24 px-6">
       <div className="max-w-7xl mx-auto">
