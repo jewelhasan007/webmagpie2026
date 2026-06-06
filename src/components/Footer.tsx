@@ -16,7 +16,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
     setStatus('loading');
     setMessage('');
     try {
-      const response = await fetch('http://localhost:5000/api/newsletter', {
+      const response = await fetch(`${process.env.VITE_BASE_URL}/api/newsletter`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

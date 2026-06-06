@@ -10,8 +10,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 
 
 import newsletterRoutes from "./routes/newsletterRoutes.js"
-const app = express();
-
+const app = express()
 app.use(cors());
 app.use(express.json());
 

@@ -293,7 +293,7 @@ const Contact = () => {
     setErrorMessage("");
 console.log('form value=', formData )
     try {
-      const response = await fetch("http://localhost:5000/api/contact", {
+      const response = await fetch(`${process.env.VITE_BASE_URL}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

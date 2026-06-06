@@ -1,27 +1,4 @@
-// import mongoose from "mongoose";
 
-// const newsletterConnection = mongoose.createConnection(
-//  process.env.MONGO_URI_NEWLETTER
-// );
-
-// export default newsletterConnection;
-
-// import mongoose from "mongoose";
-// console.log("ENV VALUE: NEWSLETTER_DB_URI =", process.env.NEWSLETTER_DB_URI);
-
-// const newsletterConnection = mongoose.createConnection(
-//   process.env.NEWSLETTER_DB_URI
-// );
-
-// newsletterConnection.on("connected", () => {
-//   console.log("✅ Newsletter DB Connected");
-// });
-
-// newsletterConnection.on("error", (err) => {
-//   console.error("❌ Newsletter DB Error:", err);
-// });
-
-// export default newsletterConnection;
 
 import mongoose from "mongoose";
 import dotenv from "dotenv";
