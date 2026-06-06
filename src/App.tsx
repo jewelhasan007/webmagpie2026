@@ -36,6 +36,17 @@ const ScrollToTop = () => {
 };
 
 export default function App() {
+
+  useEffect(() => {
+  const handleKeyDown = (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key === "A") {
+      window.location.href = "/admin/login";
+    }
+  };
+  window.addEventListener("keydown", handleKeyDown);
+  return () => window.removeEventListener("keydown", handleKeyDown);
+}, []);
+
   return (
     <Router>
       <ScrollToTop />
