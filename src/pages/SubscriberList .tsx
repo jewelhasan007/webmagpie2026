@@ -52,9 +52,8 @@ const SubscriberList = () => {
   };
 
   // Send email to all subscribers
- const handleSend = async () => {
-  console.log("handleSend called ✅"); // add this first line
-  console.log("subject:", subject, "message:", message);
+const handleSend = async () => {
+  console.log("handleSend called ✅");
   if (!subject || !message) {
     setStatus("⚠️ Please enter subject and message.");
     return;
@@ -69,18 +68,20 @@ const SubscriberList = () => {
       body: JSON.stringify({ subject, message }),
     });
 
+    console.log("Response status:", res.status); // ✅ add this
     const data = await res.json();
-console.log("Response data:", data); // ✅ add this
+    console.log("Response data:", data); // ✅ add this
+
     if (res.ok) {
       setStatus("✅ Emails sent successfully!");
-      setSubject("");   // ✅ clear fields after success
+      setSubject("");
       setMessage("");
     } else {
       setStatus(`❌ ${data?.error || "Failed to send emails"}`);
     }
   } catch (err) {
-    console.error(err);
-    setStatus(`❌ Network error: ${err.message}`); // ✅ shows real error
+    console.error("Fetch error:", err); // ✅ add this
+    setStatus(`❌ Network error: ${err.message}`);
   }
 };
   return (
