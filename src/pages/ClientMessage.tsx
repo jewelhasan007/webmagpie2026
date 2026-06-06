@@ -10,7 +10,7 @@ const ClientMessage = () => {
     const fetchMessages = async () => {
       try {
         const response = await fetch(
-          `${process.env.VITE_API_URL}/api/messages`
+          `${process.env.VITE_BASE_URL}/api/messages`
         );
 
         if (!response.ok) throw new Error("Failed to fetch messages");
