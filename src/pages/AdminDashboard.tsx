@@ -6,7 +6,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
 
-    fetch(`${process.env.VITE_BASE_URL}/api/messages`)
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/messages`)
       .then(res => res.json())
       .then(data => setMessages(data));
 
