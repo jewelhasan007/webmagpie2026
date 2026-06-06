@@ -22,6 +22,8 @@ import ClientMessage from './pages/ClientMessage';
 import SubscriberList from './pages/SubscriberList ';
 import BlogDetails from './pages/BlogDetails';
 import ProcessDetail from './pages/ProcessDetails';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -56,6 +58,8 @@ export default function App() {
              <Route path="/new-client" element={<ClientMessage />} />
              <Route path="/subscriber-list" element={<SubscriberList />} />
               <Route path="/process/:id" element={<ProcessDetail />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+<Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Routes>
           </AnimatePresence>
         </main>
