@@ -130,11 +130,11 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
               </p>
             )}
           </form>
-          <Link to="/subscriber-list">
+          {/* <Link to="/subscriber-list">
             <button className="mt-2 text-white/40 hover:text-[#D0E6FD] text-sm transition-colors">
               Subscribers Lists
             </button>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
