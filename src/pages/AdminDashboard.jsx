@@ -12,18 +12,23 @@ const AdminDashboard = () => {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [logs, setLogs] = useState([]); // ✅ email logs state
+  const [logsLoading, setLogsLoading] = useState(false); // ✅ logs loading state
 
   // ✅ Redirect if not logged in
   useEffect(() => {
     if (!token) navigate("/admin/login");
-    else fetchSubscribers();
+    else {
+      fetchSubscribers();
+      fetchLogs(); // ✅ fetch logs on load
+    }
   }, []);
 
   const fetchSubscribers = async () => {
     setLoading(true);
     try {
       const res = await fetch(`${API}/api/newsletter`, {
-        headers: { Authorization: `Bearer ${token}` }, // ✅ send token
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.status === 401) {
@@ -41,6 +46,29 @@ const AdminDashboard = () => {
     }
   };
 
+  // ✅ Fetch email logs
+  const fetchLogs = async () => {
+    setLogsLoading(true);
+    try {
+      const res = await fetch(`${API}/api/newsletter/logs`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.status === 401) {
+        localStorage.removeItem("adminToken");
+        navigate("/admin/login");
+        return;
+      }
+
+      const data = await res.json();
+      setLogs(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLogsLoading(false);
+    }
+  };
+
   const handleSend = async () => {
     if (!subject || !message) {
       setStatus("⚠️ Please enter subject and message.");
@@ -54,7 +82,7 @@ const AdminDashboard = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ send token
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ subject, message }),
       });
@@ -65,6 +93,7 @@ const AdminDashboard = () => {
         setStatus("✅ Emails sent successfully!");
         setSubject("");
         setMessage("");
+        fetchLogs(); // ✅ refresh logs after sending
       } else {
         setStatus(`❌ ${data?.error || "Failed"}`);
       }
@@ -96,10 +125,23 @@ const AdminDashboard = () => {
         </div>
 
         {/* Stats */}
-        <div className="bg-white p-6 rounded-2xl shadow">
-          <p className="text-[#162660] font-bold text-lg">
-            Total Subscribers: {subscribers.length}
-          </p>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white p-6 rounded-2xl shadow">
+            <p className="text-gray-500 text-sm uppercase tracking-widest mb-1">
+              Total Subscribers
+            </p>
+            <p className="text-4xl font-bold text-[#162660]">
+              {subscribers.length}
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow">
+            <p className="text-gray-500 text-sm uppercase tracking-widest mb-1">
+              Emails Sent
+            </p>
+            <p className="text-4xl font-bold text-green-600">
+              {logs.filter((l) => l.status === "success").length}
+            </p>
+          </div>
         </div>
 
         {/* Send Email */}
@@ -128,7 +170,16 @@ const AdminDashboard = () => {
           >
             Send to All Subscribers
           </button>
-          {status && <p className="text-sm">{status}</p>}
+          {status && (
+            <p className={`text-sm font-medium ${
+              status.includes("✅") ? "text-green-600" :
+              status.includes("❌") ? "text-red-500" :
+              status.includes("⚠️") ? "text-yellow-500" :
+              "text-gray-600"
+            }`}>
+              {status}
+            </p>
+          )}
         </div>
 
         {/* Subscriber List */}
@@ -137,7 +188,9 @@ const AdminDashboard = () => {
             Subscriber List
           </h2>
           {loading ? (
-            <p>Loading...</p>
+            <p className="text-gray-500">Loading...</p>
+          ) : subscribers.length === 0 ? (
+            <p className="text-gray-500">No subscribers yet.</p>
           ) : (
             <table className="w-full text-sm text-left">
               <thead className="bg-[#F1E4D1] text-[#162660]">
@@ -149,11 +202,60 @@ const AdminDashboard = () => {
               </thead>
               <tbody>
                 {subscribers.map((sub, index) => (
-                  <tr key={sub._id} className="border-t">
+                  <tr key={sub._id} className="border-t hover:bg-gray-50">
                     <td className="px-4 py-3">{index + 1}</td>
                     <td className="px-4 py-3">{sub.email}</td>
                     <td className="px-4 py-3">
                       {new Date(sub.subscribedAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        {/* Email Send History */}
+        <div className="bg-white p-6 rounded-2xl shadow">
+          <h2 className="text-xl font-bold text-[#162660] mb-4">
+            📧 Email Send History
+          </h2>
+          {logsLoading ? (
+            <p className="text-gray-500">Loading logs...</p>
+          ) : logs.length === 0 ? (
+            <p className="text-gray-500">No emails sent yet.</p>
+          ) : (
+            <table className="w-full text-sm text-left">
+              <thead className="bg-[#F1E4D1] text-[#162660]">
+                <tr>
+                  <th className="px-4 py-3">#</th>
+                  <th className="px-4 py-3">Subject</th>
+                  <th className="px-4 py-3">Message</th>
+                  <th className="px-4 py-3">Sent To</th>
+                  <th className="px-4 py-3">Status</th>
+                  <th className="px-4 py-3">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {logs.map((log, index) => (
+                  <tr key={log._id} className="border-t hover:bg-gray-50">
+                    <td className="px-4 py-3">{index + 1}</td>
+                    <td className="px-4 py-3 font-medium">{log.subject}</td>
+                    <td className="px-4 py-3 max-w-xs truncate text-gray-500">
+                      {log.message}
+                    </td>
+                    <td className="px-4 py-3">{log.sentTo} recipients</td>
+                    <td className="px-4 py-3">
+                      <span className={`px-2 py-1 rounded-full text-xs font-bold ${
+                        log.status === "success"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                      }`}>
+                        {log.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-gray-500">
+                      {new Date(log.sentAt).toLocaleString()}
                     </td>
                   </tr>
                 ))}
