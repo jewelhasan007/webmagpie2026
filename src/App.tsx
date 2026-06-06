@@ -37,9 +37,11 @@ const ScrollToTop = () => {
 
 export default function App() {
 
-  useEffect(() => {
-  const handleKeyDown = (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key === "A") {
+  // Option 3 — Secret Keyboard Shortcut for admin dashboard
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
+      e.preventDefault(); // ✅ prevent browser default action
       window.location.href = "/admin/login";
     }
   };
