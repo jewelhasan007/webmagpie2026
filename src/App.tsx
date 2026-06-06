@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -35,23 +35,33 @@ const ScrollToTop = () => {
   return null;
 };
 
-export default function App() {
+// Option 3 — Secret Keyboard Shortcut for admin dashboard
+// ✅ Separate component inside Router so useNavigate works
+const KeyboardShortcut = () => {
+  const navigate = useNavigate();
 
-  // Option 3 — Secret Keyboard Shortcut for admin dashboard
-useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
-      e.preventDefault(); // ✅ prevent browser default action
-      window.location.href = "/admin/login";
-    }
-  };
-  window.addEventListener("keydown", handleKeyDown);
-  return () => window.removeEventListener("keydown", handleKeyDown);
-}, []);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // ✅ Use Ctrl+Shift+Z to avoid browser conflicts
+      if (e.ctrlKey && e.shiftKey && (e.key === "Z" || e.key === "z")) {
+        e.preventDefault();
+        navigate("/admin/login");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [navigate]);
+
+  return null;
+};
+
+export default function App() {
 
   return (
     <Router>
       <ScrollToTop />
+      <KeyboardShortcut /> {/* ✅ inside Router */}
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
