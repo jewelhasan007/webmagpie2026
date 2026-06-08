@@ -1,8 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image } from "lucide-react";
+import {
+  Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image,
+} from "lucide-react";
 
 const API = import.meta.env.VITE_BASE_URL;
+
+// ─── Loaders ────────────────────────────────────────────────────────────────
 
 const PageLoader = () => (
   <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
@@ -27,6 +31,57 @@ const SendingLoader = () => (
   </div>
 );
 
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+/** Compress image to max 800px wide, JPEG 70% quality → base64 data URL */
+const compressImage = (file) =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new window.Image(); // ✅ use window.Image to avoid Lucide collision
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxWidth = 800;
+        const scale = Math.min(1, maxWidth / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.7));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+/** Build the HTML email body */
+const buildHtml = (subject, message, imageBase64) => `
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
+      <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
+    </div>
+    <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
+      <h2 style="color: #162660;">${subject}</h2>
+      <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
+      ${
+        imageBase64
+          ? `<div style="margin-top: 20px; text-align: center;">
+               <img src="${imageBase64}" alt="Newsletter Image"
+                    style="max-width: 100%; border-radius: 12px;" />
+             </div>`
+          : ""
+      }
+      <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
+      <p style="color: #94a3b8; font-size: 12px; text-align: center;">
+        © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
+        You are receiving this because you subscribed to our newsletter.
+      </p>
+    </div>
+  </div>
+`;
+
+// ─── Component ───────────────────────────────────────────────────────────────
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("adminToken");
@@ -44,15 +99,18 @@ const AdminDashboard = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
+  // ─── Auth guard + initial load ─────────────────────────────────────────────
   useEffect(() => {
     if (!token) {
       navigate("/admin/login");
     } else {
-      Promise.all([fetchSubscribers(), fetchLogs()]).finally(() => {
-        setPageReady(true);
-      });
+      Promise.all([fetchSubscribers(), fetchLogs()]).finally(() =>
+        setPageReady(true)
+      );
     }
   }, []);
+
+  // ─── Data fetchers ─────────────────────────────────────────────────────────
 
   const fetchSubscribers = async () => {
     setLoading(true);
@@ -74,7 +132,11 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchLogs = async () => {
+  /**
+   * Fetches logs and returns the parsed array so callers can inspect it
+   * without relying on stale state.
+   */
+  const fetchLogs = useCallback(async () => {
     setLogsLoading(true);
     try {
       const res = await fetch(`${API}/api/newsletter/logs`, {
@@ -83,26 +145,28 @@ const AdminDashboard = () => {
       if (res.status === 401) {
         localStorage.removeItem("adminToken");
         navigate("/admin/login");
-        return;
+        return [];
       }
       const data = await res.json();
       setLogs(data);
+      return data; // ✅ return so pollLogsUntilDone can use fresh data
     } catch (err) {
       console.error(err);
+      return [];
     } finally {
       setLogsLoading(false);
     }
-  };
+  }, [token]);
+
+  // ─── Image handling ────────────────────────────────────────────────────────
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     if (file.size > 5 * 1024 * 1024) {
       setStatus("❌ Image must be under 5MB");
       return;
     }
-
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
@@ -113,121 +177,125 @@ const AdminDashboard = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  // ✅ Compress image before base64
-  const compressImage = (file) =>
-    new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          const maxWidth = 800;
-          const scale = Math.min(1, maxWidth / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL("image/jpeg", 0.7));
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
+  // ─── Polling helper ────────────────────────────────────────────────────────
 
-const handleSend = async () => {
-  if (!subject || !message) {
-    setStatus("⚠️ Please enter subject and message.");
-    return;
-  }
+  /**
+   * Polls /logs every 5 s (up to 6 attempts = 30 s) waiting for a new
+   * successful send to appear. Updates status copy on each attempt.
+   *
+   * @param {number} previousSuccessCount - success log count before this send
+   */
+  const pollLogsUntilDone = async (previousSuccessCount) => {
+    const MAX_ATTEMPTS = 6;
+    const INTERVAL_MS = 5000;
 
-  setSending(true);
-  setStatus("⏳ Submitting...");
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      setStatus(`⏳ Delivering… (check ${attempt}/${MAX_ATTEMPTS})`);
+      await new Promise((r) => setTimeout(r, INTERVAL_MS));
 
-  try {
-    let imageBase64 = null;
-    if (imageFile) {
-      imageBase64 = await compressImage(imageFile);
-    }
+      const freshLogs = await fetchLogs();
+      const newSuccessCount = freshLogs.filter(
+        (l) => l.status === "success"
+      ).length;
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
-        </div>
-        <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
-          <h2 style="color: #162660;">${subject}</h2>
-          <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
-          ${imageBase64
-            ? `<div style="margin-top: 20px; text-align: center;">
-                <img src="${imageBase64}" alt="Newsletter Image" style="max-width: 100%; border-radius: 12px;" />
-              </div>`
-            : ""
-          }
-          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
-          <p style="color: #94a3b8; font-size: 12px; text-align: center;">
-            © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
-            You are receiving this because you subscribed to our newsletter.
-          </p>
-        </div>
-      </div>
-    `;
-
-    // ✅ Add 25 second timeout to fetch
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 25000);
-
-    let res;
-    try {
-      res = await fetch(`${API}/api/newsletter/send`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ subject, message, html: htmlContent }),
-        signal: controller.signal, // ✅ attach abort signal
-      });
-      clearTimeout(timeoutId);
-    } catch (fetchErr) {
-      clearTimeout(timeoutId);
-      if (fetchErr.name === "AbortError") {
-        // ✅ Timeout — but emails may still be sending on server
-        setStatus("✅ Emails are being sent in background! Check logs in 10 seconds.");
-        setTimeout(() => fetchLogs(), 10000);
+      if (newSuccessCount > previousSuccessCount) {
+        setStatus("✅ Emails delivered to all subscribers!");
         return;
       }
-      throw fetchErr;
     }
 
-    const text = await res.text();
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      console.error("Raw server response:", text);
-      setStatus("❌ Server error — check Vercel logs");
+    // Timed out — emails may still be in-flight
+    setStatus("⚠️ Still sending — check logs in a moment.");
+  };
+
+  // ─── Send handler ──────────────────────────────────────────────────────────
+
+  const handleSend = async () => {
+    if (!subject || !message) {
+      setStatus("⚠️ Please enter subject and message.");
       return;
     }
 
-    if (res.ok) {
-      setStatus("✅ Emails sent to all subscribers!");
-      setSubject("");
-      setMessage("");
-      handleRemoveImage();
-      setTimeout(() => fetchLogs(), 5000);
-    } else {
-      setStatus(`❌ ${data?.error || "Failed"}`);
+    setSending(true);
+    setStatus("⏳ Preparing email…");
+
+    // Snapshot success count BEFORE sending so we can detect new entries
+    const previousSuccessCount = logs.filter(
+      (l) => l.status === "success"
+    ).length;
+
+    try {
+      let imageBase64 = null;
+      if (imageFile) {
+        setStatus("⏳ Compressing image…");
+        imageBase64 = await compressImage(imageFile);
+      }
+
+      const htmlContent = buildHtml(subject, message, imageBase64);
+
+      // 25 s abort for slow serverless cold-starts
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+      let res;
+      try {
+        setStatus("⏳ Submitting…");
+        res = await fetch(`${API}/api/newsletter/send`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ subject, message, html: htmlContent }),
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
+      } catch (fetchErr) {
+        clearTimeout(timeoutId);
+        if (fetchErr.name === "AbortError") {
+          // Server is taking >25 s — emails are likely still going out in bg
+          setStatus("⏳ Request timed out — checking delivery in background…");
+          await pollLogsUntilDone(previousSuccessCount);
+          return; // finally will run and setSending(false)
+        }
+        throw fetchErr; // re-throw network errors
+      }
+
+      // Parse response (guard against non-JSON error pages)
+      let data;
+      try {
+        const text = await res.text();
+        data = JSON.parse(text);
+      } catch {
+        setStatus("❌ Server returned an unexpected response — check logs.");
+        return;
+      }
+
+      if (res.ok) {
+        // Backend responded immediately (fire-and-forget pattern).
+        // Poll until the EmailLog entry confirms delivery.
+        setSubject("");
+        setMessage("");
+        handleRemoveImage();
+        await pollLogsUntilDone(previousSuccessCount);
+      } else {
+        setStatus(`❌ ${data?.error || "Something went wrong."}`);
+      }
+    } catch (err) {
+      setStatus(`❌ Network error: ${err.message}`);
+    } finally {
+      setSending(false); // always re-enable button
     }
-  } catch (err) {
-    setStatus(`❌ Network error: ${err.message}`);
-  } finally {
-    setSending(false);
-  }
-};
+  };
+
+  // ─── Logout ────────────────────────────────────────────────────────────────
+
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     navigate("/admin/login");
   };
+
+  // ─── Render ────────────────────────────────────────────────────────────────
 
   if (!pageReady) return <PageLoader />;
 
@@ -235,15 +303,13 @@ const handleSend = async () => {
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-5xl mx-auto space-y-8">
 
-        {/* Header */}
+        {/* ── Header ── */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#162660] rounded-xl flex items-center justify-center">
               <Rocket className="text-white w-5 h-5" />
             </div>
-            <h1 className="text-3xl font-bold text-[#162660]">
-              Admin Dashboard
-            </h1>
+            <h1 className="text-3xl font-bold text-[#162660]">Admin Dashboard</h1>
           </div>
           <button
             onClick={handleLogout}
@@ -254,15 +320,19 @@ const handleSend = async () => {
           </button>
         </div>
 
-        {/* Stats */}
+        {/* ── Stats ── */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-white p-6 rounded-2xl shadow flex items-center gap-4">
             <div className="w-12 h-12 bg-[#162660]/10 rounded-xl flex items-center justify-center">
               <Users className="text-[#162660] w-6 h-6" />
             </div>
             <div>
-              <p className="text-gray-500 text-sm uppercase tracking-widest">Total Subscribers</p>
-              <p className="text-4xl font-bold text-[#162660]">{subscribers.length}</p>
+              <p className="text-gray-500 text-sm uppercase tracking-widest">
+                Total Subscribers
+              </p>
+              <p className="text-4xl font-bold text-[#162660]">
+                {subscribers.length}
+              </p>
             </div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow flex items-center gap-4">
@@ -270,7 +340,9 @@ const handleSend = async () => {
               <Mail className="text-green-600 w-6 h-6" />
             </div>
             <div>
-              <p className="text-gray-500 text-sm uppercase tracking-widest">Emails Sent</p>
+              <p className="text-gray-500 text-sm uppercase tracking-widest">
+                Emails Sent
+              </p>
               <p className="text-4xl font-bold text-green-600">
                 {logs.filter((l) => l.status === "success").length}
               </p>
@@ -278,7 +350,7 @@ const handleSend = async () => {
           </div>
         </div>
 
-        {/* Send Email */}
+        {/* ── Send Email ── */}
         <div className="bg-white p-6 rounded-2xl shadow space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Send className="text-[#162660] w-5 h-5" />
@@ -292,7 +364,8 @@ const handleSend = async () => {
             placeholder="Subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full p-3 border rounded-xl focus:outline-none focus:border-[#162660]"
+            disabled={sending}
+            className="w-full p-3 border rounded-xl focus:outline-none focus:border-[#162660] disabled:opacity-50"
           />
 
           <textarea
@@ -300,10 +373,11 @@ const handleSend = async () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={5}
-            className="w-full p-3 border rounded-xl focus:outline-none focus:border-[#162660]"
+            disabled={sending}
+            className="w-full p-3 border rounded-xl focus:outline-none focus:border-[#162660] disabled:opacity-50"
           />
 
-          {/* Image Upload */}
+          {/* Image upload */}
           <div>
             <p className="text-sm font-medium text-gray-600 mb-2">
               Attach Image (optional, max 5MB)
@@ -318,17 +392,21 @@ const handleSend = async () => {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                  disabled={sending}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 disabled:opacity-50"
                 >
                   <X size={12} />
                 </button>
-                <p className="text-xs text-gray-400 mt-1 truncate w-48">{imageFile?.name}</p>
+                <p className="text-xs text-gray-400 mt-1 truncate w-48">
+                  {imageFile?.name}
+                </p>
               </div>
             ) : (
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-[#162660]/30 rounded-xl text-[#162660]/60 hover:border-[#162660] hover:text-[#162660] transition-colors w-full justify-center"
+                disabled={sending}
+                className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-[#162660]/30 rounded-xl text-[#162660]/60 hover:border-[#162660] hover:text-[#162660] transition-colors w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ImagePlus size={20} />
                 Click to upload image
@@ -353,18 +431,23 @@ const handleSend = async () => {
           </button>
 
           {status && (
-            <p className={`text-sm font-medium ${
-              status.includes("✅") ? "text-green-600" :
-              status.includes("❌") ? "text-red-500" :
-              status.includes("⚠️") ? "text-yellow-500" :
-              "text-gray-600"
-            }`}>
+            <p
+              className={`text-sm font-medium ${
+                status.startsWith("✅")
+                  ? "text-green-600"
+                  : status.startsWith("❌")
+                  ? "text-red-500"
+                  : status.startsWith("⚠️")
+                  ? "text-yellow-500"
+                  : "text-gray-600"
+              }`}
+            >
               {status}
             </p>
           )}
         </div>
 
-        {/* Subscriber List */}
+        {/* ── Subscriber List ── */}
         <div className="bg-white p-6 rounded-2xl shadow">
           <div className="flex items-center gap-2 mb-4">
             <Users className="text-[#162660] w-5 h-5" />
@@ -393,7 +476,10 @@ const handleSend = async () => {
                 </thead>
                 <tbody>
                   {subscribers.map((sub, index) => (
-                    <tr key={sub._id} className="border-t hover:bg-gray-50 transition-colors">
+                    <tr
+                      key={sub._id}
+                      className="border-t hover:bg-gray-50 transition-colors"
+                    >
                       <td className="px-4 py-3 text-gray-400">{index + 1}</td>
                       <td className="px-4 py-3 font-medium">{sub.email}</td>
                       <td className="px-4 py-3 text-gray-500">
@@ -407,7 +493,7 @@ const handleSend = async () => {
           )}
         </div>
 
-        {/* Email Send History */}
+        {/* ── Email Send History ── */}
         <div className="bg-white p-6 rounded-2xl shadow">
           <div className="flex items-center gap-2 mb-4">
             <History className="text-[#162660] w-5 h-5" />
@@ -432,7 +518,7 @@ const handleSend = async () => {
                     <th className="px-4 py-3">#</th>
                     <th className="px-4 py-3">Subject</th>
                     <th className="px-4 py-3">Message</th>
-                    <th className="px-4 py-3">Image</th> {/* ✅ new column */}
+                    <th className="px-4 py-3">Image</th>
                     <th className="px-4 py-3">Sent To</th>
                     <th className="px-4 py-3">Status</th>
                     <th className="px-4 py-3">Date</th>
@@ -440,12 +526,15 @@ const handleSend = async () => {
                 </thead>
                 <tbody>
                   {logs.map((log, index) => (
-                    <tr key={log._id} className="border-t hover:bg-gray-50 transition-colors">
+                    <tr
+                      key={log._id}
+                      className="border-t hover:bg-gray-50 transition-colors"
+                    >
                       <td className="px-4 py-3 text-gray-400">{index + 1}</td>
                       <td className="px-4 py-3 font-medium">{log.subject}</td>
-                      <td className="px-4 py-3 max-w-xs truncate text-gray-500">{log.message}</td>
-
-                      {/* ✅ Image attached indicator */}
+                      <td className="px-4 py-3 max-w-xs truncate text-gray-500">
+                        {log.message}
+                      </td>
                       <td className="px-4 py-3">
                         {log.hasImage ? (
                           <span className="flex items-center gap-1 text-[#162660] font-medium text-xs">
@@ -456,14 +545,15 @@ const handleSend = async () => {
                           <span className="text-gray-300 text-xs">—</span>
                         )}
                       </td>
-
                       <td className="px-4 py-3">{log.sentTo} recipients</td>
                       <td className="px-4 py-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                          log.status === "success"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                        }`}>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-bold ${
+                            log.status === "success"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
+                          }`}
+                        >
                           {log.status}
                         </span>
                       </td>
