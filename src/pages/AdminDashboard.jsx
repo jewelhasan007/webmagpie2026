@@ -98,6 +98,7 @@ const AdminDashboard = () => {
   const [sending, setSending] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [modalImage, setModalImage] = useState(null); // ✅ full-size modal
 
   // ─── Auth guard + initial load ─────────────────────────────────────────────
   useEffect(() => {
@@ -536,7 +537,7 @@ const AdminDashboard = () => {
                               src={log.imageUrl}
                               alt="Email attachment"
                               className="w-8 h-8 object-cover rounded border border-gray-200 cursor-pointer transition-transform group-hover:scale-110"
-                              onClick={() => window.open(log.imageUrl, "_blank")}
+                              onClick={() => setModalImage(log.imageUrl)}
                               title="Click to view full size"
                             />
                             {/* Hover popup */}
@@ -583,6 +584,32 @@ const AdminDashboard = () => {
         </div>
 
       </div>
+
+      {/* ✅ Full-size image modal */}
+      {modalImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          onClick={() => setModalImage(null)}
+        >
+          <div
+            className="relative max-w-2xl w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setModalImage(null)}
+              className="absolute -top-3 -right-3 w-8 h-8 bg-white text-gray-700 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 z-10"
+            >
+              <X size={16} />
+            </button>
+            <img
+              src={modalImage}
+              alt="Full size"
+              className="w-full rounded-2xl shadow-2xl border-4 border-white"
+            />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
