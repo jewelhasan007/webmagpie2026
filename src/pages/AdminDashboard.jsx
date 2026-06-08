@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Rocket, LogOut, Users, Mail, Send, History } from "lucide-react";
+import { Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X } from "lucide-react";
 
 const API = import.meta.env.VITE_BASE_URL;
 
-// ✅ Inline PageLoader component
 const PageLoader = () => (
   <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
     <div className="relative w-20 h-20">
@@ -21,7 +20,6 @@ const PageLoader = () => (
   </div>
 );
 
-// ✅ Inline sending loader
 const SendingLoader = () => (
   <div className="flex items-center gap-2">
     <div className="w-4 h-4 rounded-full border-2 border-t-white border-white/30 animate-spin" />
@@ -32,6 +30,7 @@ const SendingLoader = () => (
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("adminToken");
+  const fileInputRef = useRef(null);
 
   const [subscribers, setSubscribers] = useState([]);
   const [subject, setSubject] = useState("");
@@ -40,14 +39,15 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState([]);
   const [logsLoading, setLogsLoading] = useState(false);
-  const [pageReady, setPageReady] = useState(false); // ✅ page loader state
-  const [sending, setSending] = useState(false); // ✅ send button loader state
+  const [pageReady, setPageReady] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     if (!token) {
       navigate("/admin/login");
     } else {
-      // ✅ Wait for both to finish before showing page
       Promise.all([fetchSubscribers(), fetchLogs()]).finally(() => {
         setPageReady(true);
       });
@@ -60,13 +60,11 @@ const AdminDashboard = () => {
       const res = await fetch(`${API}/api/newsletter`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       if (res.status === 401) {
         localStorage.removeItem("adminToken");
         navigate("/admin/login");
         return;
       }
-
       const data = await res.json();
       setSubscribers(data);
     } catch (err) {
@@ -82,13 +80,11 @@ const AdminDashboard = () => {
       const res = await fetch(`${API}/api/newsletter/logs`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       if (res.status === 401) {
         localStorage.removeItem("adminToken");
         navigate("/admin/login");
         return;
       }
-
       const data = await res.json();
       setLogs(data);
     } catch (err) {
@@ -98,23 +94,82 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      setStatus("❌ Image must be under 5MB");
+      return;
+    }
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
   const handleSend = async () => {
     if (!subject || !message) {
       setStatus("⚠️ Please enter subject and message.");
       return;
     }
 
-    setSending(true); // ✅ show send loader
+    setSending(true);
     setStatus("");
 
     try {
+      let imageBase64 = null;
+      if (imageFile) {
+        imageBase64 = await toBase64(imageFile);
+      }
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
+          </div>
+          <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
+            <h2 style="color: #162660;">${subject}</h2>
+            <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
+            ${imageBase64
+              ? `<div style="margin-top: 20px; text-align: center;">
+                  <img src="${imageBase64}" alt="Newsletter Image" style="max-width: 100%; border-radius: 12px;" />
+                </div>`
+              : ""
+            }
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
+            <p style="color: #94a3b8; font-size: 12px; text-align: center;">
+              © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
+              You are receiving this because you subscribed to our newsletter.
+            </p>
+          </div>
+        </div>
+      `;
+
       const res = await fetch(`${API}/api/newsletter/send`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ subject, message }),
+        body: JSON.stringify({
+          subject,
+          message,
+          html: htmlContent,
+        }),
       });
 
       const data = await res.json();
@@ -123,6 +178,7 @@ const AdminDashboard = () => {
         setStatus("✅ Emails sent successfully!");
         setSubject("");
         setMessage("");
+        handleRemoveImage();
         fetchLogs();
       } else {
         setStatus(`❌ ${data?.error || "Failed"}`);
@@ -130,7 +186,7 @@ const AdminDashboard = () => {
     } catch (err) {
       setStatus(`❌ Network error: ${err.message}`);
     } finally {
-      setSending(false); // ✅ hide send loader
+      setSending(false);
     }
   };
 
@@ -139,7 +195,6 @@ const AdminDashboard = () => {
     navigate("/admin/login");
   };
 
-  // ✅ Show full page loader until data is ready
   if (!pageReady) return <PageLoader />;
 
   return (
@@ -172,12 +227,8 @@ const AdminDashboard = () => {
               <Users className="text-[#162660] w-6 h-6" />
             </div>
             <div>
-              <p className="text-gray-500 text-sm uppercase tracking-widest">
-                Total Subscribers
-              </p>
-              <p className="text-4xl font-bold text-[#162660]">
-                {subscribers.length}
-              </p>
+              <p className="text-gray-500 text-sm uppercase tracking-widest">Total Subscribers</p>
+              <p className="text-4xl font-bold text-[#162660]">{subscribers.length}</p>
             </div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow flex items-center gap-4">
@@ -185,9 +236,7 @@ const AdminDashboard = () => {
               <Mail className="text-green-600 w-6 h-6" />
             </div>
             <div>
-              <p className="text-gray-500 text-sm uppercase tracking-widest">
-                Emails Sent
-              </p>
+              <p className="text-gray-500 text-sm uppercase tracking-widest">Emails Sent</p>
               <p className="text-4xl font-bold text-green-600">
                 {logs.filter((l) => l.status === "success").length}
               </p>
@@ -203,6 +252,7 @@ const AdminDashboard = () => {
               Send Email to All Subscribers
             </h2>
           </div>
+
           <input
             type="text"
             placeholder="Subject"
@@ -210,6 +260,7 @@ const AdminDashboard = () => {
             onChange={(e) => setSubject(e.target.value)}
             className="w-full p-3 border rounded-xl focus:outline-none focus:border-[#162660]"
           />
+
           <textarea
             placeholder="Message"
             value={message}
@@ -217,14 +268,60 @@ const AdminDashboard = () => {
             rows={5}
             className="w-full p-3 border rounded-xl focus:outline-none focus:border-[#162660]"
           />
+
+          {/* Image Upload */}
+          <div>
+            <p className="text-sm font-medium text-gray-600 mb-2">
+              Attach Image (optional, max 5MB)
+            </p>
+
+            {imagePreview ? (
+              <div className="relative inline-block">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-48 h-48 object-cover rounded-xl border border-gray-200"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                >
+                  <X size={12} />
+                </button>
+                <p className="text-xs text-gray-400 mt-1 truncate w-48">
+                  {imageFile?.name}
+                </p>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center gap-2 px-4 py-3 border-2 border-dashed border-[#162660]/30 rounded-xl text-[#162660]/60 hover:border-[#162660] hover:text-[#162660] transition-colors w-full justify-center"
+              >
+                <ImagePlus size={20} />
+                Click to upload image
+              </button>
+            )}
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+          </div>
+
           <button
             type="button"
             onClick={handleSend}
-            disabled={sending} // ✅ disable while sending
+            disabled={sending}
             className="px-6 py-3 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {sending ? <SendingLoader /> : "Send to All Subscribers"}
           </button>
+
           {status && (
             <p className={`text-sm font-medium ${
               status.includes("✅") ? "text-green-600" :
@@ -241,16 +338,12 @@ const AdminDashboard = () => {
         <div className="bg-white p-6 rounded-2xl shadow">
           <div className="flex items-center gap-2 mb-4">
             <Users className="text-[#162660] w-5 h-5" />
-            <h2 className="text-xl font-bold text-[#162660]">
-              Subscriber List
-            </h2>
+            <h2 className="text-xl font-bold text-[#162660]">Subscriber List</h2>
             <span className="ml-auto bg-[#162660]/10 text-[#162660] text-xs font-bold px-3 py-1 rounded-full">
               {subscribers.length} total
             </span>
           </div>
-
           {loading ? (
-            // ✅ Table skeleton loader
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="h-10 bg-gray-100 rounded-xl animate-pulse" />
@@ -288,16 +381,12 @@ const AdminDashboard = () => {
         <div className="bg-white p-6 rounded-2xl shadow">
           <div className="flex items-center gap-2 mb-4">
             <History className="text-[#162660] w-5 h-5" />
-            <h2 className="text-xl font-bold text-[#162660]">
-              Email Send History
-            </h2>
+            <h2 className="text-xl font-bold text-[#162660]">Email Send History</h2>
             <span className="ml-auto bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">
               {logs.filter((l) => l.status === "success").length} successful
             </span>
           </div>
-
           {logsLoading ? (
-            // ✅ Logs skeleton loader
             <div className="space-y-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="h-10 bg-gray-100 rounded-xl animate-pulse" />
@@ -323,9 +412,7 @@ const AdminDashboard = () => {
                     <tr key={log._id} className="border-t hover:bg-gray-50 transition-colors">
                       <td className="px-4 py-3 text-gray-400">{index + 1}</td>
                       <td className="px-4 py-3 font-medium">{log.subject}</td>
-                      <td className="px-4 py-3 max-w-xs truncate text-gray-500">
-                        {log.message}
-                      </td>
+                      <td className="px-4 py-3 max-w-xs truncate text-gray-500">{log.message}</td>
                       <td className="px-4 py-3">{log.sentTo} recipients</td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-1 rounded-full text-xs font-bold ${
