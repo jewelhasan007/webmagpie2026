@@ -182,8 +182,6 @@ const AdminDashboard = () => {
   /**
    * Polls /logs every 5 s (up to 6 attempts = 30 s) waiting for a new
    * successful send to appear. Updates status copy on each attempt.
-   *
-   * @param {number} previousSuccessCount - success log count before this send
    */
   const pollLogsUntilDone = async (previousSuccessCount) => {
     const MAX_ATTEMPTS = 6;
@@ -204,7 +202,6 @@ const AdminDashboard = () => {
       }
     }
 
-    // Timed out — emails may still be in-flight
     setStatus("⚠️ Still sending — check logs in a moment.");
   };
 
@@ -219,7 +216,6 @@ const AdminDashboard = () => {
     setSending(true);
     setStatus("⏳ Preparing email…");
 
-    // Snapshot success count BEFORE sending so we can detect new entries
     const previousSuccessCount = logs.filter(
       (l) => l.status === "success"
     ).length;
@@ -233,7 +229,6 @@ const AdminDashboard = () => {
 
       const htmlContent = buildHtml(subject, message, imageBase64);
 
-      // 25 s abort for slow serverless cold-starts
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 25000);
 
@@ -246,22 +241,21 @@ const AdminDashboard = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ subject, message, html: htmlContent }),
+          // ✅ send imageBase64 separately so backend can store it in EmailLog
+          body: JSON.stringify({ subject, message, html: htmlContent, imageBase64 }),
           signal: controller.signal,
         });
         clearTimeout(timeoutId);
       } catch (fetchErr) {
         clearTimeout(timeoutId);
         if (fetchErr.name === "AbortError") {
-          // Server is taking >25 s — emails are likely still going out in bg
           setStatus("⏳ Request timed out — checking delivery in background…");
           await pollLogsUntilDone(previousSuccessCount);
-          return; // finally will run and setSending(false)
+          return;
         }
-        throw fetchErr; // re-throw network errors
+        throw fetchErr;
       }
 
-      // Parse response (guard against non-JSON error pages)
       let data;
       try {
         const text = await res.text();
@@ -272,8 +266,6 @@ const AdminDashboard = () => {
       }
 
       if (res.ok) {
-        // Backend responded immediately (fire-and-forget pattern).
-        // Poll until the EmailLog entry confirms delivery.
         setSubject("");
         setMessage("");
         handleRemoveImage();
@@ -284,7 +276,7 @@ const AdminDashboard = () => {
     } catch (err) {
       setStatus(`❌ Network error: ${err.message}`);
     } finally {
-      setSending(false); // always re-enable button
+      setSending(false);
     }
   };
 
@@ -535,8 +527,19 @@ const AdminDashboard = () => {
                       <td className="px-4 py-3 max-w-xs truncate text-gray-500">
                         {log.message}
                       </td>
+
+                      {/* ✅ Image column — shows thumbnail if imageUrl exists */}
                       <td className="px-4 py-3">
-                        {log.hasImage ? (
+                        {log.imageUrl ? (
+                          <img
+                            src={log.imageUrl}
+                            alt="Email attachment"
+                            className="w-12 h-12 object-cover rounded-lg border border-gray-200 cursor-pointer hover:scale-105 transition-transform"
+                            onClick={() => window.open(log.imageUrl, "_blank")}
+                            title="Click to view full size"
+                          />
+                        ) : log.hasImage ? (
+                          // legacy logs before imageUrl was added
                           <span className="flex items-center gap-1 text-[#162660] font-medium text-xs">
                             <Image size={14} />
                             Yes
@@ -545,6 +548,7 @@ const AdminDashboard = () => {
                           <span className="text-gray-300 text-xs">—</span>
                         )}
                       </td>
+
                       <td className="px-4 py-3">{log.sentTo} recipients</td>
                       <td className="px-4 py-3">
                         <span
