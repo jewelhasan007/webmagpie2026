@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X } from "lucide-react";
+import { Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image } from "lucide-react";
 
 const API = import.meta.env.VITE_BASE_URL;
 
@@ -113,91 +113,100 @@ const AdminDashboard = () => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
+  // ✅ Compress image before base64
+  const compressImage = (file) =>
+    new Promise((resolve) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxWidth = 800;
+          const scale = Math.min(1, maxWidth / img.width);
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL("image/jpeg", 0.7));
+        };
+        img.src = e.target.result;
+      };
       reader.readAsDataURL(file);
     });
 
-const handleSend = async () => {
-  if (!subject || !message) {
-    setStatus("⚠️ Please enter subject and message.");
-    return;
-  }
-
-  setSending(true);
-  setStatus("");
-
-  try {
-    let imageBase64 = null;
-    if (imageFile) {
-      imageBase64 = await toBase64(imageFile);
-    }
-
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
-          <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
-        </div>
-        <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
-          <h2 style="color: #162660;">${subject}</h2>
-          <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
-          ${imageBase64
-            ? `<div style="margin-top: 20px; text-align: center;">
-                <img src="${imageBase64}" alt="Newsletter Image" style="max-width: 100%; border-radius: 12px;" />
-              </div>`
-            : ""
-          }
-          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
-          <p style="color: #94a3b8; font-size: 12px; text-align: center;">
-            © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
-            You are receiving this because you subscribed to our newsletter.
-          </p>
-        </div>
-      </div>
-    `;
-
-    const res = await fetch(`${API}/api/newsletter/send`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        subject,
-        message,
-        html: htmlContent,
-      }),
-    });
-
-    // ✅ Handle non-JSON responses gracefully
-    const text = await res.text();
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      console.error("Raw server response:", text);
-      setStatus(`❌ Server error — check Vercel logs`);
+  const handleSend = async () => {
+    if (!subject || !message) {
+      setStatus("⚠️ Please enter subject and message.");
       return;
     }
 
-    if (res.ok) {
-      setStatus("✅ Emails sent successfully!");
-      setSubject("");
-      setMessage("");
-      handleRemoveImage();
-      fetchLogs();
-    } else {
-      setStatus(`❌ ${data?.error || "Failed"}`);
+    setSending(true);
+    setStatus("");
+
+    try {
+      let imageBase64 = null;
+      if (imageFile) {
+        imageBase64 = await compressImage(imageFile);
+      }
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
+          </div>
+          <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
+            <h2 style="color: #162660;">${subject}</h2>
+            <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
+            ${imageBase64
+              ? `<div style="margin-top: 20px; text-align: center;">
+                  <img src="${imageBase64}" alt="Newsletter Image" style="max-width: 100%; border-radius: 12px;" />
+                </div>`
+              : ""
+            }
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
+            <p style="color: #94a3b8; font-size: 12px; text-align: center;">
+              © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
+              You are receiving this because you subscribed to our newsletter.
+            </p>
+          </div>
+        </div>
+      `;
+
+      const res = await fetch(`${API}/api/newsletter/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ subject, message, html: htmlContent }),
+      });
+
+      // ✅ Safe JSON parsing
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("Raw server response:", text);
+        setStatus("❌ Server error — check Vercel logs");
+        return;
+      }
+
+      if (res.ok) {
+        setStatus("✅ Emails sent successfully!");
+        setSubject("");
+        setMessage("");
+        handleRemoveImage();
+        fetchLogs();
+      } else {
+        setStatus(`❌ ${data?.error || "Failed"}`);
+      }
+    } catch (err) {
+      setStatus(`❌ Network error: ${err.message}`);
+    } finally {
+      setSending(false);
     }
-  } catch (err) {
-    setStatus(`❌ Network error: ${err.message}`);
-  } finally {
-    setSending(false);
-  }
-};
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
@@ -283,7 +292,6 @@ const handleSend = async () => {
             <p className="text-sm font-medium text-gray-600 mb-2">
               Attach Image (optional, max 5MB)
             </p>
-
             {imagePreview ? (
               <div className="relative inline-block">
                 <img
@@ -298,9 +306,7 @@ const handleSend = async () => {
                 >
                   <X size={12} />
                 </button>
-                <p className="text-xs text-gray-400 mt-1 truncate w-48">
-                  {imageFile?.name}
-                </p>
+                <p className="text-xs text-gray-400 mt-1 truncate w-48">{imageFile?.name}</p>
               </div>
             ) : (
               <button
@@ -312,7 +318,6 @@ const handleSend = async () => {
                 Click to upload image
               </button>
             )}
-
             <input
               ref={fileInputRef}
               type="file"
@@ -411,6 +416,7 @@ const handleSend = async () => {
                     <th className="px-4 py-3">#</th>
                     <th className="px-4 py-3">Subject</th>
                     <th className="px-4 py-3">Message</th>
+                    <th className="px-4 py-3">Image</th> {/* ✅ new column */}
                     <th className="px-4 py-3">Sent To</th>
                     <th className="px-4 py-3">Status</th>
                     <th className="px-4 py-3">Date</th>
@@ -422,6 +428,19 @@ const handleSend = async () => {
                       <td className="px-4 py-3 text-gray-400">{index + 1}</td>
                       <td className="px-4 py-3 font-medium">{log.subject}</td>
                       <td className="px-4 py-3 max-w-xs truncate text-gray-500">{log.message}</td>
+
+                      {/* ✅ Image attached indicator */}
+                      <td className="px-4 py-3">
+                        {log.hasImage ? (
+                          <span className="flex items-center gap-1 text-[#162660] font-medium text-xs">
+                            <Image size={14} />
+                            Yes
+                          </span>
+                        ) : (
+                          <span className="text-gray-300 text-xs">—</span>
+                        )}
+                      </td>
+
                       <td className="px-4 py-3">{log.sentTo} recipients</td>
                       <td className="px-4 py-3">
                         <span className={`px-2 py-1 rounded-full text-xs font-bold ${
