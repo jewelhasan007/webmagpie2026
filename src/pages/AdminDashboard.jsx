@@ -592,7 +592,8 @@ const AdminDashboard = () => {
           onClick={() => setModalImage(null)}
         >
           <div
-            className="relative max-w-2xl w-full mx-4"
+            className="relative mx-4"
+            style={{ width: "50%", maxWidth: "50vw" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
