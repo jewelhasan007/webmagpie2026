@@ -585,27 +585,42 @@ const AdminDashboard = () => {
 
       </div>
 
-      {/* ✅ Full-size image modal */}
+      {/* ✅ Image modal — 40% width, pure inline styles to avoid Tailwind conflicts */}
       {modalImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
           onClick={() => setModalImage(null)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 9999,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            backgroundColor: "rgba(0,0,0,0.72)",
+            backdropFilter: "blur(4px)",
+          }}
         >
           <div
-            className="relative mx-4"
-            style={{ width: "50%", maxWidth: "50vw" }}
             onClick={(e) => e.stopPropagation()}
+            style={{ position: "relative", width: "40%" }}
           >
             <button
               onClick={() => setModalImage(null)}
-              className="absolute -top-3 -right-3 w-8 h-8 bg-white text-gray-700 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 z-10"
+              style={{
+                position: "absolute", top: "-12px", right: "-12px",
+                width: "28px", height: "28px", borderRadius: "50%",
+                background: "white", border: "none", cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.3)", zIndex: 1,
+              }}
             >
-              <X size={16} />
+              <X size={14} />
             </button>
             <img
               src={modalImage}
-              alt="Full size"
-              className="w-full rounded-2xl shadow-2xl border-4 border-white"
+              alt="Preview"
+              style={{
+                width: "100%", display: "block",
+                borderRadius: "16px",
+                border: "4px solid white",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+              }}
             />
           </div>
         </div>
