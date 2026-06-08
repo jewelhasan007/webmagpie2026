@@ -528,16 +528,27 @@ const AdminDashboard = () => {
                         {log.message}
                       </td>
 
-                      {/* ✅ Image column — shows thumbnail if imageUrl exists */}
+                      {/* ✅ Image column — shows thumbnail + hover popup */}
                       <td className="px-3 py-1.5">
                         {log.imageUrl ? (
-                          <img
-                            src={log.imageUrl}
-                            alt="Email attachment"
-                            className="w-8 h-8 object-cover rounded border border-gray-200 cursor-pointer hover:scale-110 transition-transform"
-                            onClick={() => window.open(log.imageUrl, "_blank")}
-                            title="Click to view full size"
-                          />
+                          <div className="relative inline-block group">
+                            <img
+                              src={log.imageUrl}
+                              alt="Email attachment"
+                              className="w-8 h-8 object-cover rounded border border-gray-200 cursor-pointer transition-transform group-hover:scale-110"
+                              onClick={() => window.open(log.imageUrl, "_blank")}
+                              title="Click to view full size"
+                            />
+                            {/* Hover popup */}
+                            <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block pointer-events-none">
+                              <img
+                                src={log.imageUrl}
+                                alt="Preview"
+                                className="w-40 h-40 object-cover rounded-xl border-2 border-white shadow-2xl"
+                              />
+                              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45 border-r border-b border-gray-200" />
+                            </div>
+                          </div>
                         ) : log.hasImage ? (
                           <span className="flex items-center gap-1 text-[#162660] font-medium">
                             <Image size={12} />
