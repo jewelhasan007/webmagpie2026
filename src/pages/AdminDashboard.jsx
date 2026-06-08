@@ -38,7 +38,7 @@ const compressImage = (file) =>
   new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      const img = new window.Image(); // ✅ use window.Image to avoid Lucide collision
+      const img = new window.Image();
       img.onload = () => {
         const canvas = document.createElement("canvas");
         const maxWidth = 800;
@@ -54,8 +54,8 @@ const compressImage = (file) =>
     reader.readAsDataURL(file);
   });
 
-/** Build the HTML email body */
-const buildHtml = (subject, message, imageBase64) => `
+/** Build the HTML email body — imageUrl should be a real https:// URL */
+const buildHtml = (subject, message, imageUrl) => `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
       <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
@@ -64,9 +64,9 @@ const buildHtml = (subject, message, imageBase64) => `
       <h2 style="color: #162660;">${subject}</h2>
       <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
       ${
-        imageBase64
+        imageUrl
           ? `<div style="margin-top: 20px; text-align: center;">
-               <img src="${imageBase64}" alt="Newsletter Image"
+               <img src="${imageUrl}" alt="Newsletter Image"
                     style="max-width: 100%; border-radius: 12px;" />
              </div>`
           : ""
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
   const [sending, setSending] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [modalImage, setModalImage] = useState(null); // ✅ full-size modal
+  const [modalImage, setModalImage] = useState(null);
 
   // ─── Auth guard + initial load ─────────────────────────────────────────────
   useEffect(() => {
@@ -133,10 +133,6 @@ const AdminDashboard = () => {
     }
   };
 
-  /**
-   * Fetches logs and returns the parsed array so callers can inspect it
-   * without relying on stale state.
-   */
   const fetchLogs = useCallback(async () => {
     setLogsLoading(true);
     try {
@@ -150,7 +146,7 @@ const AdminDashboard = () => {
       }
       const data = await res.json();
       setLogs(data);
-      return data; // ✅ return so pollLogsUntilDone can use fresh data
+      return data;
     } catch (err) {
       console.error(err);
       return [];
@@ -180,10 +176,6 @@ const AdminDashboard = () => {
 
   // ─── Polling helper ────────────────────────────────────────────────────────
 
-  /**
-   * Polls /logs every 5 s (up to 6 attempts = 30 s) waiting for a new
-   * successful send to appear. Updates status copy on each attempt.
-   */
   const pollLogsUntilDone = async (previousSuccessCount) => {
     const MAX_ATTEMPTS = 6;
     const INTERVAL_MS = 5000;
@@ -222,13 +214,36 @@ const AdminDashboard = () => {
     ).length;
 
     try {
-      let imageBase64 = null;
+      let imageUrl = null;
+
       if (imageFile) {
+        // Step 1: Compress to base64
         setStatus("⏳ Compressing image…");
-        imageBase64 = await compressImage(imageFile);
+        const imageBase64 = await compressImage(imageFile);
+
+        // Step 2: Upload to Cloudinary via backend → get real https:// URL
+        setStatus("⏳ Uploading image…");
+        const uploadRes = await fetch(`${API}/api/newsletter/upload-image`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ imageBase64 }),
+        });
+
+        if (!uploadRes.ok) {
+          const uploadErr = await uploadRes.json();
+          setStatus(`❌ Image upload failed: ${uploadErr.error || "Unknown error"}`);
+          return;
+        }
+
+        const uploadData = await uploadRes.json();
+        imageUrl = uploadData.url; // ✅ real https://res.cloudinary.com/... URL
       }
 
-      const htmlContent = buildHtml(subject, message, imageBase64);
+      // Step 3: Build HTML with the hosted image URL (works in all email clients)
+      const htmlContent = buildHtml(subject, message, imageUrl);
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 25000);
@@ -242,8 +257,8 @@ const AdminDashboard = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          // ✅ send imageBase64 separately so backend can store it in EmailLog
-          body: JSON.stringify({ subject, message, html: htmlContent, imageBase64 }),
+          // ✅ send imageUrl (Cloudinary https:// URL) not base64
+          body: JSON.stringify({ subject, message, html: htmlContent, imageUrl }),
           signal: controller.signal,
         });
         clearTimeout(timeoutId);
@@ -529,7 +544,7 @@ const AdminDashboard = () => {
                         {log.message}
                       </td>
 
-                      {/* ✅ Image column — shows thumbnail + hover popup */}
+                      {/* ✅ Image column — thumbnail + hover preview + click modal */}
                       <td className="px-3 py-1.5">
                         {log.imageUrl ? (
                           <div className="relative inline-block group">
@@ -538,7 +553,7 @@ const AdminDashboard = () => {
                               alt="Email attachment"
                               className="w-8 h-8 object-cover rounded border border-gray-200 cursor-pointer transition-transform group-hover:scale-110"
                               onClick={() => setModalImage(log.imageUrl)}
-                              title="Click to view full size"
+                              title="Click to view"
                             />
                             {/* Hover popup */}
                             <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block pointer-events-none">
@@ -585,7 +600,7 @@ const AdminDashboard = () => {
 
       </div>
 
-      {/* ✅ Image modal — 40% width, pure inline styles to avoid Tailwind conflicts */}
+      {/* ✅ Image modal — pure inline styles, 40% width */}
       {modalImage && (
         <div
           onClick={() => setModalImage(null)}
