@@ -121,74 +121,83 @@ const AdminDashboard = () => {
       reader.readAsDataURL(file);
     });
 
-  const handleSend = async () => {
-    if (!subject || !message) {
-      setStatus("⚠️ Please enter subject and message.");
+const handleSend = async () => {
+  if (!subject || !message) {
+    setStatus("⚠️ Please enter subject and message.");
+    return;
+  }
+
+  setSending(true);
+  setStatus("");
+
+  try {
+    let imageBase64 = null;
+    if (imageFile) {
+      imageBase64 = await toBase64(imageFile);
+    }
+
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
+          <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
+        </div>
+        <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
+          <h2 style="color: #162660;">${subject}</h2>
+          <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
+          ${imageBase64
+            ? `<div style="margin-top: 20px; text-align: center;">
+                <img src="${imageBase64}" alt="Newsletter Image" style="max-width: 100%; border-radius: 12px;" />
+              </div>`
+            : ""
+          }
+          <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
+          <p style="color: #94a3b8; font-size: 12px; text-align: center;">
+            © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
+            You are receiving this because you subscribed to our newsletter.
+          </p>
+        </div>
+      </div>
+    `;
+
+    const res = await fetch(`${API}/api/newsletter/send`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        subject,
+        message,
+        html: htmlContent,
+      }),
+    });
+
+    // ✅ Handle non-JSON responses gracefully
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      console.error("Raw server response:", text);
+      setStatus(`❌ Server error — check Vercel logs`);
       return;
     }
 
-    setSending(true);
-    setStatus("");
-
-    try {
-      let imageBase64 = null;
-      if (imageFile) {
-        imageBase64 = await toBase64(imageFile);
-      }
-
-      const htmlContent = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
-          </div>
-          <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
-            <h2 style="color: #162660;">${subject}</h2>
-            <p style="color: #475569; line-height: 1.8; white-space: pre-line;">${message}</p>
-            ${imageBase64
-              ? `<div style="margin-top: 20px; text-align: center;">
-                  <img src="${imageBase64}" alt="Newsletter Image" style="max-width: 100%; border-radius: 12px;" />
-                </div>`
-              : ""
-            }
-            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
-            <p style="color: #94a3b8; font-size: 12px; text-align: center;">
-              © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
-              You are receiving this because you subscribed to our newsletter.
-            </p>
-          </div>
-        </div>
-      `;
-
-      const res = await fetch(`${API}/api/newsletter/send`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          subject,
-          message,
-          html: htmlContent,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setStatus("✅ Emails sent successfully!");
-        setSubject("");
-        setMessage("");
-        handleRemoveImage();
-        fetchLogs();
-      } else {
-        setStatus(`❌ ${data?.error || "Failed"}`);
-      }
-    } catch (err) {
-      setStatus(`❌ Network error: ${err.message}`);
-    } finally {
-      setSending(false);
+    if (res.ok) {
+      setStatus("✅ Emails sent successfully!");
+      setSubject("");
+      setMessage("");
+      handleRemoveImage();
+      fetchLogs();
+    } else {
+      setStatus(`❌ ${data?.error || "Failed"}`);
     }
-  };
+  } catch (err) {
+    setStatus(`❌ Network error: ${err.message}`);
+  } finally {
+    setSending(false);
+  }
+};
 
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
