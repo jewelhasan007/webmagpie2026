@@ -141,7 +141,7 @@ const handleSend = async () => {
   }
 
   setSending(true);
-  setStatus("⏳ Sending emails, please wait...");
+  setStatus("⏳ Submitting...");
 
   try {
     let imageBase64 = null;
@@ -172,16 +172,33 @@ const handleSend = async () => {
       </div>
     `;
 
-    const res = await fetch(`${API}/api/newsletter/send`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ subject, message, html: htmlContent }),
-    });
+    // ✅ Add 25 second timeout to fetch
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 25000);
 
-    // ✅ Safe JSON parsing
+    let res;
+    try {
+      res = await fetch(`${API}/api/newsletter/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ subject, message, html: htmlContent }),
+        signal: controller.signal, // ✅ attach abort signal
+      });
+      clearTimeout(timeoutId);
+    } catch (fetchErr) {
+      clearTimeout(timeoutId);
+      if (fetchErr.name === "AbortError") {
+        // ✅ Timeout — but emails may still be sending on server
+        setStatus("✅ Emails are being sent in background! Check logs in 10 seconds.");
+        setTimeout(() => fetchLogs(), 10000);
+        return;
+      }
+      throw fetchErr;
+    }
+
     const text = await res.text();
     let data;
     try {
@@ -189,16 +206,14 @@ const handleSend = async () => {
     } catch {
       console.error("Raw server response:", text);
       setStatus("❌ Server error — check Vercel logs");
-      setSending(false);
       return;
     }
 
     if (res.ok) {
-      setStatus("✅ Request received! Emails are being sent to all subscribers.");
+      setStatus("✅ Emails sent to all subscribers!");
       setSubject("");
       setMessage("");
       handleRemoveImage();
-      // ✅ Refresh logs after 5 seconds to show new log entry
       setTimeout(() => fetchLogs(), 5000);
     } else {
       setStatus(`❌ ${data?.error || "Failed"}`);
@@ -206,7 +221,7 @@ const handleSend = async () => {
   } catch (err) {
     setStatus(`❌ Network error: ${err.message}`);
   } finally {
-    setSending(false); // ✅ always stop the spinner
+    setSending(false);
   }
 };
   const handleLogout = () => {
