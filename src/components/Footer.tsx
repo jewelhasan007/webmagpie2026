@@ -144,13 +144,21 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
         </p>
         <div className="flex flex-wrap items-center justify-end gap-3">
           {[
-          {
+ {
   name: "Visa",
   svg: (
-    <svg viewBox="0 0 70 25" className="h-4 w-auto" fill="none">
-      <rect width="70" height="25" rx="4" fill="#1a1f71"/>
-      <text x="8" y="18" fontFamily="Arial" fontWeight="900" fontSize="16" fill="#fff" letterSpacing="-0.5">VISA</text>
-      <rect x="0" y="20" width="70" height="5" rx="0" fill="#f7b600"/>
+    <svg viewBox="0 0 48 24" className="h-5 w-auto">
+      <text
+        x="2"
+        y="18"
+        fontSize="16"
+        fontWeight="900"
+        fontFamily="Arial, sans-serif"
+        fill="#1A1F71"
+        fontStyle="italic"
+      >
+        VISA
+      </text>
     </svg>
   ),
 },
