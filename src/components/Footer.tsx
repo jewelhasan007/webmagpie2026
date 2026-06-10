@@ -137,14 +137,17 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
           </Link> */}
         </div>
       </div>
-
 {/* ── Payment platforms ── */}
-      <div className="max-w-7xl mx-auto flex justify-end flex-wrap gap-2">
-        {[
+      <div className="max-w-7xl mx-auto mt-14 mb-2">
+        <p className="text-white/30 text-xs uppercase tracking-widest mb-4 text-center text-right">
+          Secure payments via
+        </p>
+        <div className="flex flex-wrap items-right justify-center gap-3">
+          {[
             {
               name: "Visa",
               svg: (
-                <svg viewBox="0 0 48 16" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 48 16" className="h-5 w-auto" fill="none">
                   <text x="0" y="13" fontFamily="Arial" fontWeight="800" fontSize="15" fill="#fff" letterSpacing="-0.5">VISA</text>
                 </svg>
               ),
@@ -152,7 +155,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "Mastercard",
               svg: (
-                <svg viewBox="0 0 38 24" className="h-4 w-auto">
+                <svg viewBox="0 0 38 24" className="h-5 w-auto">
                   <circle cx="13" cy="12" r="10" fill="#EB001B" opacity="0.9"/>
                   <circle cx="25" cy="12" r="10" fill="#F79E1B" opacity="0.9"/>
                   <path d="M19 5.5a10 10 0 0 1 0 13 10 10 0 0 1 0-13z" fill="#FF5F00" opacity="0.9"/>
@@ -162,7 +165,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "PayPal",
               svg: (
-                <svg viewBox="0 0 60 20" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 60 20" className="h-5 w-auto" fill="none">
                   <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#009cde">Pay</text>
                   <text x="22" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#012169">Pal</text>
                 </svg>
@@ -171,7 +174,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "Stripe",
               svg: (
-                <svg viewBox="0 0 52 20" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
                   <text x="0" y="15" fontFamily="Arial" fontWeight="700" fontSize="15" fill="#635bff">stripe</text>
                 </svg>
               ),
@@ -179,7 +182,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "bKash",
               svg: (
-                <svg viewBox="0 0 52 20" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
                   <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#e2136e">bKash</text>
                 </svg>
               ),
@@ -187,7 +190,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "Nagad",
               svg: (
-                <svg viewBox="0 0 52 20" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
                   <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#f6a01b">Nagad</text>
                 </svg>
               ),
@@ -195,7 +198,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "Wise",
               svg: (
-                <svg viewBox="0 0 44 20" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 44 20" className="h-5 w-auto" fill="none">
                   <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#9fe870">wise</text>
                 </svg>
               ),
@@ -203,20 +206,22 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             {
               name: "AMEX",
               svg: (
-                <svg viewBox="0 0 52 20" className="h-4 w-auto" fill="none">
+                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
                   <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="12" fill="#2557d6" letterSpacing="1">AMEX</text>
                 </svg>
               ),
             },
           ].map((p) => (
-          <div
-            key={p.name}
-            title={p.name}
-            className="px-2.5 py-1.5 rounded-md bg-white/5 border border-[#D0E6FD]/10 hover:bg-white/10 hover:border-[#D0E6FD]/25 transition-all flex items-center justify-center"
-          >
-            {p.svg}
-          </div>
-        ))}
+            <div
+              key={p.name}
+              title={p.name}
+              className="px-3 py-2 rounded-lg bg-white/5 border border-[#D0E6FD]/10 hover:bg-white/10 hover:border-[#D0E6FD]/30 transition-all flex items-center justify-center"
+              style={{ minWidth: 56 }}
+            >
+              {p.svg}
+            </div>
+          ))}
+        </div>
       </div>
       {/* ── end payment platforms ── */}
 
