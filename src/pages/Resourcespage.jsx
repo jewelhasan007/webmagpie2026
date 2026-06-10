@@ -1,126 +1,12 @@
-
-Claude finished the response
-newpage.jpg
-
-import React, { useState, useEffect, useRef, useCallback } from "react"; import { useNavigate } from "react-router-dom"; import { Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image, } from "lucide-react"; const API = import.meta.env.VITE_BASE_URL; // ─── Loaders ────────────
-
-pasted
-
-in the attached adminDashboard i want to add another page where i can show some topics and record that looks like the attached image
-
-1:15 PM
-
-Reading frontend design skill
-Reading frontend design skill
-Now I have a clear picture of both the existing dashboard design and the target UI from the screenshot. Let me build a new ResourcesPage component that matches the accordion-style layout shown in the image, using the existing dashboard's color palette (
-#162660, 
-#F1E4D1).
-
-
-Created a file, read a file
-Created a file, read a file
-Here's your new ResourcesPage.jsx. It matches the accordion layout from your screenshot and uses the same design language as your existing dashboard (
-#162660, 
-#F1E4D1, rounded-2xl, shadow cards, etc.).
-
-What's included:
-
-Stats bar — platforms count, total prompts, best for beginners, highest value leads
-7 platform sections — Upwork/Fiverr, LinkedIn, Facebook Groups, X (Twitter), Cold Email, Google/Local SEO, Referral — each with 3 copy-ready prompts
-Accordion toggle — click any row to expand/collapse its prompts
-One-click copy — each prompt card has a "Copy" button that flashes "Copied!" feedback
-Navigation — a "← Dashboard" button to go back + the same Logout button
-To wire it up in your router, add two things:
-
-jsx
-// In your router (e.g. App.jsx)
-import ResourcesPage from "./ResourcesPage";
-
-<Route path="/admin/resources" element={<ResourcesPage />} />
-Then add a nav link in your AdminDashboard header:
-
-jsx
-<button onClick={() => navigate("/admin/resources")}
-  className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors">
-  <BookOpen size={16} />
-  Resources
-</button>
-
-Resourcespage
-Code · JSX 
-
-import React, { useState, useEffect, useRef, useCallback } from "react"; import { useNavigate } from "react-router-dom"; import { Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image, } from "lucide-react"; const API = import.meta.env.VITE_BASE_URL; // ─── Loaders ────────────
-
-pasted
-
-please give me the complete adminDashboard component as the existing attached
-
-1:22 PM
-Here's the complete AdminDashboard with the Resources nav button added:
-
-
-Created a file, read a file
-Created a file, read a file
-The only two changes from your original are:
-
-BookOpen added to the lucide-react import at the top
-Header buttons — the single Logout button is now wrapped in a flex div alongside a new Resources button that navigates to /admin/resources
-Everything else is byte-for-byte identical to what you had.
-
-
-Admindashboard
-Code · JSX 
-
-import React, { useState, useEffect } from 'react'; import { Link, useLocation } from 'react-router-dom'; import { motion, AnimatePresence } from 'motion/react'; import { Menu, X, Rocket, ChevronDown, Phone, } from 'lucide-react'; import { cn } from '../lib/utils'; export cons
-
-pasted
-
-also add the logout button in the resources page and give me the full resources page component
-the adminDashboard page logout button under the navbar. Give me the complete adminDashboard page and the attached navbar component is like
-
-1:50 PM
-Looking at your navbar, the logout button in AdminDashboard should sit below the navbar (which is fixed at z-50). Let me give you both complete files.
-
-
-Created 2 files, ran a command, read a file
-Created 2 files, ran a command, read a file
-Both files are ready. Here's a summary of every change made:
-
-AdminDashboard.jsx
-
-Outer wrapper changed from p-8 → pt-24 pb-12 px-8 so the content clears your fixed navbar (~72px tall)
-Header now has a flex row with both the Resources button and Logout button side by side
-BookOpen added to the lucide import
-ResourcesPage.jsx
-
-Same pt-24 pb-12 px-8 navbar offset applied
-Header has a flex row with Dashboard button (navigates to /admin) and Logout button side by side — matching the exact same pattern as AdminDashboard
-BookOpen icon used for the page header instead of Rocket to visually distinguish the two pages
-
-Admindashboard
-Code · JSX 
-
-Resourcespage
-Code · JSX 
-
-
-
-
-
-Claude is AI and can make mistakes. Please double-check responses.
-
-
-raw
-Resourcespage · JSX
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Rocket, LogOut, ChevronDown, ChevronUp, BookOpen,
   Briefcase, Link2, Users, Twitter, Globe, Mail, Megaphone,
 } from "lucide-react";
- 
+
 // ─── Data ────────────────────────────────────────────────────────────────────
- 
+
 const TOPICS = [
   {
     id: "upwork",
@@ -277,42 +163,42 @@ const TOPICS = [
     ],
   },
 ];
- 
+
 // ─── Stats ────────────────────────────────────────────────────────────────────
- 
+
 const STATS = [
   { label: "Platforms covered", value: TOPICS.length },
   { label: "Total prompts", value: TOPICS.reduce((s, t) => s + t.prompts.length, 0) },
   { label: "Best for beginners", value: "Upwork" },
   { label: "Highest value leads", value: "LinkedIn" },
 ];
- 
+
 // ─── Component ────────────────────────────────────────────────────────────────
- 
+
 const ResourcesPage = () => {
   const navigate = useNavigate();
   const [openId, setOpenId] = useState(null);
   const [copied, setCopied] = useState(null);
- 
+
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
- 
+
   const handleCopy = (text, key) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(key);
       setTimeout(() => setCopied(null), 1800);
     });
   };
- 
+
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
     navigate("/admin/login");
   };
- 
+
   return (
     // pt-24 pushes content below the fixed navbar (same offset as AdminDashboard)
     <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-8">
       <div className="max-w-3xl mx-auto space-y-8">
- 
+
         {/* ── Page header bar ── */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -338,7 +224,7 @@ const ResourcesPage = () => {
             </button>
           </div>
         </div>
- 
+
         {/* ── Hero card ── */}
         <div className="bg-white rounded-2xl shadow p-6">
           <div className="flex items-center gap-2 mb-1">
@@ -350,7 +236,7 @@ const ResourcesPage = () => {
           <p className="text-gray-500 text-sm mb-5">
             Copy-ready messages for web developers to hunt clients across every major platform.
           </p>
- 
+
           {/* Stats row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {STATS.map((s) => (
@@ -364,7 +250,7 @@ const ResourcesPage = () => {
             ))}
           </div>
         </div>
- 
+
         {/* ── Accordion list ── */}
         <div className="space-y-3">
           {TOPICS.map((topic) => {
@@ -403,7 +289,7 @@ const ResourcesPage = () => {
                     )}
                   </div>
                 </button>
- 
+
                 {/* Expanded prompts */}
                 {isOpen && (
                   <div className="border-t border-gray-100 px-5 py-4 space-y-4 bg-gray-50/60">
@@ -441,17 +327,10 @@ const ResourcesPage = () => {
             );
           })}
         </div>
- 
+
       </div>
     </div>
   );
 };
- 
+
 export default ResourcesPage;
- 
-
-
-
-
-
-
