@@ -25,7 +25,8 @@ import ProcessDetail from './pages/ProcessDetails';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import RouteLoader from './components/RouteLoader';
-import ResourcesPage from "./ResourcesPage";
+import ResourcesPage from './pages/Resourcespage';
+
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
