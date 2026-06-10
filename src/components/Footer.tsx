@@ -142,7 +142,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
         <p className="text-white/30 text-xs uppercase tracking-widest mb-4 text-right">
           Secure payments via
         </p>
-        <div className="flex flex-wrap items-center justify-end gap-3">
+        <div className="bg-bg-secondary flex flex-wrap items-center justify-end gap-3">
           {[
  {
   name: "Visa",
