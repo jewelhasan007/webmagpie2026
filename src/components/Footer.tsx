@@ -144,14 +144,16 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
         </p>
         <div className="flex flex-wrap items-center justify-end gap-3">
           {[
-            {
-              name: "Visa",
-              svg: (
-                <svg viewBox="0 0 48 16" className="h-5 w-auto" fill="none">
-                  <text x="0" y="13" fontFamily="Arial" fontWeight="800" fontSize="15" fill="#fff" letterSpacing="-0.5">VISA</text>
-                </svg>
-              ),
-            },
+          {
+  name: "Visa",
+  svg: (
+    <svg viewBox="0 0 70 25" className="h-4 w-auto" fill="none">
+      <rect width="70" height="25" rx="4" fill="#1a1f71"/>
+      <text x="8" y="18" fontFamily="Arial" fontWeight="900" fontSize="16" fill="#fff" letterSpacing="-0.5">VISA</text>
+      <rect x="0" y="20" width="70" height="5" rx="0" fill="#f7b600"/>
+    </svg>
+  ),
+},
             {
               name: "Mastercard",
               svg: (
@@ -162,39 +164,45 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
                 </svg>
               ),
             },
-            {
-              name: "PayPal",
-              svg: (
-                <svg viewBox="0 0 60 20" className="h-5 w-auto" fill="none">
-                  <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#009cde">Pay</text>
-                  <text x="22" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#012169">Pal</text>
-                </svg>
-              ),
-            },
-            {
-              name: "Stripe",
-              svg: (
-                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
-                  <text x="0" y="15" fontFamily="Arial" fontWeight="700" fontSize="15" fill="#635bff">stripe</text>
-                </svg>
-              ),
-            },
-            {
-              name: "bKash",
-              svg: (
-                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
-                  <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#e2136e">bKash</text>
-                </svg>
-              ),
-            },
-            {
-              name: "Nagad",
-              svg: (
-                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
-                  <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#f6a01b">Nagad</text>
-                </svg>
-              ),
-            },
+             {
+      name: "PayPal",
+      svg: (
+        <svg viewBox="0 0 80 25" className="h-4 w-auto" fill="none">
+          <rect width="80" height="25" rx="4" fill="#003087"/>
+          <text x="6" y="17" fontFamily="Arial" fontWeight="800" fontSize="13" fill="#009cde">Pay</text>
+          <text x="27" y="17" fontFamily="Arial" fontWeight="800" fontSize="13" fill="#fff">Pal</text>
+        </svg>
+      ),
+    },
+              {
+      name: "Stripe",
+      svg: (
+        <svg viewBox="0 0 60 25" className="h-4 w-auto" fill="none">
+          <rect width="60" height="25" rx="4" fill="#635bff"/>
+          <text x="8" y="17" fontFamily="Arial" fontWeight="700" fontSize="13" fill="#fff">stripe</text>
+        </svg>
+      ),
+    },
+          {
+      name: "bKash",
+      svg: (
+        <svg viewBox="0 0 68 25" className="h-4 w-auto" fill="none">
+          <rect width="68" height="25" rx="4" fill="#e2136e"/>
+          <circle cx="12" cy="12.5" r="7" fill="#c0005e"/>
+          <text x="23" y="17" fontFamily="Arial" fontWeight="800" fontSize="12" fill="#fff">bKash</text>
+        </svg>
+      ),
+    },
+             {
+      name: "Nagad",
+      svg: (
+        <svg viewBox="0 0 70 25" className="h-4 w-auto" fill="none">
+          <rect width="70" height="25" rx="4" fill="#f6a01b"/>
+          <circle cx="12" cy="12.5" r="7" fill="#e05c00"/>
+          <text x="23" y="17" fontFamily="Arial" fontWeight="800" fontSize="12" fill="#fff">nagad</text>
+        </svg>
+      ),
+    },
             {
               name: "Wise",
               svg: (
@@ -203,14 +211,17 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
                 </svg>
               ),
             },
-            {
-              name: "AMEX",
-              svg: (
-                <svg viewBox="0 0 52 20" className="h-5 w-auto" fill="none">
-                  <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="12" fill="#2557d6" letterSpacing="1">AMEX</text>
-                </svg>
-              ),
-            },
+           {
+      name: "AMEX",
+      svg: (
+        <svg viewBox="0 0 70 25" className="h-4 w-auto" fill="none">
+          <rect width="70" height="25" rx="4" fill="#2557d6"/>
+          <text x="5" y="17" fontFamily="Arial" fontWeight="800" fontSize="11" fill="#fff" letterSpacing="1.5">AMEX</text>
+          <path d="M52 5 L68 5 L68 20 Q60 25 52 20 Z" fill="#1a44b8"/>
+          <text x="53" y="16" fontFamily="Arial" fontWeight="700" fontSize="8" fill="#fff">®</text>
+        </svg>
+      ),
+    },
           ].map((p) => (
             <div
               key={p.name}
