@@ -366,6 +366,12 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
+<button onClick={() => navigate("/admin/resources")}
+  className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors">
+  <BookOpen size={16} />
+  Resources
+</button>
+
 
         {/* ── Send Email ── */}
         <div className="bg-white p-6 rounded-2xl shadow space-y-4">
