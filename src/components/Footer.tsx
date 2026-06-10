@@ -142,7 +142,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
         <p className="text-white/30 text-xs uppercase tracking-widest mb-4 text-right">
           Secure payments via
         </p>
-        <div className="bg-bg-secondary flex flex-wrap items-center justify-end gap-3">
+        <div className="flex flex-wrap items-center justify-end mb-0 gap-3">
           {[
  {
   name: "Visa",
@@ -187,15 +187,23 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
     </svg>
   ),
 },
-              {
-      name: "Stripe",
-      svg: (
-        <svg viewBox="0 0 60 25" className="h-4 w-auto" fill="none">
-          <rect width="60" height="25" rx="4" fill="#635bff"/>
-          <text x="8" y="17" fontFamily="Arial" fontWeight="700" fontSize="13" fill="#fff">stripe</text>
-        </svg>
-      ),
-    },
+          {
+  name: "Stripe",
+  svg: (
+    <svg viewBox="0 0 60 24" className="h-5 w-auto">
+      <text
+        x="2"
+        y="17"
+        fontSize="14"
+        fontWeight="700"
+        fontFamily="Arial, sans-serif"
+        fill="#635BFF"
+      >
+        stripe
+      </text>
+    </svg>
+  ),
+},
           {
       name: "bKash",
       svg: (
@@ -206,24 +214,40 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
         </svg>
       ),
     },
-             {
-      name: "Nagad",
-      svg: (
-        <svg viewBox="0 0 70 25" className="h-4 w-auto" fill="none">
-          <rect width="70" height="25" rx="4" fill="#f6a01b"/>
-          <circle cx="12" cy="12.5" r="7" fill="#e05c00"/>
-          <text x="23" y="17" fontFamily="Arial" fontWeight="800" fontSize="12" fill="#fff">nagad</text>
-        </svg>
-      ),
-    },
-            {
-              name: "Wise",
-              svg: (
-                <svg viewBox="0 0 44 20" className="h-5 w-auto" fill="none">
-                  <text x="0" y="15" fontFamily="Arial" fontWeight="800" fontSize="14" fill="#9fe870">wise</text>
-                </svg>
-              ),
-            },
+         {
+  name: "Nagad",
+  svg: (
+    <svg viewBox="0 0 60 24" className="h-5 w-auto">
+      <text
+        x="2"
+        y="17"
+        fontSize="14"
+        fontWeight="700"
+        fontFamily="Arial, sans-serif"
+        fill="#F58220"
+      >
+        Nagad
+      </text>
+    </svg>
+  ),
+},
+          {
+  name: "Wise",
+  svg: (
+    <svg viewBox="0 0 60 24" className="h-5 w-auto">
+      <text
+        x="2"
+        y="17"
+        fontSize="14"
+        fontWeight="700"
+        fontFamily="Arial, sans-serif"
+        fill="#163300"
+      >
+        Wise
+      </text>
+    </svg>
+  ),
+},
            {
       name: "AMEX",
       svg: (
@@ -239,7 +263,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
             <div
               key={p.name}
               title={p.name}
-              className="px-3 py-2 rounded-lg bg-white/5 border border-[#D0E6FD]/10 hover:bg-white/10 hover:border-[#D0E6FD]/30 transition-all flex items-center justify-center"
+              className=" px-3 py-2 rounded-lg bg-white/60 border border-[#D0E6FD]/10 hover:bg-white/80 hover:border-[#D0E6FD]/30 transition-all flex items-center justify-center"
               style={{ minWidth: 56 }}
             >
               {p.svg}
@@ -249,7 +273,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
       </div>
       {/* ── end payment platforms ── */}
 
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-[#D0E6FD]/10 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="max-w-7xl mx-auto mt-5 pt-8 border-t border-[#D0E6FD]/10 flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-white/40 text-sm">
           © {new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.
         </p>
