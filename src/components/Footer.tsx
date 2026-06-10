@@ -155,7 +155,7 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
         fontWeight="900"
         fontFamily="Arial, sans-serif"
         fill="#1A1F71"
-        fontStyle="italic"
+        fontStyle="regular"
       >
         VISA
       </text>
@@ -172,16 +172,21 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
                 </svg>
               ),
             },
-             {
-      name: "PayPal",
-      svg: (
-        <svg viewBox="0 0 80 25" className="h-4 w-auto" fill="none">
-          <rect width="80" height="25" rx="4" fill="#003087"/>
-          <text x="6" y="17" fontFamily="Arial" fontWeight="800" fontSize="13" fill="#009cde">Pay</text>
-          <text x="27" y="17" fontFamily="Arial" fontWeight="800" fontSize="13" fill="#fff">Pal</text>
-        </svg>
-      ),
-    },
+         {
+  name: "PayPal",
+  svg: (
+    <svg viewBox="0 0 48 24" className="h-5 w-auto">
+      <path
+        d="M16.5 5.5c2.8 0 4.5 1.2 4.5 3.7 0 3.1-2.2 5-5.6 5h-1.6l-.7 4.3H10l2.1-13h4.4zM14.7 12c1.8 0 2.8-.8 2.8-2.3 0-1.1-.7-1.7-2.1-1.7h-1.1L13.7 12h1z"
+        fill="#003087"
+      />
+      <path
+        d="M25.5 7.5c2.7 0 4.2 1.2 4.2 3.5 0 3.4-2.1 5.5-5.4 5.5h-1.2l-.5 3H19.8l2-12h3.7zM23.9 14c1.6 0 2.6-.9 2.6-2.5 0-1-.6-1.6-1.9-1.6h-.8l-.7 4.1h.8z"
+        fill="#009CDE"
+      />
+    </svg>
+  ),
+},
               {
       name: "Stripe",
       svg: (
