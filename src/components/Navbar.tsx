@@ -12,8 +12,7 @@ import { cn } from '../lib/utils';
 
 export const navLinks = [
   { name: 'Home', path: '/' },
-  { name: 'Why ZOZOWeb', path: '/why' },
-  {
+   {
     name: 'Services',
     path: '/services',
     megaMenu: true,
@@ -51,9 +50,13 @@ export const navLinks = [
       },
     ],
   },
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'About', path: '/about' },
-  { name: 'Blog', path: '/blog' },
+  { name: 'Why ZOZOWeb', path: '/why' },
+  { name: 'How We Help', path: '/how' },
+  { name: 'Who We Help', path: '/who' },
+ 
+  { name: 'Resources', path: '/portfolio' },
+  // { name: 'About', path: '/about' },
+  // { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
 ];
 
