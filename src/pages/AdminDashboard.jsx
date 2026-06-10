@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image,
+  Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image, BookOpen,
 } from "lucide-react";
 
 const API = import.meta.env.VITE_BASE_URL;
@@ -308,7 +308,7 @@ const AdminDashboard = () => {
   if (!pageReady) return <PageLoader />;
 
   return (
-    <div className="min-h-screen mt-3 bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-5xl mx-auto space-y-8">
 
         {/* ── Header ── */}
@@ -319,13 +319,22 @@ const AdminDashboard = () => {
             </div>
             <h1 className="text-3xl font-bold text-[#162660]">Admin Dashboard</h1>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors"
-          >
-            <LogOut size={16} />
-            Logout
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate("/admin/resources")}
+              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium"
+            >
+              <BookOpen size={16} />
+              Resources
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors"
+            >
+              <LogOut size={16} />
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* ── Stats ── */}
