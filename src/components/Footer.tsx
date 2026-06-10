@@ -139,10 +139,10 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
       </div>
 {/* ── Payment platforms ── */}
       <div className="max-w-7xl mx-auto mt-14 mb-2">
-        <p className="text-white/30 text-xs uppercase tracking-widest mb-4 text-center text-right">
+        <p className="text-white/30 text-xs uppercase tracking-widest mb-4 text-right">
           Secure payments via
         </p>
-        <div className="flex flex-wrap items-right justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-3">
           {[
             {
               name: "Visa",
