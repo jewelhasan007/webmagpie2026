@@ -308,7 +308,7 @@ const AdminDashboard = () => {
   if (!pageReady) return <PageLoader />;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen mt-3 bg-gray-100 p-8">
       <div className="max-w-5xl mx-auto space-y-8">
 
         {/* ── Header ── */}
@@ -321,7 +321,7 @@ const AdminDashboard = () => {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center pt-5 gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors"
           >
             <LogOut size={16} />
             Logout
