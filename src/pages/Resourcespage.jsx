@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Rocket, LogOut, ChevronDown, ChevronUp, BookOpen,
@@ -173,12 +173,43 @@ const STATS = [
   { label: "Highest value leads", value: "LinkedIn" },
 ];
 
+// ─── Page loader (same as AdminDashboard) ─────────────────────────────────────
+
+const PageLoader = () => (
+  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+    <div className="relative w-20 h-20">
+      <div className="absolute inset-0 rounded-full border-4 border-[#162660]/10" />
+      <div className="absolute inset-0 rounded-full border-4 border-t-[#162660] animate-spin" />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Rocket className="text-[#162660] w-8 h-8" />
+      </div>
+    </div>
+    <p className="mt-4 text-[#162660] font-bold text-lg tracking-widest uppercase">
+      ZOZOWeb
+    </p>
+    <p className="text-gray-400 text-sm mt-1">Loading Resources...</p>
+  </div>
+);
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 const ResourcesPage = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("adminToken");
+
+  const [pageReady, setPageReady] = useState(false);
   const [openId, setOpenId] = useState(null);
   const [copied, setCopied] = useState(null);
+
+  // ─── Auth guard ─────────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!token) {
+      // No token → kick to login immediately
+      navigate("/admin/login");
+    } else {
+      setPageReady(true);
+    }
+  }, []);
 
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
 
@@ -194,8 +225,11 @@ const ResourcesPage = () => {
     navigate("/admin/login");
   };
 
+  // ─── Render ─────────────────────────────────────────────────────────────────
+
+  if (!pageReady) return <PageLoader />;
+
   return (
-    // pt-24 pushes content below the fixed navbar (same offset as AdminDashboard)
     <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-8">
       <div className="max-w-3xl mx-auto space-y-8">
 
@@ -209,7 +243,7 @@ const ResourcesPage = () => {
           </div>
           <div className="flex items-center gap-3">
             <button
-              onClick={() => navigate("/admin/dashboard")}
+              onClick={() => navigate("/admin")}
               className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
             >
               <Rocket size={15} />
@@ -240,10 +274,7 @@ const ResourcesPage = () => {
           {/* Stats row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {STATS.map((s) => (
-              <div
-                key={s.label}
-                className="border border-gray-200 rounded-xl p-3"
-              >
+              <div key={s.label} className="border border-gray-200 rounded-xl p-3">
                 <p className="text-gray-400 text-[11px] leading-tight mb-1">{s.label}</p>
                 <p className="text-[#162660] font-bold text-lg leading-tight">{s.value}</p>
               </div>
@@ -256,10 +287,8 @@ const ResourcesPage = () => {
           {TOPICS.map((topic) => {
             const isOpen = openId === topic.id;
             return (
-              <div
-                key={topic.id}
-                className="bg-white rounded-2xl shadow overflow-hidden"
-              >
+              <div key={topic.id} className="bg-white rounded-2xl shadow overflow-hidden">
+
                 {/* Row header */}
                 <button
                   onClick={() => toggle(topic.id)}
@@ -282,11 +311,10 @@ const ResourcesPage = () => {
                     <span className="text-gray-400 text-xs">
                       {topic.prompts.length} prompts
                     </span>
-                    {isOpen ? (
-                      <ChevronUp size={16} className="text-[#162660]" />
-                    ) : (
-                      <ChevronDown size={16} className="text-gray-400" />
-                    )}
+                    {isOpen
+                      ? <ChevronUp size={16} className="text-[#162660]" />
+                      : <ChevronDown size={16} className="text-gray-400" />
+                    }
                   </div>
                 </button>
 
@@ -323,6 +351,7 @@ const ResourcesPage = () => {
                     })}
                   </div>
                 )}
+
               </div>
             );
           })}
