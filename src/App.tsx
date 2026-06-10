@@ -25,6 +25,7 @@ import ProcessDetail from './pages/ProcessDetails';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import RouteLoader from './components/RouteLoader';
+import ResourcesPage from "./ResourcesPage";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -76,13 +77,14 @@ export default function App() {
               <Route path="/blog/:id" element={<BlogDetails />} />
               <Route path="/create-blog" element={<CreateBlog />} />
               <Route path="/contact" element={<Contact />} />
-             <Route path="/services/:slug" element={<LearnMore />} />
-             <Route path="/about-stats" element={<MoreAboutStats />} />
-             <Route path="/new-client" element={<ClientMessage />} />
-             <Route path="/subscriber-list" element={<SubscriberList />} />
+              <Route path="/services/:slug" element={<LearnMore />} />
+              <Route path="/about-stats" element={<MoreAboutStats />} />
+              <Route path="/new-client" element={<ClientMessage />} />
+              <Route path="/subscriber-list" element={<SubscriberList />} />
               <Route path="/process/:id" element={<ProcessDetail />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-<Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/resources" element={<ResourcesPage />} />
             </Routes>
           </AnimatePresence>
         </main>
