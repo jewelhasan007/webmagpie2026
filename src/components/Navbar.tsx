@@ -7,24 +7,16 @@ import {
   Rocket,
   ChevronDown,
   Phone,
+  ArrowRight,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const navLinks = [
   { name: 'Home', path: '/' },
-   {
+  {
     name: 'Services',
     path: '/services',
     megaMenu: true,
-    subMenu: [
-      { name: 'Digital Marketing', path: '/services/seo-marketing' },
-      { name: 'Brand Strategy', path: '/services/branding' },
-      { name: 'Website Design', path: '/services/web-development' },
-      { name: 'Landing Page Design', path: '/services/landing-page' },
-      { name: 'UI/UX Design', path: '/services/ui-ux-design' },
-      { name: 'Mobile Apps', path: '/services/mobile-apps' },
-      { name: 'E-commerce', path: '/services/ecommerce' },
-    ],
     groups: [
       {
         title: 'Strategy & Growth',
@@ -49,14 +41,73 @@ export const navLinks = [
         ],
       },
     ],
+    cta: {
+      heading: 'Need Help Choosing a Service?',
+      sub: 'Talk with our expert team and get a free consultation.',
+      label: 'Schedule A Call',
+      path: '/contact',
+    },
   },
-  { name: 'Why ZOZOWeb', path: '/why' },
-  { name: 'How We Help', path: '/how' },
-  { name: 'Who We Help', path: '/who' },
- 
+  {
+    name: 'Why ZOZOWeb',
+    path: '/why',
+    megaMenu: true,
+    layout: 'two-col',
+    heading: 'Why ZOZOWeb',
+    description:
+      'We help businesses grow online through strategic web design and digital marketing. Whether you need a new website or a full rebrand, we re here to guide the process.',
+    links: [
+      { name: 'About Us', path: '/about' },
+      { name: 'Case Studies', path: '/portfolio' },
+    ],
+    cta: {
+      heading: 'Ready To Take The First Step?',
+      sub: 'Contact us today to schedule a free consultation.',
+      label: 'Schedule A Call',
+      path: '/contact',
+    },
+  },
+  {
+    name: 'How We Help',
+    path: '/how',
+    megaMenu: true,
+    layout: 'two-col',
+    heading: 'How We Help',
+    description:
+      'From driving traffic to converting visitors and keeping your site running 24/7 — we cover every stage of your digital growth journey.',
+    links: [
+      { name: 'Marketing', path: '/how/marketing' },
+      { name: 'Build Website', path: '/how/build-website' },
+      { name: 'Convert Leads', path: '/how/convert-leads' },
+      { name: 'Website Support (24/7)', path: '/how/website-support' },
+    ],
+    cta: {
+      heading: 'Not Sure Where To Start?',
+      sub: 'Let our team walk you through the right solution for your goals.',
+      label: 'Schedule A Call',
+      path: '/contact',
+    },
+  },
+  {
+    name: 'Who We Help',
+    path: '/who',
+    megaMenu: true,
+    layout: 'two-col',
+    heading: 'Who We Help',
+    description:
+      'We work with organizations of all sizes — from ambitious small businesses to established B2B companies ready to scale their digital presence.',
+    links: [
+      { name: 'B2B Organizations', path: '/who/b2b' },
+      { name: 'Small Business', path: '/who/small-business' },
+    ],
+    cta: {
+      heading: 'Is This You?',
+      sub: 'Tell us about your business and we\'ll tailor the perfect plan.',
+      label: 'Get Started',
+      path: '/contact',
+    },
+  },
   { name: 'Resources', path: '/portfolio' },
-  // { name: 'About', path: '/about' },
-  // { name: 'Blog', path: '/blog' },
   { name: 'Contact', path: '/contact' },
 ];
 
@@ -69,19 +120,270 @@ const brandTitles = [
   'Brand Strategy',
 ];
 
+/* ─────────────────────────────────────────────
+   Desktop Mega Menu — Services
+   Width increased to 820px so group titles fit on one line
+───────────────────────────────────────────── */
+const ServicesMegaMenu = ({ link, isActive }) => (
+  <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden w-[820px]">
+    <div className="grid grid-cols-[1fr_220px]">
+
+      {/* LEFT — 3 groups */}
+      <div className="p-8 bg-white">
+        <div className="grid grid-cols-3 gap-10">
+          {link.groups.map((group, i) => (
+            <div key={i}>
+              <h4 className="text-[#1e2d50] font-semibold text-xs uppercase tracking-widest mb-4 whitespace-nowrap">
+                {group.title}
+              </h4>
+              <div className="flex flex-col gap-3">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={cn(
+                      'text-sm font-medium transition-all duration-200 hover:translate-x-1 flex items-center gap-1 group/item',
+                      isActive(item.path)
+                        ? 'text-[#22C55E] font-bold'
+                        : 'text-gray-700 hover:text-[#22C55E]'
+                    )}
+                  >
+                    <span>{item.name}</span>
+                    <ArrowRight
+                      size={12}
+                      className="opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200"
+                    />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* RIGHT — dark CTA card */}
+      <div className="relative bg-[#1e2d50] flex flex-col items-center justify-center text-center p-7 overflow-hidden">
+        <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#22C55E]/10 blur-2xl pointer-events-none" />
+        <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/5 blur-xl pointer-events-none" />
+
+        <h3 className="relative z-10 text-white font-extrabold text-base leading-snug mb-3">
+          {link.cta.heading}
+        </h3>
+        <p className="relative z-10 text-white/60 text-xs leading-relaxed mb-5">
+          {link.cta.sub}
+        </p>
+        <Link
+          to={link.cta.path}
+          className="relative z-10 px-5 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          {link.cta.label}
+        </Link>
+      </div>
+
+    </div>
+  </div>
+);
+
+/* ─────────────────────────────────────────────
+   Desktop Mega Menu — Why ZOZOWeb (2-col)
+───────────────────────────────────────────── */
+const WhyMegaMenu = ({ link, isActive }) => (
+  <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden w-[600px]">
+    <div className="grid grid-cols-2">
+
+      {/* LEFT — text + arrow links */}
+      <div className="p-8 bg-white">
+        <h3 className="text-gray-900 font-bold text-base mb-3">
+          {link.heading}
+        </h3>
+        <p className="text-gray-500 text-sm leading-relaxed mb-6">
+          {link.description}
+        </p>
+
+        <div className="flex flex-col gap-3">
+          {link.links.map((item) => (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={cn(
+                'inline-flex items-center gap-1.5 text-sm font-semibold border-b-2 border-dashed pb-1 w-fit transition-all duration-200 hover:gap-2.5',
+                isActive(item.path)
+                  ? 'text-[#22C55E] border-[#22C55E]'
+                  : 'text-gray-800 border-gray-400 hover:text-[#22C55E] hover:border-[#22C55E]'
+              )}
+            >
+              {item.name}
+              <ArrowRight size={14} />
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* RIGHT — dark CTA card */}
+      <div className="relative bg-[#1e2d50] flex flex-col items-center justify-center text-center p-8 overflow-hidden">
+        <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#22C55E]/10 blur-2xl pointer-events-none" />
+        <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/5 blur-xl pointer-events-none" />
+
+        <h3 className="relative z-10 text-white font-extrabold text-lg leading-snug mb-3">
+          {link.cta.heading}
+        </h3>
+        <p className="relative z-10 text-white/60 text-sm leading-relaxed mb-6">
+          {link.cta.sub}
+        </p>
+        <Link
+          to={link.cta.path}
+          className="relative z-10 px-6 py-3 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          {link.cta.label}
+        </Link>
+      </div>
+
+    </div>
+  </div>
+);
+
+/* ─────────────────────────────────────────────
+   Mobile accordion
+───────────────────────────────────────────── */
+const MobileAccordion = ({ link, isActive, onClose }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        className={cn(
+          'w-full flex items-center justify-between py-3 px-4 rounded-xl transition-all',
+          open
+            ? 'text-[#22C55E] font-bold bg-[#22C55E]/10'
+            : 'text-white/80 hover:text-[#22C55E]'
+        )}
+      >
+        <span>{link.name}</span>
+        <ChevronDown
+          size={16}
+          className={cn('transition-transform duration-300', open && 'rotate-180')}
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="pb-2">
+
+              {/* Services — groups */}
+              {link.groups ? (
+                <>
+                  {link.groups.map((group, i) => (
+                    <div key={i} className="px-4 pb-1">
+                      <p className="text-white/40 text-[10px] uppercase tracking-[2px] font-semibold mt-3 mb-2">
+                        {group.title}
+                      </p>
+                      {group.items.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          onClick={onClose}
+                          className={cn(
+                            'flex items-center gap-1.5 py-2 pl-3 text-sm border-l-2 transition-all duration-200 hover:pl-4',
+                            isActive(item.path)
+                              ? 'text-[#22C55E] font-bold border-[#22C55E]'
+                              : 'text-white/60 hover:text-[#22C55E] border-white/10 hover:border-[#22C55E]'
+                          )}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+
+                  {/* Services mobile CTA */}
+                  <div className="mx-4 mt-3 rounded-2xl bg-[#1e2d50] border border-white/10 p-4 text-center">
+                    <p className="text-white font-bold text-sm leading-snug mb-1">
+                      {link.cta.heading}
+                    </p>
+                    <p className="text-white/50 text-xs mb-3">{link.cta.sub}</p>
+                    <Link
+                      to={link.cta.path}
+                      onClick={onClose}
+                      className="inline-flex items-center justify-center w-full bg-[#22C55E] hover:bg-[#16A34A] text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all"
+                    >
+                      {link.cta.label}
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                /* Why ZOZOWeb — description + links + CTA */
+                <div className="px-4 pb-2">
+                  <p className="text-white/50 text-xs leading-relaxed mb-4">
+                    {link.description}
+                  </p>
+                  <div className="flex flex-col gap-3 mb-4">
+                    {link.links.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        onClick={onClose}
+                        className={cn(
+                          'inline-flex items-center gap-1.5 text-sm font-semibold border-b border-dashed pb-1 w-fit transition-all duration-200',
+                          isActive(item.path)
+                            ? 'text-[#22C55E] border-[#22C55E]'
+                            : 'text-white/70 border-white/30 hover:text-[#22C55E] hover:border-[#22C55E]'
+                        )}
+                      >
+                        {item.name}
+                        <ArrowRight size={13} />
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="rounded-2xl bg-[#1e2d50] border border-white/10 p-4 text-center">
+                    <p className="text-white font-bold text-sm leading-snug mb-1">
+                      {link.cta.heading}
+                    </p>
+                    <p className="text-white/50 text-xs mb-3">{link.cta.sub}</p>
+                    <Link
+                      to={link.cta.path}
+                      onClick={onClose}
+                      className="inline-flex items-center justify-center w-full bg-[#22C55E] hover:bg-[#16A34A] text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all"
+                    >
+                      {link.cta.label}
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/* ─────────────────────────────────────────────
+   Main Navbar
+───────────────────────────────────────────── */
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   const isActive = (path) => location.pathname === path;
 
@@ -96,33 +398,22 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
 
-        {/* LOGO */}
-        <Link
-          to="/"
-          className="flex items-center gap-3 whitespace-nowrap group"
-        >
+        {/* ── LOGO ── */}
+        <Link to="/" className="flex items-center gap-3 whitespace-nowrap group">
           <div className="relative">
             <div className="absolute inset-0 bg-[#22C55E]/30 blur-xl rounded-full" />
-
-            {/* ROTATING LOGO */}
             <div className="relative w-11 h-11 bg-[#22C55E]/15 rounded-2xl flex items-center justify-center border border-[#22C55E]/20 transition-transform duration-500 group-hover:rotate-180">
               <Rocket className="text-[#22C55E] w-6 h-6" />
             </div>
           </div>
-
           <div className="flex flex-col leading-none">
             <span className="text-2xl font-extrabold text-white tracking-wide">
               ZOZOWeb
             </span>
-
             <div className="relative h-[14px] overflow-hidden mt-1">
               <motion.div
                 animate={{ y: ['0%', '-100%'] }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
+                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
                 className="flex flex-col"
               >
                 {[...brandTitles, ...brandTitles].map((title, index) => (
@@ -138,7 +429,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* DESKTOP MENU */}
+        {/* ── DESKTOP MENU ── */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <div key={link.name} className="relative group">
@@ -147,7 +438,10 @@ const Navbar = () => {
                   <div
                     className={cn(
                       'flex items-center gap-1 cursor-pointer text-sm transition-all duration-300',
-                      location.pathname.startsWith('/services')
+                      (link.links
+                        ? link.links.some((i) => isActive(i.path)) || isActive(link.path)
+                        : link.groups?.flatMap((g) => g.items).some((i) => isActive(i.path)) ||
+                          isActive(link.path))
                         ? 'text-[#22C55E] font-bold'
                         : 'text-white/90 font-medium hover:text-[#22C55E]'
                     )}
@@ -156,56 +450,12 @@ const Navbar = () => {
                     <ChevronDown size={15} />
                   </div>
 
-                  {/* MEGA MENU */}
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                    <div className="bg-[#162660] border border-white/10 shadow-2xl rounded-3xl p-8 w-[780px] backdrop-blur-xl">
-                      <div className="grid grid-cols-3 gap-8">
-                        {link.groups.map((group, i) => (
-                          <div key={i}>
-                            <h4 className="text-[#22C55E] font-bold text-sm uppercase mb-4">
-                              {group.title}
-                            </h4>
-
-                            <div className="space-y-3">
-                              {group.items.map((item) => (
-                                <Link
-                                  key={item.name}
-                                  to={item.path}
-                                  className={cn(
-                                    'block text-sm transition-all duration-300 hover:translate-x-1',
-                                    isActive(item.path)
-                                      ? 'text-[#22C55E] font-bold'
-                                      : 'text-white/70 hover:text-[#22C55E]'
-                                  )}
-                                >
-                                  {item.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* CTA */}
-                      <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-                        <div>
-                          <p className="text-white font-semibold text-sm">
-                            Need help choosing a service?
-                          </p>
-                          <p className="text-white/50 text-xs">
-                            Talk with our expert team instantly
-                          </p>
-                        </div>
-
-                        <a
-                          href="tel:+8801XXXXXXXXX"
-                          className="flex items-center gap-2 px-5 py-3 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-full font-semibold transition-all"
-                        >
-                          <Phone size={16} />
-                          Call Now
-                        </a>
-                      </div>
-                    </div>
+                    {link.layout === 'two-col' ? (
+                      <WhyMegaMenu link={link} isActive={isActive} />
+                    ) : (
+                      <ServicesMegaMenu link={link} isActive={isActive} />
+                    )}
                   </div>
                 </>
               ) : (
@@ -224,7 +474,6 @@ const Navbar = () => {
             </div>
           ))}
 
-          {/* CTA */}
           <Link
             to="/contact"
             className="px-6 py-3 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-full text-sm font-bold transition-all shadow-lg hover:scale-105"
@@ -233,55 +482,66 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* MOBILE BUTTON */}
+        {/* ── MOBILE HAMBURGER ── */}
         <button
           className="md:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* ── MOBILE MENU ── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-[#162660] border-t border-white/10 mt-4 p-6 rounded-2xl flex flex-col gap-3"
+            className="md:hidden bg-[#162660] border-t border-white/10 mt-4 p-4 rounded-2xl flex flex-col gap-1"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  'py-3 px-4 rounded-xl transition-all',
-                  isActive(link.path)
-                    ? 'text-[#22C55E] font-bold bg-[#22C55E]/10'
-                    : 'text-white/80 hover:text-[#22C55E]'
-                )}
+            {navLinks.map((link) =>
+              link.megaMenu ? (
+                <MobileAccordion
+                  key={link.name}
+                  link={link}
+                  isActive={isActive}
+                  onClose={() => setIsOpen(false)}
+                />
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    'py-3 px-4 rounded-xl transition-all',
+                    isActive(link.path)
+                      ? 'text-[#22C55E] font-bold bg-[#22C55E]/10'
+                      : 'text-white/80 hover:text-[#22C55E]'
+                  )}
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
+
+            <div className="flex flex-col gap-3 mt-3 pt-3 border-t border-white/10">
+              <a
+                href="tel:+8801XXXXXXXXX"
+                className="flex items-center justify-center gap-2 bg-[#22C55E] text-white py-3 rounded-xl font-bold"
               >
-                {link.name}
+                <Phone size={16} />
+                Call Now
+              </a>
+              <Link
+                to="/contact"
+                onClick={() => setIsOpen(false)}
+                className="bg-white text-[#162660] py-3 rounded-xl text-center font-bold"
+              >
+                Get Started
               </Link>
-            ))}
-
-            <a
-              href="tel:+8801XXXXXXXXX"
-              className="flex items-center justify-center gap-2 bg-[#22C55E] text-white py-3 rounded-xl font-bold"
-            >
-              <Phone size={16} />
-              Call Now
-            </a>
-
-            <Link
-              to="/contact"
-              onClick={() => setIsOpen(false)}
-              className="bg-white text-[#162660] py-3 rounded-xl text-center font-bold"
-            >
-              Get Started
-            </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
