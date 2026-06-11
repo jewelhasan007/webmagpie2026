@@ -26,7 +26,9 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import RouteLoader from './components/RouteLoader';
 import ResourcesPage from './pages/Resourcespage';
-import MessagesPage from './pages/messagesPage';
+import MessagesPage from './pages/MessagesPage';
+
+
 
 
 const ScrollToTop = () => {
@@ -87,7 +89,8 @@ export default function App() {
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/resources" element={<ResourcesPage />} />
-              <Route path="/admin/messages" element={<MessagesPage />} />
+              <Route path="/admin/resources" element={<MessagesPage />} />
+  
             </Routes>
           </AnimatePresence>
         </main>
