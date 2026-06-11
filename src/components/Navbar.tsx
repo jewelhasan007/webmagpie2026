@@ -8,6 +8,13 @@ import {
   ChevronDown,
   Phone,
   ArrowRight,
+  TrendingUp,
+  Palette,
+  Globe,
+  Layout,
+  Figma,
+  Smartphone,
+  ShoppingCart,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -21,23 +28,23 @@ export const navLinks = [
       {
         title: 'Strategy & Growth',
         items: [
-          { name: 'Digital Marketing', path: '/services/seo-marketing' },
-          { name: 'Brand Strategy', path: '/services/branding' },
+          { name: 'Digital Marketing', path: '/services/seo-marketing', icon: TrendingUp },
+          { name: 'Brand Strategy', path: '/services/branding', icon: Palette },
         ],
       },
       {
         title: 'Web & Design',
         items: [
-          { name: 'Website Design', path: '/services/web-development' },
-          { name: 'Landing Page Design', path: '/services/landing-page' },
-          { name: 'UI/UX Design', path: '/services/ui-ux-design' },
+          { name: 'Website Design', path: '/services/web-development', icon: Globe },
+          { name: 'Landing Page Design', path: '/services/landing-page', icon: Layout },
+          { name: 'UI/UX Design', path: '/services/ui-ux-design', icon: Figma },
         ],
       },
       {
         title: 'Support & Scaling',
         items: [
-          { name: 'Mobile Apps', path: '/services/mobile-apps' },
-          { name: 'E-commerce', path: '/services/ecommerce' },
+          { name: 'Mobile Apps', path: '/services/mobile-apps', icon: Smartphone },
+          { name: 'E-commerce', path: '/services/ecommerce', icon: ShoppingCart },
         ],
       },
     ],
@@ -102,7 +109,7 @@ export const navLinks = [
     ],
     cta: {
       heading: 'Is This You?',
-      sub: 'Tell us about your business and we\'ll tailor the perfect plan.',
+      sub: "Tell us about your business and we'll tailor the perfect plan.",
       label: 'Get Started',
       path: '/contact',
     },
@@ -154,29 +161,48 @@ const ServicesMegaMenu = ({ link, isActive }) => (
             <h4 className="text-[#1e2d50] font-semibold text-xs uppercase tracking-widest mb-4 whitespace-nowrap">
               {group.title}
             </h4>
-            <div className="flex flex-col gap-4">
-              {group.items.map((item) => (
-                <div key={item.name}>
-                  <Link
-                    to={item.path}
-                    className={cn(
-                      'text-sm font-semibold transition-all duration-200 hover:translate-x-1 flex items-center gap-1 group/item',
-                      isActive(item.path)
-                        ? 'text-[#22C55E]'
-                        : 'text-gray-800 hover:text-[#22C55E]'
+            <div className="flex flex-col gap-3">
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.name}>
+                    <Link
+                      to={item.path}
+                      className={cn(
+                        'flex items-center gap-2.5 group/item transition-all duration-200 hover:translate-x-1',
+                        isActive(item.path)
+                          ? 'text-[#22C55E]'
+                          : 'text-gray-800 hover:text-[#22C55E]'
+                      )}
+                    >
+                      {/* Icon badge */}
+                      {Icon && (
+                        <span
+                          className={cn(
+                            'flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200',
+                            isActive(item.path)
+                              ? 'bg-[#22C55E]/15 text-[#22C55E]'
+                              : 'bg-gray-100 text-gray-500 group-hover/item:bg-[#22C55E]/15 group-hover/item:text-[#22C55E]'
+                          )}
+                        >
+                          <Icon size={15} />
+                        </span>
+                      )}
+
+                      {/* Label + arrow */}
+                      <span className="text-sm font-semibold leading-tight">{item.name}</span>
+                      <ArrowRight
+                        size={12}
+                        className="opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200 ml-auto flex-shrink-0"
+                      />
+                    </Link>
+
+                    {item.desc && (
+                      <p className="text-xs text-gray-500 mt-1 ml-10 leading-relaxed">{item.desc}</p>
                     )}
-                  >
-                    <span>{item.name}</span>
-                    <ArrowRight
-                      size={12}
-                      className="opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200"
-                    />
-                  </Link>
-                  {item.desc && (
-                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{item.desc}</p>
-                  )}
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -191,7 +217,7 @@ const ServicesMegaMenu = ({ link, isActive }) => (
       </p>
       <Link
         to={link.cta.path}
-        className="relative z-10 px-6 py-2.5 bg-white hover:bg-gray-100 text-[#1e2d50] rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap ml-6"
+        className="relative z-10 px-6 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap ml-6"
       >
         {link.cta.label}
       </Link>
@@ -301,21 +327,36 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                       <p className="text-white/40 text-[10px] uppercase tracking-[2px] font-semibold mt-3 mb-2">
                         {group.title}
                       </p>
-                      {group.items.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          onClick={onClose}
-                          className={cn(
-                            'flex items-center gap-1.5 py-2 pl-3 text-sm border-l-2 transition-all duration-200 hover:pl-4',
-                            isActive(item.path)
-                              ? 'text-[#22C55E] font-bold border-[#22C55E]'
-                              : 'text-white/60 hover:text-[#22C55E] border-white/10 hover:border-[#22C55E]'
-                          )}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
+                      {group.items.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.name}
+                            to={item.path}
+                            onClick={onClose}
+                            className={cn(
+                              'flex items-center gap-2.5 py-2 pl-2 text-sm border-l-2 transition-all duration-200 hover:pl-3',
+                              isActive(item.path)
+                                ? 'text-[#22C55E] font-bold border-[#22C55E]'
+                                : 'text-white/60 hover:text-[#22C55E] border-white/10 hover:border-[#22C55E]'
+                            )}
+                          >
+                            {Icon && (
+                              <span
+                                className={cn(
+                                  'flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-md transition-colors duration-200',
+                                  isActive(item.path)
+                                    ? 'bg-[#22C55E]/20 text-[#22C55E]'
+                                    : 'bg-white/10 text-white/50'
+                                )}
+                              >
+                                <Icon size={12} />
+                              </span>
+                            )}
+                            {item.name}
+                          </Link>
+                        );
+                      })}
                     </div>
                   ))}
 
