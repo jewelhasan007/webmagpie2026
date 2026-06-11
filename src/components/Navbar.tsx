@@ -58,7 +58,7 @@ export const navLinks = [
       'We help businesses grow online through strategic web design and digital marketing. Whether you need a new website or a full rebrand, we re here to guide the process.',
     links: [
       { name: 'About Us', path: '/about' },
-      { name: 'Case Studies', path: '/portfolio' },
+      { name: 'Case Studies', path: '/case-studies' },
     ],
     cta: {
       heading: 'Ready To Take The First Step?',
@@ -107,7 +107,26 @@ export const navLinks = [
       path: '/contact',
     },
   },
-  { name: 'Resources', path: '/portfolio' },
+  {
+    name: 'Resources',
+    path: '/portfolio',
+    megaMenu: true,
+    layout: 'two-col',
+    heading: 'Resources',
+    description:
+      'Stay informed with the latest insights, success stories, and industry news from the ZOZOWeb team.',
+    links: [
+      { name: 'Blogs', path: '/resources/blogs' },
+      { name: 'Case Studies', path: '/resources/case-studies' },
+      { name: 'News', path: '/resources/news' },
+    ],
+    cta: {
+      heading: 'Want Fresh Insights?',
+      sub: 'Subscribe to our newsletter and never miss an update.',
+      label: 'Subscribe Now',
+      path: '/contact',
+    },
+  },
   { name: 'Contact', path: '/contact' },
 ];
 
@@ -122,30 +141,29 @@ const brandTitles = [
 
 /* ─────────────────────────────────────────────
    Desktop Mega Menu — Services
-   Width increased to 820px so group titles fit on one line
+   3-col links grid + full-width dark CTA bar at bottom
 ───────────────────────────────────────────── */
 const ServicesMegaMenu = ({ link, isActive }) => (
-  <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden w-[820px]">
-    <div className="grid grid-cols-[1fr_220px]">
+  <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden w-[780px]">
 
-      {/* LEFT — 3 groups */}
-      <div className="p-8 bg-white">
-        <div className="grid grid-cols-3 gap-10">
-          {link.groups.map((group, i) => (
-            <div key={i}>
-              <h4 className="text-[#1e2d50] font-semibold text-xs uppercase tracking-widest mb-4 whitespace-nowrap">
-                {group.title}
-              </h4>
-              <div className="flex flex-col gap-3">
-                {group.items.map((item) => (
+    {/* TOP — 3 groups */}
+    <div className="p-8">
+      <div className="grid grid-cols-3 gap-10">
+        {link.groups.map((group, i) => (
+          <div key={i}>
+            <h4 className="text-[#1e2d50] font-semibold text-xs uppercase tracking-widest mb-4 whitespace-nowrap">
+              {group.title}
+            </h4>
+            <div className="flex flex-col gap-4">
+              {group.items.map((item) => (
+                <div key={item.name}>
                   <Link
-                    key={item.name}
                     to={item.path}
                     className={cn(
-                      'text-sm font-medium transition-all duration-200 hover:translate-x-1 flex items-center gap-1 group/item',
+                      'text-sm font-semibold transition-all duration-200 hover:translate-x-1 flex items-center gap-1 group/item',
                       isActive(item.path)
-                        ? 'text-[#22C55E] font-bold'
-                        : 'text-gray-700 hover:text-[#22C55E]'
+                        ? 'text-[#22C55E]'
+                        : 'text-gray-800 hover:text-[#22C55E]'
                     )}
                   >
                     <span>{item.name}</span>
@@ -154,33 +172,31 @@ const ServicesMegaMenu = ({ link, isActive }) => (
                       className="opacity-0 -translate-x-1 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-200"
                     />
                   </Link>
-                ))}
-              </div>
+                  {item.desc && (
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{item.desc}</p>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-
-      {/* RIGHT — dark CTA card */}
-      <div className="relative bg-[#1e2d50] flex flex-col items-center justify-center text-center p-7 overflow-hidden">
-        <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[#22C55E]/10 blur-2xl pointer-events-none" />
-        <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/5 blur-xl pointer-events-none" />
-
-        <h3 className="relative z-10 text-white font-extrabold text-base leading-snug mb-3">
-          {link.cta.heading}
-        </h3>
-        <p className="relative z-10 text-white/60 text-xs leading-relaxed mb-5">
-          {link.cta.sub}
-        </p>
-        <Link
-          to={link.cta.path}
-          className="relative z-10 px-5 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg"
-        >
-          {link.cta.label}
-        </Link>
-      </div>
-
     </div>
+
+    {/* BOTTOM — full-width dark CTA bar */}
+    <div className="relative bg-[#1e2d50] flex items-center justify-between px-8 py-5 overflow-hidden">
+      <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-[#22C55E]/10 blur-3xl pointer-events-none" />
+      <p className="relative z-10 text-white font-extrabold text-base">
+        {link.cta.heading}
+      </p>
+      <Link
+        to={link.cta.path}
+        className="relative z-10 px-6 py-2.5 bg-white hover:bg-gray-100 text-[#1e2d50] rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap ml-6"
+      >
+        {link.cta.label}
+      </Link>
+    </div>
+
   </div>
 );
 

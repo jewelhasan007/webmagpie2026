@@ -5,7 +5,7 @@ import { cn } from '../lib/utils';
 import { navLinks } from './Navbar';
 
 const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
-  const services = navLinks.find(link => link.name === 'Services')?.subMenu || [];
+  const services = navLinks.find(link => link.name === 'Services')?.groups?.flatMap(group => group.items) || [];
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
