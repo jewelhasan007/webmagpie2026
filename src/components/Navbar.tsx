@@ -65,7 +65,7 @@ export const navLinks = [
       'We help businesses grow online through strategic web design and digital marketing. Whether you need a new website or a full rebrand, we re here to guide the process.',
     links: [
       { name: 'About Us', path: '/about' },
-      { name: 'Case Studies', path: '/case-studies' },
+      { name: 'Case Studies', path: '/portfolio' },
     ],
     cta: {
       heading: 'Ready To Take The First Step?',
@@ -124,7 +124,7 @@ export const navLinks = [
       'Stay informed with the latest insights, success stories, and industry news from the ZOZOWeb team.',
     links: [
       { name: 'Blogs', path: '/resources/blogs' },
-      { name: 'Case Studies', path: '/resources/case-studies' },
+      { name: 'Case Studies', path: '/portfolio' },
       { name: 'News', path: '/resources/news' },
     ],
     cta: {
