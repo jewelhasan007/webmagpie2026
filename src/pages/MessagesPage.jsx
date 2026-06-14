@@ -67,16 +67,16 @@ const MessageCard = ({ msg, index }) => {
             <span
               className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${subjectColor(msg.subject)}`}
             >
-              {msg.subject}
+             Full Name: {msg.subject}
             </span>
           </div>
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#475569]">
             <span className="flex items-center gap-1">
-              <Mail size={11} /> {msg.email}
+              <Mail size={11} /> Email: {msg.email}
             </span>
             {msg.company && (
               <span className="flex items-center gap-1">
-                <Building2 size={11} /> {msg.company}
+                <Building2 size={11} /> Company: {msg.company}
               </span>
             )}
             <span className="flex items-center gap-1 ml-auto">
@@ -95,7 +95,7 @@ const MessageCard = ({ msg, index }) => {
       {expanded && (
         <div className="px-5 pb-5 pt-0 border-t border-[#162660]/10">
           <p className="text-[#475569] text-sm leading-relaxed whitespace-pre-wrap mt-4">
-           MESSAGE: {msg.message}
+           Message: {msg.message}
           </p>
           <a
             href={`mailto:${msg.email}?subject=Re: ${msg.subject}`}
