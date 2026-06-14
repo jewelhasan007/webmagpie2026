@@ -63,11 +63,11 @@ const MessageCard = ({ msg, index }) => {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <span className="font-bold text-[#162660] text-sm truncate">{msg.fullName}</span>
+            <span className="font-bold text-[#162660] text-sm truncate">Full Name:{msg.fullName}</span>
             <span
               className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${subjectColor(msg.subject)}`}
             >
-             Full Name: {msg.subject}
+             Service Interested In: {msg.subject}
             </span>
           </div>
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#475569]">
