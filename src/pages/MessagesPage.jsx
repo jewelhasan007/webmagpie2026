@@ -95,7 +95,7 @@ const MessageCard = ({ msg, index }) => {
       {expanded && (
         <div className="px-5 pb-5 pt-0 border-t border-[#162660]/10">
           <p className="text-[#475569] text-sm leading-relaxed whitespace-pre-wrap mt-4">
-            {msg.message}
+           MESSAGE: {msg.message}
           </p>
           <a
             href={`mailto:${msg.email}?subject=Re: ${msg.subject}`}
