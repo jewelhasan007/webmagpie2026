@@ -65,7 +65,7 @@ const MessageCard = ({ msg, index }) => {
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <span className="font-bold text-[#162660] text-sm truncate">Full Name:{msg.fullName}</span>
             <span
-              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${subjectColor(msg.subject)}`}
+              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full tracking-wide ${subjectColor(msg.subject)}`}
             >
              Service Interested In: {msg.subject}
             </span>
