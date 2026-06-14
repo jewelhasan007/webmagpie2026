@@ -50,19 +50,19 @@ const ProjectDetails = () => {
                 <div className="text-[#475569] text-xs font-bold uppercase tracking-wider flex items-center gap-2">
                   <User size={14} /> Client
                 </div>
-                <div className="text-white font-bold">{project.client}</div>
+                <div className=" font-bold">{project.client}</div>
               </div>
               <div className="space-y-1">
                 <div className="text-[#475569] text-xs font-bold uppercase tracking-wider flex items-center gap-2">
                   <Calendar size={14} /> Year
                 </div>
-                <div className="text-white font-bold">{project.year}</div>
+                <div className="font-bold">{project.year}</div>
               </div>
               <div className="space-y-1">
                 <div className="text-[#475569] text-xs font-bold uppercase tracking-wider flex items-center gap-2">
                   <Tag size={14} /> Category
                 </div>
-                <div className="text-white font-bold">{project.category}</div>
+                <div className=" font-bold">{project.category}</div>
               </div>
               <div className="space-y-1">
                 <div className="text-[#475569] text-xs font-bold uppercase tracking-wider flex items-center gap-2">
@@ -75,7 +75,7 @@ const ProjectDetails = () => {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-white mb-4">Key Features</h3>
               {project.features?.map((feature) => (
-                <div key={feature} className="flex items-center gap-3 text-white/80">
+                <div key={feature} className="flex items-center gap-3 text-black/80">
                   <CheckCircle2 size={18} className="text-[#162660]" />
                   <span>{feature}</span>
                 </div>
@@ -111,13 +111,13 @@ const ProjectDetails = () => {
               </p>
             </div>
             <div className="bg-white border border-[#162660]/10 shadow-md p-10 rounded-3xl">
-              <h4 className="text-[#D0E6FD] font-bold mb-4">The Solution</h4>
+              <h4 className="text-[#162660] font-bold mb-4">The Solution</h4>
               <p className="text-[#475569] leading-relaxed">
                 We developed a custom React-based dashboard with a modular architecture, allowing for real-time updates and personalized views for different user roles.
               </p>
             </div>
             <div className="bg-white border border-[#162660]/10 shadow-md p-10 rounded-3xl">
-              <h4 className="text-brand-accent font-bold mb-4">The Result</h4>
+              <h4 className="text-[#162660] font-bold mb-4">The Result</h4>
               <p className="text-[#475569] leading-relaxed">
                 A 40% increase in operational efficiency and a significant reduction in data reporting errors across the entire organization.
               </p>
