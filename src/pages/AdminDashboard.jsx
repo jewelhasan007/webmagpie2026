@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image, BookOpen,
+  Rocket, LogOut, Users, Mail, Send, History, ImagePlus, X, Image, BookOpen, MessageSquare,
 } from "lucide-react";
 
 const API = import.meta.env.VITE_BASE_URL;
@@ -313,6 +313,13 @@ const AdminDashboard = () => {
             <h1 className="text-3xl font-bold text-[#162660]">Admin Dashboard</h1>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate("/admin/messages")}
+              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium"
+            >
+              <MessageSquare size={16} />
+              Messages
+            </button>
             <button
               onClick={() => navigate("/admin/resources")}
               className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium"
