@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Rocket, LogOut, ChevronDown, ChevronUp, BookOpen,
   Briefcase, Link2, Users, Twitter, Globe, Mail, Megaphone,
+  MessageSquare,
 } from "lucide-react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -173,7 +174,7 @@ const STATS = [
   { label: "Highest value leads", value: "LinkedIn" },
 ];
 
-// ─── Page loader (same as AdminDashboard) ─────────────────────────────────────
+// ─── Page loader ──────────────────────────────────────────────────────────────
 
 const PageLoader = () => (
   <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
@@ -204,7 +205,6 @@ const ResourcesPage = () => {
   // ─── Auth guard ─────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!token) {
-      // No token → kick to login immediately
       navigate("/admin/login");
     } else {
       setPageReady(true);
@@ -242,9 +242,9 @@ const ResourcesPage = () => {
             <h1 className="text-3xl font-bold text-[#162660]">Resources</h1>
           </div>
           <div className="flex items-center gap-3">
-             <button
+            <button
               onClick={() => navigate("/admin/messages")}
-              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium"
+              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
             >
               <MessageSquare size={16} />
               Messages
