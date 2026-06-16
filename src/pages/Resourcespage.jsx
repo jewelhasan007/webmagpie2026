@@ -242,6 +242,13 @@ const ResourcesPage = () => {
             <h1 className="text-3xl font-bold text-[#162660]">Resources</h1>
           </div>
           <div className="flex items-center gap-3">
+  <button
+              onClick={() => navigate("/admin/dashboard")}
+              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
+            >
+              <Rocket size={15} />
+              Dashboard
+            </button>
             <button
               onClick={() => navigate("/admin/messages")}
               className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
@@ -249,13 +256,7 @@ const ResourcesPage = () => {
              
               Messages
             </button>
-            <button
-              onClick={() => navigate("/admin/dashboard")}
-              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
-            >
-              <Rocket size={15} />
-              Dashboard
-            </button>
+          
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors text-sm"
