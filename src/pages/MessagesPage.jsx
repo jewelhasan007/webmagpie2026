@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import {
   Mail,
   Building2,
@@ -11,6 +12,8 @@ import {
   ChevronDown,
   ChevronUp,
   Loader2,
+  Rocket,
+  LogOut,
 } from "lucide-react";
 
 /* ─── helpers ─── */
@@ -63,11 +66,15 @@ const MessageCard = ({ msg, index }) => {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <span className="font-bold text-[#162660] text-sm truncate">Full Name:{msg.fullName}</span>
+            <span className="font-bold text-[#162660] text-sm truncate">
+              Full Name: {msg.fullName}
+            </span>
             <span
-              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full tracking-wide ${subjectColor(msg.subject)}`}
+              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full tracking-wide ${subjectColor(
+                msg.subject
+              )}`}
             >
-             Service Interested In: {msg.subject}
+              Service Interested In: {msg.subject}
             </span>
           </div>
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[#475569]">
@@ -95,7 +102,7 @@ const MessageCard = ({ msg, index }) => {
       {expanded && (
         <div className="px-5 pb-5 pt-0 border-t border-[#162660]/10">
           <p className="text-[#475569] text-sm leading-relaxed whitespace-pre-wrap mt-4">
-           Message: {msg.message}
+            Message: {msg.message}
           </p>
           <a
             href={`mailto:${msg.email}?subject=Re: ${msg.subject}`}
@@ -109,8 +116,11 @@ const MessageCard = ({ msg, index }) => {
   );
 };
 
-/* ─── Main Admin Dashboard ─── */
+/* ─── Main Messages Page ─── */
 const MessagesPage = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("adminToken");
+
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -118,13 +128,37 @@ const MessagesPage = () => {
   const [filterSubject, setFilterSubject] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
 
+  // ─── Auth guard ───────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!token) {
+      navigate("/admin/login");
+    }
+  }, []);
+
+  // ─── Logout ───────────────────────────────────────────────────────────────
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    navigate("/admin/login");
+  };
+
+  // ─── Fetch messages ───────────────────────────────────────────────────────
   const fetchMessages = async (silent = false) => {
     if (!silent) setLoading(true);
     else setRefreshing(true);
     setError("");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/messages`);
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/messages`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (res.status === 401) {
+        localStorage.removeItem("adminToken");
+        navigate("/admin/login");
+        return;
+      }
       if (!res.ok) throw new Error("Server error");
       const data = await res.json();
       setMessages(data);
@@ -137,11 +171,14 @@ const MessagesPage = () => {
   };
 
   useEffect(() => {
-    fetchMessages();
+    if (token) fetchMessages();
   }, []);
 
-  /* Derived filter options */
-  const subjects = ["All", ...new Set(messages.map((m) => m.subject).filter(Boolean))];
+  // ─── Derived values ───────────────────────────────────────────────────────
+  const subjects = [
+    "All",
+    ...new Set(messages.map((m) => m.subject).filter(Boolean)),
+  ];
 
   const filtered = messages.filter((m) => {
     const matchSearch =
@@ -151,14 +188,19 @@ const MessagesPage = () => {
       m.message?.toLowerCase().includes(search.toLowerCase()) ||
       m.company?.toLowerCase().includes(search.toLowerCase());
 
-    const matchSubject = filterSubject === "All" || m.subject === filterSubject;
+    const matchSubject =
+      filterSubject === "All" || m.subject === filterSubject;
 
     return matchSearch && matchSubject;
   });
 
-  /* Stats */
+  // ─── Stats ────────────────────────────────────────────────────────────────
   const stats = [
-    { label: "Total Messages", value: messages.length, color: "bg-[#162660] text-white" },
+    {
+      label: "Total Messages",
+      value: messages.length,
+      color: "bg-[#162660] text-white",
+    },
     {
       label: "This Week",
       value: messages.filter((m) => {
@@ -176,45 +218,63 @@ const MessagesPage = () => {
     },
   ];
 
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-gray-50 pt-28 pb-20 px-6">
       <div className="max-w-5xl mx-auto">
 
         {/* ── Header ── */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-10">
           <div>
-            <h1 className="text-3xl font-extrabold text-[#162660]">Contact Messages</h1>
-            <p className="text-[#475569] text-sm mt-1">All enquiries submitted via the contact form</p>
+            <h1 className="text-3xl font-extrabold text-[#162660]">
+              Contact Messages
+            </h1>
+            <p className="text-[#475569] text-sm mt-1">
+              All enquiries submitted via the contact form
+            </p>
           </div>
-          <button
-            onClick={() => fetchMessages(true)}
-            disabled={refreshing}
-            className="flex items-center gap-2 bg-[#162660] hover:bg-[#1e2d50] text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all disabled:opacity-60"
-          >
-            <RefreshCw size={15} className={refreshing ? "animate-spin" : ""} />
-            {refreshing ? "Refreshing…" : "Refresh"}
-          </button>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Refresh */}
+            <button
+              onClick={() => fetchMessages(true)}
+              disabled={refreshing}
+              className="flex items-center gap-2 bg-[#162660] hover:bg-[#1e2d50] text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all disabled:opacity-60"
+            >
+              <RefreshCw
+                size={15}
+                className={refreshing ? "animate-spin" : ""}
+              />
+              {refreshing ? "Refreshing…" : "Refresh"}
+            </button>
+
+            {/* Back to Dashboard */}
             <button
               onClick={() => navigate("/admin/dashboard")}
-              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
             >
               <Rocket size={15} />
               Dashboard
             </button>
+
+            {/* Logout */}
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors text-sm"
+              className="flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors text-sm font-medium"
             >
               <LogOut size={15} />
               Logout
             </button>
-          
+          </div>
         </div>
 
         {/* ── Stats ── */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           {stats.map((s) => (
-            <div key={s.label} className={`rounded-2xl p-5 shadow-sm ${s.color}`}>
+            <div
+              key={s.label}
+              className={`rounded-2xl p-5 shadow-sm ${s.color}`}
+            >
               <p className="text-3xl font-extrabold">{s.value}</p>
               <p className="text-sm opacity-70 mt-1 font-medium">{s.label}</p>
             </div>
@@ -224,7 +284,10 @@ const MessagesPage = () => {
         {/* ── Search + Filter ── */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#475569]" />
+            <Search
+              size={16}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-[#475569]"
+            />
             <input
               type="text"
               placeholder="Search by name, email, company or message…"
@@ -234,14 +297,19 @@ const MessagesPage = () => {
             />
           </div>
           <div className="relative">
-            <Tag size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#475569]" />
+            <Tag
+              size={14}
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#475569]"
+            />
             <select
               value={filterSubject}
               onChange={(e) => setFilterSubject(e.target.value)}
               className="pl-9 pr-4 py-3 rounded-xl border border-[#162660]/10 bg-white text-[#162660] text-sm focus:outline-none focus:border-[#162660] transition-colors appearance-none"
             >
               {subjects.map((s) => (
-                <option key={s} value={s}>{s}</option>
+                <option key={s} value={s}>
+                  {s}
+                </option>
               ))}
             </select>
           </div>
@@ -267,11 +335,16 @@ const MessagesPage = () => {
           <div className="text-center py-24 text-[#475569]">
             <Inbox size={48} className="mx-auto mb-4 opacity-30" />
             <p className="font-semibold text-lg">
-              {messages.length === 0 ? "No messages yet" : "No results match your filters"}
+              {messages.length === 0
+                ? "No messages yet"
+                : "No results match your filters"}
             </p>
             {messages.length > 0 && (
               <button
-                onClick={() => { setSearch(""); setFilterSubject("All"); }}
+                onClick={() => {
+                  setSearch("");
+                  setFilterSubject("All");
+                }}
                 className="mt-4 text-sm text-[#22C55E] hover:underline font-bold"
               >
                 Clear filters
@@ -281,7 +354,8 @@ const MessagesPage = () => {
         ) : (
           <div className="flex flex-col gap-4">
             <p className="text-xs text-[#475569] font-medium">
-              Showing {filtered.length} of {messages.length} message{messages.length !== 1 ? "s" : ""}
+              Showing {filtered.length} of {messages.length} message
+              {messages.length !== 1 ? "s" : ""}
             </p>
             {filtered.map((msg, i) => (
               <MessageCard key={msg._id} msg={msg} index={i} />
