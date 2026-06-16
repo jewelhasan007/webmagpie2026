@@ -1,55 +1,213 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, TrendingUp, Palette, Globe, Layout, Smartphone, ShoppingCart, MousePointer, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+// const PROJECTS = [
+//   {
+//     id: '1',
+//     title: 'Digital Marketing & SEO',
+//     category: 'SEO & Marketing',
+//     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
+//     icon: TrendingUp,
+//   },
+//   {
+//     id: '2',
+//     title: 'Brand Strategy',
+//     category: 'Branding',
+//     image: 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=1200&q=80',
+//     icon: Layers,
+//   },
+//   {
+//     id: '3',
+//     title: 'Website Design & Development',
+//     category: 'Web Development',
+//     image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&q=80',
+//     icon: Globe,
+//   },
+//   {
+//     id: '4',
+//     title: 'Landing Page Design',
+//     category: 'UI/UX Design',
+//     image: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200&q=80',
+//     icon: MousePointer,
+//   },
+//   {
+//     id: '5',
+//     title: 'UI/UX Design',
+//     category: 'Design',
+//     image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80',
+//     icon: Palette,
+//   },
+//   {
+//     id: '6',
+//     title: 'Mobile Apps',
+//     category: 'App Development',
+//     image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80',
+//     icon: Smartphone,
+//   },
+//   {
+//     id: '7',
+//     title: 'E-commerce Solutions',
+//     category: 'E-commerce',
+//     image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80',
+//     icon: ShoppingCart,
+//   },
+//     {
+//     id: '8',
+//     title: 'Logo Design',
+//     category: 'Branding',
+//     image: 'https://images.pexels.com/photos/6224/hands-people-woman-working.jpg?auto=compress&cs=tinysrgb&w=1200',
+//     icon: Layout,
+//   },
+// ];
 
 const PROJECTS = [
   {
     id: '1',
-    title: 'Website Design & Development',
-    category: 'Web Development',
-    image: 'https://static.vecteezy.com/system/resources/previews/034/342/883/non_2x/html-css-programming-data-analysis-concept-flat-illustration-vector.jpg',
+    title: 'Digital Marketing & SEO',
+    category: 'SEO & Marketing',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80',
+    icon: TrendingUp,
+    card: {
+      heading: 'Campaign Live',
+      sub: 'Organic traffic up 3x',
+      metric: '340%',
+      metricLabel: 'ROI Achieved',
+      progressLabel: 'Keyword Rankings',
+      progressValue: 92,
+      badgeNumber: '10K+',
+      badgeLabel: 'Leads Generated',
+    },
   },
   {
     id: '2',
-    title: 'Landing Page Design',
-    category: 'UI/UX Design',
-    image: 'https://venngage-wordpress.s3.amazonaws.com/uploads/2018/04/Landing-Page-Examples.png',
+    title: 'Brand Strategy',
+    category: 'Branding',
+    image: 'https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=1200&q=80',
+    icon: Layers,
+    card: {
+      heading: 'Brand Delivered',
+      sub: 'Full identity system',
+      metric: '100%',
+      metricLabel: 'Client Satisfaction',
+      progressLabel: 'Brand Consistency',
+      progressValue: 97,
+      badgeNumber: '50+',
+      badgeLabel: 'Brands Built',
+    },
   },
   {
     id: '3',
-    title: 'Logo Design',
-    category: 'Branding',
-    image: 'https://optimusclick.com.au/wp-content/uploads/2020/03/Logo-Design-OptimusClick.jpg',
+    title: 'Website Design & Development',
+    category: 'Web Development',
+    image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=1200&q=80',
+    icon: Globe,
+    card: {
+      heading: 'Site Launched',
+      sub: 'Live in 14 days',
+      metric: '98%',
+      metricLabel: 'Performance Score',
+      progressLabel: 'Load Speed Optimized',
+      progressValue: 98,
+      badgeNumber: '150+',
+      badgeLabel: 'Sites Delivered',
+    },
   },
   {
     id: '4',
-    title: 'Digital Marketing & SEO',
-    category: 'Marketing',
-    image: 'https://cms-media.bartleby.com/wp-content/uploads/sites/2/2022/04/08102245/image-54.png',
+    title: 'Landing Page Design',
+    category: 'UI/UX Design',
+    image: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200&q=80',
+    icon: MousePointer,
+    card: {
+      heading: 'Page Published',
+      sub: 'Conversion rate boosted',
+      metric: '4.8x',
+      metricLabel: 'Conversion Lift',
+      progressLabel: 'A/B Test Winner',
+      progressValue: 88,
+      badgeNumber: '200+',
+      badgeLabel: 'Pages Launched',
+    },
   },
   {
     id: '5',
-    title: 'Shopify Store Development',
-    category: 'E-commerce',
-    image: 'https://cdn.shopify.com/s/files/1/0070/7032/files/Blog_-_1848x970_433f73d9-ad0f-46fa-8475-6fe0ec1abb74.png?format=jpg&quality=90&v=1674559633&width=1024',
+    title: 'UI/UX Design',
+    category: 'Design',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80',
+    icon: Palette,
+    card: {
+      heading: 'Design Approved',
+      sub: 'Handoff ready',
+      metric: '95%',
+      metricLabel: 'User Satisfaction',
+      progressLabel: 'Usability Score',
+      progressValue: 95,
+      badgeNumber: '80+',
+      badgeLabel: 'Products Designed',
+    },
   },
   {
     id: '6',
-    title: 'Amazon FBA',
+    title: 'Mobile Apps',
+    category: 'App Development',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=80',
+    icon: Smartphone,
+    card: {
+      heading: 'App Submitted',
+      sub: 'iOS & Android ready',
+      metric: '4.9★',
+      metricLabel: 'App Store Rating',
+      progressLabel: 'Crash-Free Sessions',
+      progressValue: 99,
+      badgeNumber: '30+',
+      badgeLabel: 'Apps Shipped',
+    },
+  },
+  {
+    id: '7',
+    title: 'E-commerce Solutions',
     category: 'E-commerce',
-    image: 'https://i.pinimg.com/736x/2c/d5/f0/2cd5f0b64c42a4daef66e72b168dbf6f.jpg',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80',
+    icon: ShoppingCart,
+    card: {
+      heading: 'Store Live',
+      sub: 'First sale in 48 hours',
+      metric: '220%',
+      metricLabel: 'Revenue Growth',
+      progressLabel: 'Cart Conversion Rate',
+      progressValue: 84,
+      badgeNumber: '60+',
+      badgeLabel: 'Stores Launched',
+    },
+  },
+  {
+    id: '8',
+    title: 'Logo Design',
+    category: 'Branding',
+    image: 'https://images.pexels.com/photos/5632371/pexels-photo-5632371.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    icon: Layout,
+    card: {
+      heading: 'Logo Delivered',
+      sub: 'All formats included',
+      metric: '100%',
+      metricLabel: 'Revision Satisfaction',
+      progressLabel: 'Client Approval Rate',
+      progressValue: 100,
+      badgeNumber: '300+',
+      badgeLabel: 'Logos Created',
+    },
   },
 ];
 
 const words = ['Build', 'Design', 'Grow', 'Transform', 'Launch'];
 
-const Hero = () => {
+const Hero2 = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [wordVisible, setWordVisible] = useState(true);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  // Rotating word with fade (matches original 2000ms)
   useEffect(() => {
     const interval = setInterval(() => {
       setWordVisible(false);
@@ -61,7 +219,6 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-advance carousel every 4s
   useEffect(() => {
     const interval = setInterval(() => {
       setSlideIndex((prev) => (prev + 1) % PROJECTS.length);
@@ -73,45 +230,89 @@ const Hero = () => {
     setSlideIndex((n + PROJECTS.length) % PROJECTS.length);
   };
 
+  const currentProject = PROJECTS[slideIndex];
+  const IconComponent = currentProject.icon;
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-white">
 
-      {/* ── Background Carousel (replaces plain bg-white) ── */}
+      {/* ── Background Carousel ── */}
       <div className="absolute inset-0 z-0">
         <div
           className="flex h-full transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${slideIndex * 100}%)` }}
         >
-          {PROJECTS.map((project, i) => (
-            <div key={project.id} className="relative min-w-full h-full flex-shrink-0">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover"
-                loading={i === 0 ? 'eager' : 'lazy'}
-              />
-              {/* Overlay: heavy white on left to keep original text colors, fades to transparent right */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/30" />
-
-              {/* Slide label */}
-              <div className="absolute bottom-16 right-6 bg-white/80 border border-[#162660]/10 backdrop-blur-sm rounded-xl px-4 py-2 pointer-events-none shadow-sm">
-                <span className="block text-[10px] uppercase tracking-widest text-[#475569] mb-0.5 font-medium">
-                  {project.category}
-                </span>
-                <span className="text-[#162660] text-sm font-semibold">{project.title}</span>
+          {PROJECTS.map((project, i) => {
+            const Icon = project.icon;
+            return (
+              <div key={project.id} className="relative min-w-full h-full flex-shrink-0">
+                {/* Background image */}
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/96 via-white/85 to-white/40" />
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
-      {/* Original background elements — kept exactly as-is */}
+      {/* Original background elements */}
       <div className="absolute inset-0 bg-grid opacity-30 z-[1]" />
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#D0E6FD]/40 blur-[120px] rounded-full z-[1]" />
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#F1E4D1]/60 blur-[120px] rounded-full z-[1]" />
 
-      {/* Original content — zero changes to padding, margin, classes */}
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      {/* ── Slide Label (current slide, shown outside carousel track so it's always on top) ── */}
+      <div className="hidden lg:flex absolute bottom-10 right-6 z-30 items-center gap-3 bg-white/90 border border-[#162660]/10 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-md pointer-events-none">
+        <div className="w-9 h-9 rounded-xl bg-[#D0E6FD] flex items-center justify-center flex-shrink-0">
+          <IconComponent size={18} className="text-[#162660]" strokeWidth={2} />
+        </div>
+        <div>
+          <span className="block text-[10px] uppercase tracking-widest text-[#475569] font-medium">
+            {currentProject.category}
+          </span>
+          <span className="text-[#162660] text-sm font-semibold leading-tight">{currentProject.title}</span>
+        </div>
+      </div>
+
+      {/* Dots — bottom center */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+        {PROJECTS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`rounded-full border-none cursor-pointer transition-all duration-300 ${
+              i === slideIndex
+                ? 'bg-[#162660] w-6 h-2'
+                : 'bg-[#162660]/25 w-2 h-2 hover:bg-[#162660]/50'
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Arrows */}
+      <button
+        onClick={() => goTo(slideIndex - 1)}
+        aria-label="Previous slide"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 border border-[#162660]/15 text-[#162660] flex items-center justify-center hover:bg-white transition-all shadow-sm"
+      >
+        <ChevronLeft size={20} />
+      </button>
+      <button
+        onClick={() => goTo(slideIndex + 1)}
+        aria-label="Next slide"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/90 border border-[#162660]/15 text-[#162660] flex items-center justify-center hover:bg-white transition-all shadow-sm"
+      >
+        <ChevronRight size={20} />
+      </button>
+
+      {/* ── Hero Content ── */}
+      <div className="max-w-7xl mx-auto px-6 relative z-30">
         <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -170,80 +371,97 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
+{/* ── Floating Card — Option C, synced with carousel ── */}
+<div className="hidden lg:block absolute right-20 top-1/2 -translate-y-1/2 w-72 z-20">
+  <motion.div
+    key={slideIndex}
+    initial={{ opacity: 0, y: 12, scale: 0.95 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    transition={{ duration: 0.45, ease: 'easeOut' }}
+    className="relative animate-float"
+  >
+    {/* Main card */}
+    <div className="bg-white border border-[#162660]/10 shadow-2xl rounded-2xl p-5">
 
-      {/* Original Floating Card — kept exactly as-is */}
-      <div className="hidden lg:block absolute right-20 top-1/2 -translate-y-1/2 w-1/3 z-10">
+      {/* Header */}
+      <div className="flex items-center gap-2.5 mb-4">
+        <div className="w-9 h-9 rounded-lg bg-[#D0E6FD] flex items-center justify-center flex-shrink-0">
+          <IconComponent size={18} className="text-[#162660]" strokeWidth={2} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-[#162660] text-sm font-bold leading-tight truncate">
+            {currentProject.title}
+          </div>
+          <div className="text-[#475569] text-[11px] truncate">
+            {currentProject.card.heading}
+          </div>
+        </div>
+        <div className="flex-shrink-0 bg-[#F1E4D1] rounded-lg px-2.5 py-1">
+          <div className="text-[#162660] text-[11px] font-bold whitespace-nowrap">
+            {currentProject.card.badgeNumber}
+          </div>
+        </div>
+      </div>
+
+      {/* Progress bar */}
+      <div className="flex justify-between text-[10px] text-[#475569] mb-1.5">
+        <span className="truncate mr-2">{currentProject.card.progressLabel}</span>
+        <span className="font-semibold text-[#162660] flex-shrink-0">
+          {currentProject.card.progressValue}%
+        </span>
+      </div>
+      <div className="h-1.5 w-full bg-[#F1E4D1] rounded-full overflow-hidden mb-4">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="relative"
-        >
-          <div className="bg-white border border-[#162660]/10 shadow-2xl p-8 rounded-3xl relative z-10 animate-float">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 rounded-full bg-[#D0E6FD] flex items-center justify-center">
-                <RocketIcon className="text-[#162660]" />
-              </div>
-              <div>
-                <div className="text-[#162660] font-bold">Project Launched</div>
-                <div className="text-[#475569] text-sm">24 hours ago</div>
-              </div>
-            </div>
-            <div className="h-2 w-full bg-[#F1E4D1] rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: '85%' }}
-                transition={{ duration: 2, delay: 1 }}
-                className="h-full bg-[#162660]"
-              />
-            </div>
-            <div className="mt-4 flex justify-between text-sm">
-              <span className="text-[#475569]">Success Rate</span>
-              <span className="text-[#162660] font-bold">98%</span>
-            </div>
-          </div>
-
-          <div
-            className="absolute -top-10 -right-10 bg-[#F1E4D1] border border-[#162660]/10 shadow-xl p-6 rounded-2xl z-20 animate-float"
-            style={{ animationDelay: '1s' }}
-          >
-            <div className="text-3xl font-bold text-[#162660] mb-1">150+</div>
-            <div className="text-[#475569] text-xs uppercase tracking-wider font-bold">Clients Served</div>
-          </div>
-        </motion.div>
+          initial={{ width: 0 }}
+          animate={{ width: `${currentProject.card.progressValue}%` }}
+          transition={{ duration: 1.2, delay: 0.15, ease: 'easeOut' }}
+          className="h-full bg-[#162660] rounded-full"
+        />
       </div>
 
-      {/* ── Carousel Dot Indicators ── */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {PROJECTS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`rounded-full border-none cursor-pointer transition-all duration-300 ${
-              i === slideIndex
-                ? 'bg-[#162660] w-6 h-2'
-                : 'bg-[#162660]/30 w-2 h-2 hover:bg-[#162660]/60'
-            }`}
-          />
-        ))}
+      {/* Chips row */}
+      <div className="grid grid-cols-3 gap-2">
+        <div className="bg-[#F8FAFF] border border-[#162660]/08 rounded-lg py-2 px-1 text-center">
+          <div className="text-[#162660] text-sm font-extrabold leading-tight">
+            {currentProject.card.metric}
+          </div>
+          <div className="text-[#475569] text-[9px] mt-0.5 leading-tight">
+            {currentProject.card.metricLabel.split(' ').slice(0, 2).join(' ')}
+          </div>
+        </div>
+        <div className="bg-[#F8FAFF] border border-[#162660]/08 rounded-lg py-2 px-1 text-center">
+          <div className="text-[#162660] text-sm font-extrabold leading-tight">
+            {currentProject.card.progressValue}%
+          </div>
+          <div className="text-[#475569] text-[9px] mt-0.5 leading-tight">
+            {currentProject.card.progressLabel.split(' ').slice(0, 2).join(' ')}
+          </div>
+        </div>
+        <div className="bg-[#F1E4D1] border border-[#162660]/08 rounded-lg py-2 px-1 text-center">
+          <div className="text-[#162660] text-sm font-extrabold leading-tight">
+            {currentProject.card.badgeNumber}
+          </div>
+          <div className="text-[#475569] text-[9px] mt-0.5 leading-tight">
+            {currentProject.card.badgeLabel.split(' ').slice(0, 2).join(' ')}
+          </div>
+        </div>
       </div>
+    </div>
 
-      {/* ── Prev / Next Arrows ── */}
-      <button
-        onClick={() => goTo(slideIndex - 1)}
-        aria-label="Previous slide"
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/80 border border-[#162660]/20 text-[#162660] flex items-center justify-center hover:bg-white transition-all shadow-sm"
-      >
-        <ChevronLeft size={20} />
-      </button>
-      <button
-        onClick={() => goTo(slideIndex + 1)}
-        aria-label="Next slide"
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/80 border border-[#162660]/20 text-[#162660] flex items-center justify-center hover:bg-white transition-all shadow-sm"
-      >
-        <ChevronRight size={20} />
-      </button>
+    {/* Floating bubble — top right */}
+    <div
+      className="absolute -top-8 -right-8 bg-[#F1E4D1] border border-[#162660]/10 shadow-xl rounded-2xl px-4 py-3 animate-float z-20"
+      style={{ animationDelay: '1s' }}
+    >
+      <div className="text-xl font-extrabold text-[#162660] leading-tight">
+        {currentProject.card.badgeNumber}
+      </div>
+      <div className="text-[#475569] text-[10px] uppercase tracking-wider font-bold mt-0.5">
+        {currentProject.card.badgeLabel}
+      </div>
+    </div>
+  </motion.div>
+</div>
 
     </section>
   );
@@ -258,4 +476,4 @@ const RocketIcon = ({ className }) => (
   </svg>
 );
 
-export default Hero;
+export default Hero2;
