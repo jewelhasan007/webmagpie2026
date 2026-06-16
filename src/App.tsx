@@ -19,7 +19,7 @@ import LearnMore from './pages/LearnMore';
 import MoreAboutStats from './pages/MoreAboutStats';
 import CreateBlog from './pages/CreateBlog';
 import ClientMessage from './pages/ClientMessage';
-import SubscriberList from './pages/SubscriberList';
+import SubscriberList from './pages/SubscriberList ';
 import BlogDetails from './pages/BlogDetails';
 import ProcessDetail from './pages/ProcessDetails';
 import AdminLogin from './pages/AdminLogin';

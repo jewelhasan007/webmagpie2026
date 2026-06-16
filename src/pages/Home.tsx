@@ -8,6 +8,7 @@ import Process from '../sections/Process';
 import Testimonials from '../sections/Testimonials';
 import BlogPreview from '../sections/BlogPreview';
 import CTA from '../sections/CTA';
+import Hero2 from '../sections/Hero2';
 
 
 
@@ -20,7 +21,8 @@ const Home = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Hero />
+     
+      <Hero2 />
       <Services />
       <Portfolio />
       <About />
