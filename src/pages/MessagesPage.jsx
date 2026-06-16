@@ -14,6 +14,8 @@ import {
   Loader2,
   
   LogOut,
+  Rocket,
+  BookOpen,
 } from "lucide-react";
 
 /* ─── helpers ─── */

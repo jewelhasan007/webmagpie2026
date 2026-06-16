@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Rocket, LogOut, ChevronDown, ChevronUp, BookOpen,
   Briefcase, Link2, Users, Twitter, Globe, Mail, Megaphone,
-  
+  MessageSquare
 } from "lucide-react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
