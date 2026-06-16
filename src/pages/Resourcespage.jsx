@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Rocket, LogOut, ChevronDown, ChevronUp, BookOpen,
   Briefcase, Link2, Users, Twitter, Globe, Mail, Megaphone,
-  MessageSquare,
+  
 } from "lucide-react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -246,7 +246,7 @@ const ResourcesPage = () => {
               onClick={() => navigate("/admin/messages")}
               className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
             >
-              <MessageSquare size={16} />
+             
               Messages
             </button>
             <button
