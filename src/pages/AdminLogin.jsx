@@ -309,7 +309,7 @@ const AdminLogin = () => {
           <div className="al-left">
             <h1 className="al-welcome">Welcome!</h1>
             <p className="al-sub">
-              Sign in to access your ZOZOWeb admin panel and manage your dashboard.
+              Sign in to access your WebMagpie admin panel and manage your dashboard.
             </p>
 
             <form onSubmit={handleLogin}>
@@ -371,7 +371,7 @@ const AdminLogin = () => {
 
           {/* ── Right: brand ── */}
           <div className="al-right">
-            <div className=" text-white text-2xl">ZOZOWeb</div>
+            <div className=" text-white text-2xl">WebMagpie</div>
             <p className="al-vessel">Admin Portal</p>
             <div className="al-dots">
               <div className="al-dot active" />

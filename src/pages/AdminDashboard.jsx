@@ -18,7 +18,7 @@ const PageLoader = () => (
       </div>
     </div>
     <p className="mt-4 text-[#162660] font-bold text-lg tracking-widest uppercase">
-      ZOZOWeb
+      WebMagpie
     </p>
     <p className="text-gray-400 text-sm mt-1">Loading Dashboard...</p>
   </div>
@@ -56,7 +56,7 @@ const compressImage = (file) =>
 const buildHtml = (subject, message, imageUrl) => `
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
     <div style="background: #162660; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
-      <h1 style="color: white; margin: 0; font-size: 24px;">ZOZOWeb</h1>
+      <h1 style="color: white; margin: 0; font-size: 24px;">WebMagpie</h1>
     </div>
     <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 12px 12px;">
       <h2 style="color: #162660;">${subject}</h2>
@@ -71,7 +71,7 @@ const buildHtml = (subject, message, imageUrl) => `
       }
       <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
       <p style="color: #94a3b8; font-size: 12px; text-align: center;">
-        © ${new Date().getFullYear()} ZOZOWeb Digital Agency. All rights reserved.<br/>
+        © ${new Date().getFullYear()} WebMagpie Digital Agency. All rights reserved.<br/>
         You are receiving this because you subscribed to our newsletter.
       </p>
     </div>

@@ -18,7 +18,7 @@ console.log("PASS:", process.env.SMTP_PASS);
   console.log("✅ SMTP Ready");
   
   const info = await transporter.sendMail({
-    from: `"ZOZOWeb" <${process.env.SMTP_USER}>`,
+    from: `"WebMagpie" <${process.env.SMTP_USER}>`,
     to,
     subject,
     text,

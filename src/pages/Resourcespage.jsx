@@ -186,7 +186,7 @@ const PageLoader = () => (
       </div>
     </div>
     <p className="mt-4 text-[#162660] font-bold text-lg tracking-widest uppercase">
-      ZOZOWeb
+      WebMagpie
     </p>
     <p className="text-gray-400 text-sm mt-1">Loading Resources...</p>
   </div>

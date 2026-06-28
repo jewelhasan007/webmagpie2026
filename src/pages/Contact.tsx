@@ -105,9 +105,9 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="text-[#162660] font-bold mb-2">Email Us</h4>
-                  <p className="text-[#475569] text-sm">info@zozoweb.com</p>
-                  <p className="text-[#475569] text-sm">hello@zozoweb.com</p>
-                  <p className="text-[#475569] text-sm">support@zozoweb.com</p>
+                  <p className="text-[#475569] text-sm">info@webmagpie.com</p>
+                  <p className="text-[#475569] text-sm">hello@webmagpie.com</p>
+                  <p className="text-[#475569] text-sm">support@webmagpie.com</p>
                 </div>
               </div>
             </div>

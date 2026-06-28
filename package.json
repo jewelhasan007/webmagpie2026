@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ZOZOWeb.github.io/ZOZOWeb",
+  "homepage": "https://WebMagpie2026.github.io/WebMagpie2026",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
