@@ -56,11 +56,11 @@ export const navLinks = [
     },
   },
   {
-    name: 'Why ZOZOWeb',
+    name: 'Why WebMagpie',
     path: '/why',
     megaMenu: true,
     layout: 'two-col',
-    heading: 'Why ZOZOWeb',
+    heading: 'Why WebMagpie',
     description:
       'We help businesses grow online through strategic web design and digital marketing. Whether you need a new website or a full rebrand, we re here to guide the process.',
     links: [
@@ -121,7 +121,7 @@ export const navLinks = [
     layout: 'two-col',
     heading: 'Resources',
     description:
-      'Stay informed with the latest insights, success stories, and industry news from the ZOZOWeb team.',
+      'Stay informed with the latest insights, success stories, and industry news from the WebMagpie team.',
     links: [
       { name: 'Blogs', path: '/resources/blogs' },
       { name: 'Case Studies', path: '/portfolio' },
@@ -227,7 +227,7 @@ const ServicesMegaMenu = ({ link, isActive }) => (
 );
 
 /* ─────────────────────────────────────────────
-   Desktop Mega Menu — Why ZOZOWeb (2-col)
+   Desktop Mega Menu — Why WebMagpie (2-col)
 ───────────────────────────────────────────── */
 const WhyMegaMenu = ({ link, isActive }) => (
   <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden w-[600px]">
@@ -376,7 +376,7 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                   </div>
                 </>
               ) : (
-                /* Why ZOZOWeb — description + links + CTA */
+                /* Why WebMagpie — description + links + CTA */
                 <div className="px-4 pb-2">
                   <p className="text-white/50 text-xs leading-relaxed mb-4">
                     {link.description}
@@ -465,7 +465,7 @@ const Navbar = () => {
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-2xl font-extrabold text-white tracking-wide">
-              ZOZOWeb
+              WebMagpie
             </span>
             <div className="relative h-[14px] overflow-hidden mt-1">
               <motion.div
