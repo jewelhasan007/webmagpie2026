@@ -24,7 +24,7 @@ const About = () => {
             >
               <img
                 src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=1200&auto=format&fit=crop"
-                alt="ZoZo TECH Team Working"
+                alt="WebMagpie TECH Team Working"
                 className="w-full h-auto"
                 referrerPolicy="no-referrer"
               />
@@ -81,7 +81,7 @@ const About = () => {
               Empowering <span className="text-gradient">Digital Growth</span> Since 2020
             </h2>
             <p className="text-[#475569] text-lg leading-relaxed">
-              ZoZo TECH is a full-service agency dedicated to helping businesses navigate the complex digital landscape. We combine creative vision with technical precision to deliver results that matter.
+              WebMagpie is a full-service agency dedicated to helping businesses navigate the complex digital landscape. We combine creative vision with technical precision to deliver results that matter.
             </p>
           </motion.div>
 

@@ -465,7 +465,7 @@ const Navbar = () => {
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-2xl font-extrabold text-white tracking-wide">
-              WebMagpie
+              Web <span className='text-[#22C55E]'>Magpie</span>
             </span>
             <div className="relative h-[14px] overflow-hidden mt-1">
               <motion.div
