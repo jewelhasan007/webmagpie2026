@@ -15,7 +15,7 @@ const PageLoader = () => {
       </div>
       {/* Brand name */}
       <p className="mt-4 text-[#162660] font-bold text-lg tracking-widest uppercase">
-        Web <span className="text-yellow-500">Magpie</span>
+        Web <span className="text-green-500">Magpie</span>
       </p>
       <p className="text-gray-400 text-sm mt-1">Loading...</p>
     </div>
