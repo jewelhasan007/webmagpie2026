@@ -96,26 +96,26 @@ const channels = [
 
 const billing = {
   monthly: [
-    { name: 'Starter', price: '$1,500', per: '/mo', blurb: 'One channel, done right.' },
+    { name: 'Starter', price: '$1,200', per: '/mo', blurb: 'One channel, done right.' },
     {
       name: 'Growth',
-      price: '$3,200',
+      price: '$3,000',
       per: '/mo',
       blurb: 'Multi-channel management with a dedicated strategist.',
       featured: true,
     },
-    { name: 'Scale', price: '$5,800', per: '/mo', blurb: 'Full-funnel coverage for larger budgets.' },
+    { name: 'Scale', price: '$4,500', per: '/mo', blurb: 'Full-funnel coverage for larger budgets.' },
   ],
   quarterly: [
-    { name: 'Starter', price: '$1,275', per: '/mo, billed quarterly', blurb: 'One channel, done right.' },
+    { name: 'Starter', price: '$1,100', per: '/mo, billed quarterly', blurb: 'One channel, done right.' },
     {
       name: 'Growth',
-      price: '$2,720',
+      price: '$2,500',
       per: '/mo, billed quarterly',
       blurb: 'Multi-channel management with a dedicated strategist.',
       featured: true,
     },
-    { name: 'Scale', price: '$4,930', per: '/mo, billed quarterly', blurb: 'Full-funnel coverage for larger budgets.' },
+    { name: 'Scale', price: '$4,000', per: '/mo, billed quarterly', blurb: 'Full-funnel coverage for larger budgets.' },
   ],
 };
 
