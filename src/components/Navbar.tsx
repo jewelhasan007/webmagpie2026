@@ -28,23 +28,58 @@ export const navLinks = [
       {
         title: 'Strategy & Growth',
         items: [
-          { name: 'Digital Marketing', path: '/services/seo-marketing', icon: TrendingUp },
-          { name: 'Brand Strategy', path: '/services/branding', icon: Palette },
+          {
+            name: 'Digital Marketing',
+            path: '/services/seo-marketing',
+            icon: TrendingUp,
+            desc: 'Data-driven campaigns that drive traffic',
+          },
+          {
+            name: 'Brand Strategy',
+            path: '/services/branding',
+            icon: Palette,
+            desc: 'Positioning and identity that stand out',
+          },
         ],
       },
       {
         title: 'Web & Design',
         items: [
-          { name: 'Website Design', path: '/services/web-development', icon: Globe },
-          { name: 'Landing Page Design', path: '/services/landing-page', icon: Layout },
-          { name: 'UI/UX Design', path: '/services/ui-ux-design', icon: Figma },
+          {
+            name: 'Website Design',
+            path: '/services/web-development',
+            icon: Globe,
+            desc: 'Custom sites built to convert',
+          },
+          {
+            name: 'Landing Page Design',
+            path: '/services/landing-page',
+            icon: Layout,
+            desc: 'High-converting pages for your campaigns',
+          },
+          {
+            name: 'UI/UX Design',
+            path: '/services/ui-ux-design',
+            icon: Figma,
+            desc: 'Intuitive interfaces users love',
+          },
         ],
       },
       {
         title: 'Support & Scaling',
         items: [
-          { name: 'Mobile Apps', path: '/services/mobile-apps', icon: Smartphone },
-          { name: 'E-commerce', path: '/services/ecommerce', icon: ShoppingCart },
+          {
+            name: 'Mobile Apps',
+            path: '/services/mobile-apps',
+            icon: Smartphone,
+            desc: 'Native and cross-platform app builds',
+          },
+          {
+            name: 'E-commerce',
+            path: '/services/ecommerce',
+            icon: ShoppingCart,
+            desc: 'Online stores that sell around the clock',
+          },
         ],
       },
     ],
@@ -64,8 +99,8 @@ export const navLinks = [
     description:
       'We help businesses grow online through strategic web design and digital marketing. Whether you need a new website or a full rebrand, we re here to guide the process.',
     links: [
-      { name: 'About Us', path: '/about' },
-      { name: 'Case Studies', path: '/portfolio' },
+      { name: 'About Us', path: '/about', desc: 'Meet the team behind WebMagpie' },
+      { name: 'Case Studies', path: '/portfolio', desc: 'Real results from real clients' },
     ],
     cta: {
       heading: 'Ready To Take The First Step?',
@@ -83,10 +118,22 @@ export const navLinks = [
     description:
       'From driving traffic to converting visitors and keeping your site running 24/7 — we cover every stage of your digital growth journey.',
     links: [
-      { name: 'Marketing', path: '/how/marketing' },
-      { name: 'Build Website', path: '/how/build-website' },
-      { name: 'Convert Leads', path: '/how/convert-leads' },
-      { name: 'Website Support (24/7)', path: '/how/website-support' },
+      { name: 'Marketing', path: '/how/marketing', desc: 'Get found by the right audience' },
+      {
+        name: 'Website Development',
+        path: '/how/build-website',
+        desc: 'Launch a site built to perform',
+      },
+      {
+        name: 'Convertion Optimization',
+        path: '/how/convert-leads',
+        desc: 'Turn visitors into paying customers',
+      },
+      {
+        name: 'Support & Maintenance',
+        path: '/how/website-support',
+        desc: 'Keep your site fast and secure',
+      },
     ],
     cta: {
       heading: 'Not Sure Where To Start?',
@@ -104,8 +151,12 @@ export const navLinks = [
     description:
       'We work with organizations of all sizes — from ambitious small businesses to established B2B companies ready to scale their digital presence.',
     links: [
-      { name: 'B2B Organizations', path: '/who/b2b' },
-      { name: 'Small Business', path: '/who/small-business' },
+      { name: 'B2B Organizations', path: '/who/b2b', desc: 'Scalable solutions for growing companies' },
+      {
+        name: 'Small Business',
+        path: '/who/small-business',
+        desc: 'Affordable growth for local businesses',
+      },
     ],
     cta: {
       heading: 'Is This You?',
@@ -123,9 +174,9 @@ export const navLinks = [
     description:
       'Stay informed with the latest insights, success stories, and industry news from the WebMagpie team.',
     links: [
-      { name: 'Blogs', path: '/resources/blogs' },
-      { name: 'Case Studies', path: '/portfolio' },
-      { name: 'News', path: '/resources/news' },
+      { name: 'Blogs', path: '/blog', desc: 'Tips, trends, and industry insights' },
+      { name: 'Case Studies', path: '/portfolio', desc: "See how we've helped clients grow" },
+      { name: 'News', path: '/resources/news', desc: 'Latest updates from WebMagpie' },
     ],
     cta: {
       heading: 'Want Fresh Insights?',
@@ -197,6 +248,7 @@ const ServicesMegaMenu = ({ link, isActive }) => (
                       />
                     </Link>
 
+                    {/* Small description under the title */}
                     {item.desc && (
                       <p className="text-xs text-gray-500 mt-1 ml-10 leading-relaxed">{item.desc}</p>
                     )}
@@ -242,21 +294,27 @@ const WhyMegaMenu = ({ link, isActive }) => (
           {link.description}
         </p>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {link.links.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={cn(
-                'inline-flex items-center gap-1.5 text-sm font-semibold border-b-2 border-dashed pb-1 w-fit transition-all duration-200 hover:gap-2.5',
-                isActive(item.path)
-                  ? 'text-[#22C55E] border-[#22C55E]'
-                  : 'text-gray-800 border-gray-400 hover:text-[#22C55E] hover:border-[#22C55E]'
+            <div key={item.name}>
+              <Link
+                to={item.path}
+                className={cn(
+                  'inline-flex items-center gap-1.5 text-sm font-semibold border-b-2 border-dashed pb-1 w-fit transition-all duration-200 hover:gap-2.5',
+                  isActive(item.path)
+                    ? 'text-[#22C55E] border-[#22C55E]'
+                    : 'text-gray-800 border-gray-400 hover:text-[#22C55E] hover:border-[#22C55E]'
+                )}
+              >
+                {item.name}
+                <ArrowRight size={14} />
+              </Link>
+
+              {/* Small description under the title */}
+              {item.desc && (
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">{item.desc}</p>
               )}
-            >
-              {item.name}
-              <ArrowRight size={14} />
-            </Link>
+            </div>
           ))}
         </div>
       </div>
@@ -335,7 +393,7 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                             to={item.path}
                             onClick={onClose}
                             className={cn(
-                              'flex items-center gap-2.5 py-2 pl-2 text-sm border-l-2 transition-all duration-200 hover:pl-3',
+                              'flex items-start gap-2.5 py-2 pl-2 text-sm border-l-2 transition-all duration-200 hover:pl-3',
                               isActive(item.path)
                                 ? 'text-[#22C55E] font-bold border-[#22C55E]'
                                 : 'text-white/60 hover:text-[#22C55E] border-white/10 hover:border-[#22C55E]'
@@ -344,7 +402,7 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                             {Icon && (
                               <span
                                 className={cn(
-                                  'flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-md transition-colors duration-200',
+                                  'flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-md transition-colors duration-200 mt-0.5',
                                   isActive(item.path)
                                     ? 'bg-[#22C55E]/20 text-[#22C55E]'
                                     : 'bg-white/10 text-white/50'
@@ -353,7 +411,15 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                                 <Icon size={12} />
                               </span>
                             )}
-                            {item.name}
+                            <span className="flex flex-col">
+                              <span>{item.name}</span>
+                              {/* Small description under the title */}
+                              {item.desc && (
+                                <span className="text-white/35 text-xs font-normal mt-0.5">
+                                  {item.desc}
+                                </span>
+                              )}
+                            </span>
                           </Link>
                         );
                       })}
@@ -383,20 +449,26 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                   </p>
                   <div className="flex flex-col gap-3 mb-4">
                     {link.links.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.path}
-                        onClick={onClose}
-                        className={cn(
-                          'inline-flex items-center gap-1.5 text-sm font-semibold border-b border-dashed pb-1 w-fit transition-all duration-200',
-                          isActive(item.path)
-                            ? 'text-[#22C55E] border-[#22C55E]'
-                            : 'text-white/70 border-white/30 hover:text-[#22C55E] hover:border-[#22C55E]'
+                      <div key={item.name}>
+                        <Link
+                          to={item.path}
+                          onClick={onClose}
+                          className={cn(
+                            'inline-flex items-center gap-1.5 text-sm font-semibold border-b border-dashed pb-1 w-fit transition-all duration-200',
+                            isActive(item.path)
+                              ? 'text-[#22C55E] border-[#22C55E]'
+                              : 'text-white/70 border-white/30 hover:text-[#22C55E] hover:border-[#22C55E]'
+                          )}
+                        >
+                          {item.name}
+                          <ArrowRight size={13} />
+                        </Link>
+
+                        {/* Small description under the title */}
+                        {item.desc && (
+                          <p className="text-white/35 text-xs mt-1 leading-relaxed">{item.desc}</p>
                         )}
-                      >
-                        {item.name}
-                        <ArrowRight size={13} />
-                      </Link>
+                      </div>
                     ))}
                   </div>
 

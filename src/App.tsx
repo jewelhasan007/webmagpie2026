@@ -27,6 +27,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import RouteLoader from './components/RouteLoader';
 import ResourcesPage from './pages/Resourcespage';
 import MessagesPage from './pages/MessagesPage';
+import DigitalMarketingConsulting from './pages/MarketingConsulting2';
+
 
 
 
@@ -90,6 +92,8 @@ export default function App() {
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/resources" element={<ResourcesPage />} />
               <Route path="/admin/messages" element={<MessagesPage />} />
+              <Route path="/how/marketing" element={<DigitalMarketingConsulting></DigitalMarketingConsulting>} />
+              
             </Routes>
           </AnimatePresence>
         </main>
