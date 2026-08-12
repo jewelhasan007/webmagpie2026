@@ -19,14 +19,14 @@ const Process = () => {
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#D0E6FD]/40 blur-[120px] rounded-full" />
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-20">
-          <motion.span
+          {/* <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-[#162660] font-bold uppercase tracking-widest text-sm"
           >
             Our Workflow
-          </motion.span>
+          </motion.span> */}
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 mb-6 text-[#162660]">
             How We Bring Your <span className="text-gradient">Vision</span> To Life
           </h2>

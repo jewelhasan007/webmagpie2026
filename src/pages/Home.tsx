@@ -28,7 +28,7 @@ const Home = () => {
       <About />
       <Process />
       <Testimonials />
-      <BlogPreview />
+      {/* <BlogPreview /> */}
       <CTA />
 
     </motion.div>

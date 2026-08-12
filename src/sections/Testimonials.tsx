@@ -8,14 +8,14 @@ const Testimonials = () => {
     <section className="py-24 px-6 bg-[#162660]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
-          <motion.span
+          {/* <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-[#D0E6FD] font-bold uppercase tracking-widest text-sm"
           >
             Client Feedback
-          </motion.span>
+          </motion.span> */}
           <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 text-white">
             What Our <span className="text-[#D0E6FD]">Partners</span> Say
           </h2>

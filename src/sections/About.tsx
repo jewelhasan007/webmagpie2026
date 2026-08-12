@@ -74,9 +74,9 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-[#162660] font-bold uppercase tracking-widest text-sm">
+            {/* <span className="text-[#162660] font-bold uppercase tracking-widest text-sm">
               Who We Are
-            </span>
+            </span> */}
             <h2 className="text-4xl md:text-5xl font-display font-bold mt-4 mb-6 text-[#162660]">
               Empowering <span className="text-gradient">Digital Growth</span> Since 2020
             </h2>

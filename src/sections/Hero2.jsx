@@ -319,9 +319,7 @@ const Hero2 = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#D0E6FD] border border-[#162660]/20 text-[#162660] text-sm font-bold mb-6">
-              NEXT GEN DIGITAL AGENCY
-            </span>
+        
           </motion.div>
 
           <motion.h1
