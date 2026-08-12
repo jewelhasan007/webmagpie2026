@@ -185,6 +185,46 @@ export const navLinks = [
       path: '/contact',
     },
   },
+  {
+    name: 'Pricing',
+    path: '/price',
+    megaMenu: true,
+    layout: 'two-col',
+    heading: 'Resources',
+    description:
+      'Stay informed with the latest insights, success stories, and industry news from the WebMagpie team.',
+    links: [
+      { name: 'Blogs', path: '/blog', desc: 'Tips, trends, and industry insights' },
+      { name: 'Case Studies', path: '/portfolio', desc: "See how we've helped clients grow" },
+      { name: 'News', path: '/resources/news', desc: 'Latest updates from WebMagpie' },
+    ],
+    cta: {
+      heading: 'Want Fresh Insights?',
+      sub: 'Subscribe to our newsletter and never miss an update.',
+      label: 'Subscribe Now',
+      path: '/contact',
+    },
+  },
+  {
+    name: 'FAQs',
+    path: '/faq',
+    megaMenu: true,
+    layout: 'two-col',
+    heading: 'Resources',
+    description:
+      'Stay informed with the latest insights, success stories, and industry news from the WebMagpie team.',
+    links: [
+      { name: 'Blogs', path: '/blog', desc: 'Tips, trends, and industry insights' },
+      { name: 'Case Studies', path: '/portfolio', desc: "See how we've helped clients grow" },
+      { name: 'News', path: '/resources/news', desc: 'Latest updates from WebMagpie' },
+    ],
+    cta: {
+      heading: 'Want Fresh Insights?',
+      sub: 'Subscribe to our newsletter and never miss an update.',
+      label: 'Subscribe Now',
+      path: '/contact',
+    },
+  },
   { name: 'Contact', path: '/contact' },
 ];
 
