@@ -110,58 +110,52 @@ export const navLinks = [
     },
   },
   {
-    name: 'How We Help',
+    name: 'How & Who',
     path: '/how',
     megaMenu: true,
-    layout: 'two-col',
-    heading: 'How We Help',
-    description:
-      'From driving traffic to converting visitors and keeping your site running 24/7 — we cover every stage of your digital growth journey.',
-    links: [
-      { name: 'Marketing', path: '/how/marketing', desc: 'Get found by the right audience' },
+    layout: 'split-two-col',
+    groups: [
       {
-        name: 'Website Development',
-        path: '/how/build-website',
-        desc: 'Launch a site built to perform',
+        title: 'How We Help',
+        items: [
+          { name: 'Marketing', path: '/how/marketing', desc: 'Get found by the right audience' },
+          {
+            name: 'Website Development',
+            path: '/how/build-website',
+            desc: 'Launch a site built to perform',
+          },
+          {
+            name: 'Convertion Optimization',
+            path: '/how/convert-leads',
+            desc: 'Turn visitors into paying customers',
+          },
+          {
+            name: 'Support & Maintenance',
+            path: '/how/website-support',
+            desc: 'Keep your site fast and secure',
+          },
+        ],
       },
       {
-        name: 'Convertion Optimization',
-        path: '/how/convert-leads',
-        desc: 'Turn visitors into paying customers',
-      },
-      {
-        name: 'Support & Maintenance',
-        path: '/how/website-support',
-        desc: 'Keep your site fast and secure',
+        title: 'Who We Help',
+        items: [
+          {
+            name: 'B2B Organizations',
+            path: '/who/b2b',
+            desc: 'Scalable solutions for growing companies',
+          },
+          {
+            name: 'Small Business',
+            path: '/who/small-business',
+            desc: 'Affordable growth for local businesses',
+          },
+        ],
       },
     ],
     cta: {
       heading: 'Not Sure Where To Start?',
-      sub: 'Let our team walk you through the right solution for your goals.',
+      sub: "Tell us about your goals and we'll map out the right plan for you.",
       label: 'Schedule A Call',
-      path: '/contact',
-    },
-  },
-  {
-    name: 'Who We Help',
-    path: '/who',
-    megaMenu: true,
-    layout: 'two-col',
-    heading: 'Who We Help',
-    description:
-      'We work with organizations of all sizes — from ambitious small businesses to established B2B companies ready to scale their digital presence.',
-    links: [
-      { name: 'B2B Organizations', path: '/who/b2b', desc: 'Scalable solutions for growing companies' },
-      {
-        name: 'Small Business',
-        path: '/who/small-business',
-        desc: 'Affordable growth for local businesses',
-      },
-    ],
-    cta: {
-      heading: 'Is This You?',
-      sub: "Tell us about your business and we'll tailor the perfect plan.",
-      label: 'Get Started',
       path: '/contact',
     },
   },
@@ -187,21 +181,22 @@ export const navLinks = [
   },
   {
     name: 'Pricing',
-    path: '/price',
+    path: '/pricing',
     megaMenu: true,
     layout: 'two-col',
-    heading: 'Resources',
+    heading: 'Pricing Packages',
     description:
-      'Stay informed with the latest insights, success stories, and industry news from the WebMagpie team.',
+      'Transparent, value-focused plans for every stage of growth. Jump straight to pricing for the service you need.',
     links: [
-      { name: 'Blogs', path: '/blog', desc: 'Tips, trends, and industry insights' },
-      { name: 'Case Studies', path: '/portfolio', desc: "See how we've helped clients grow" },
-      { name: 'News', path: '/resources/news', desc: 'Latest updates from WebMagpie' },
-    ],
+      { name: 'Web Development', path: '/pricing#web-development', desc: 'From 3-page builds to full-stack platforms' },
+      { name: 'Search Engine Optimisation', path: '/pricing#seo', desc: 'Rankings, traffic, and technical SEO' },
+      { name: 'Digital Marketing & PPC', path: '/pricing#digital-marketing-ppc', desc: 'Paid campaigns across every channel' },
+      { name: 'UI/UX & Branding', path: '/pricing#ui-ux-branding', desc: 'Identity systems and product design' },
+       ],
     cta: {
-      heading: 'Want Fresh Insights?',
-      sub: 'Subscribe to our newsletter and never miss an update.',
-      label: 'Subscribe Now',
+      heading: 'Need A Custom Quote?',
+      sub: "Every business is different — let's scope a plan around your goals.",
+      label: 'Get A Quote',
       path: '/contact',
     },
   },
@@ -319,6 +314,67 @@ const ServicesMegaMenu = ({ link, isActive }) => (
 );
 
 /* ─────────────────────────────────────────────
+   Desktop Mega Menu — How & Who We Help
+   2-col split (How left / Who right) + shared CTA bar
+───────────────────────────────────────────── */
+const HowWhoMegaMenu = ({ link, isActive }) => (
+  <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden w-[560px]">
+
+    {/* TOP — 2 groups side by side */}
+    <div className="p-8">
+      <div className="grid grid-cols-2 gap-10">
+        {link.groups.map((group, i) => (
+          <div key={i} className={cn(i === 0 && 'border-r border-gray-100 pr-8')}>
+            <h4 className="text-[#1e2d50] font-semibold text-xs uppercase tracking-widest mb-4 whitespace-nowrap">
+              {group.title}
+            </h4>
+            <div className="flex flex-col gap-4">
+              {group.items.map((item) => (
+                <div key={item.name}>
+                  <Link
+                    to={item.path}
+                    className={cn(
+                      'inline-flex items-center gap-1.5 text-sm font-semibold border-b-2 border-dashed pb-1 w-fit transition-all duration-200 hover:gap-2.5',
+                      isActive(item.path)
+                        ? 'text-[#22C55E] border-[#22C55E]'
+                        : 'text-gray-800 border-gray-300 hover:text-[#22C55E] hover:border-[#22C55E]'
+                    )}
+                  >
+                    {item.name}
+                    <ArrowRight size={13} />
+                  </Link>
+
+                  {/* Small description under the title */}
+                  {item.desc && (
+                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{item.desc}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* BOTTOM — single shared dark CTA bar spanning both sections */}
+    <div className="relative bg-[#1e2d50] flex items-center justify-between px-8 py-5 overflow-hidden">
+      <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-[#22C55E]/10 blur-3xl pointer-events-none" />
+      <div className="relative z-10">
+        <p className="text-white font-extrabold text-base leading-snug">{link.cta.heading}</p>
+        <p className="text-white/50 text-xs mt-1">{link.cta.sub}</p>
+      </div>
+      <Link
+        to={link.cta.path}
+        className="relative z-10 px-6 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-lg text-sm font-bold transition-all duration-300 hover:scale-105 shadow-lg whitespace-nowrap ml-6"
+      >
+        {link.cta.label}
+      </Link>
+    </div>
+
+  </div>
+);
+
+/* ─────────────────────────────────────────────
    Desktop Mega Menu — Why WebMagpie (2-col)
 ───────────────────────────────────────────── */
 const WhyMegaMenu = ({ link, isActive }) => (
@@ -417,7 +473,7 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
           >
             <div className="pb-2">
 
-              {/* Services — groups */}
+              {/* Services / How & Who — groups */}
               {link.groups ? (
                 <>
                   {link.groups.map((group, i) => (
@@ -466,7 +522,7 @@ const MobileAccordion = ({ link, isActive, onClose }) => {
                     </div>
                   ))}
 
-                  {/* Services mobile CTA */}
+                  {/* Shared mobile CTA */}
                   <div className="mx-4 mt-3 rounded-2xl bg-[#1e2d50] border border-white/10 p-4 text-center">
                     <p className="text-white font-bold text-sm leading-snug mb-1">
                       {link.cta.heading}
@@ -565,21 +621,21 @@ const Navbar = () => {
           : 'bg-[#162660]'
       )}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between flex-nowrap gap-4">
 
         {/* ── LOGO ── */}
-        <Link to="/" className="flex items-center gap-3 whitespace-nowrap group">
-          <div className="relative">
+        <Link to="/" className="flex items-center gap-2.5 whitespace-nowrap group flex-shrink-0">
+          <div className="relative flex-shrink-0">
             <div className="absolute inset-0 bg-[#22C55E]/30 blur-xl rounded-full" />
-            <div className="relative w-11 h-11 bg-[#22C55E]/15 rounded-2xl flex items-center justify-center border border-[#22C55E]/20 transition-transform duration-500 group-hover:rotate-180">
-              <Rocket className="text-[#22C55E] w-6 h-6" />
+            <div className="relative w-9 h-9 lg:w-10 lg:h-10 bg-[#22C55E]/15 rounded-2xl flex items-center justify-center border border-[#22C55E]/20 transition-transform duration-500 group-hover:rotate-180">
+              <Rocket className="text-[#22C55E] w-5 h-5 lg:w-5.5 lg:h-5.5" />
             </div>
           </div>
           <div className="flex flex-col leading-none">
-            <span className="text-2xl font-extrabold text-white tracking-wide">
+            <span className="text-lg lg:text-xl font-extrabold text-white tracking-wide">
               Web <span className='text-[#22C55E]'>Magpie</span>
             </span>
-            <div className="relative h-[14px] overflow-hidden mt-1">
+            <div className="relative h-[14px] overflow-hidden mt-1 hidden xl:block">
               <motion.div
                 animate={{ y: ['0%', '-100%'] }}
                 transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
@@ -599,14 +655,14 @@ const Navbar = () => {
         </Link>
 
         {/* ── DESKTOP MENU ── */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-5 xl:gap-7 flex-nowrap">
           {navLinks.map((link) => (
-            <div key={link.name} className="relative group">
+            <div key={link.name} className="relative group flex-shrink-0">
               {link.megaMenu ? (
                 <>
                   <div
                     className={cn(
-                      'flex items-center gap-1 cursor-pointer text-sm transition-all duration-300',
+                      'flex items-center gap-1 cursor-pointer text-sm whitespace-nowrap transition-all duration-300',
                       (link.links
                         ? link.links.some((i) => isActive(i.path)) || isActive(link.path)
                         : link.groups?.flatMap((g) => g.items).some((i) => isActive(i.path)) ||
@@ -622,6 +678,8 @@ const Navbar = () => {
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-6 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                     {link.layout === 'two-col' ? (
                       <WhyMegaMenu link={link} isActive={isActive} />
+                    ) : link.layout === 'split-two-col' ? (
+                      <HowWhoMegaMenu link={link} isActive={isActive} />
                     ) : (
                       <ServicesMegaMenu link={link} isActive={isActive} />
                     )}
@@ -631,7 +689,7 @@ const Navbar = () => {
                 <Link
                   to={link.path}
                   className={cn(
-                    'text-sm transition-all duration-300',
+                    'text-sm whitespace-nowrap transition-all duration-300',
                     isActive(link.path)
                       ? 'text-[#22C55E] font-bold'
                       : 'text-white/90 hover:text-[#22C55E]'
@@ -645,7 +703,7 @@ const Navbar = () => {
 
           <Link
             to="/contact"
-            className="px-6 py-3 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-full text-sm font-bold transition-all shadow-lg hover:scale-105"
+            className="px-5 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-full text-sm font-bold whitespace-nowrap transition-all shadow-lg hover:scale-105 flex-shrink-0"
           >
             Get Started
           </Link>
@@ -653,7 +711,7 @@ const Navbar = () => {
 
         {/* ── MOBILE HAMBURGER ── */}
         <button
-          className="md:hidden text-white"
+          className="lg:hidden text-white flex-shrink-0"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
         >
@@ -668,7 +726,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-[#162660] border-t border-white/10 mt-4 p-4 rounded-2xl flex flex-col gap-1"
+            className="lg:hidden bg-[#162660] border-t border-white/10 mt-4 p-4 rounded-2xl flex flex-col gap-1"
           >
             {navLinks.map((link) =>
               link.megaMenu ? (

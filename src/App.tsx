@@ -28,6 +28,7 @@ import RouteLoader from './components/RouteLoader';
 import ResourcesPage from './pages/Resourcespage';
 import MessagesPage from './pages/MessagesPage';
 import DigitalMarketingConsulting from './pages/MarketingConsulting2';
+import Pricing from './pages/Pricing';
 
 
 
@@ -88,6 +89,7 @@ export default function App() {
               <Route path="/new-client" element={<ClientMessage />} />
               <Route path="/subscriber-list" element={<SubscriberList />} />
               <Route path="/process/:id" element={<ProcessDetail />} />
+              <Route path="/pricing" element={<Pricing />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/resources" element={<ResourcesPage />} />
