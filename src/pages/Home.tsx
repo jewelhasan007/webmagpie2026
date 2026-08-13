@@ -11,8 +11,6 @@ import CTA from '../sections/CTA';
 import Hero2 from '../sections/Hero2';
 
 
-
-
 const Home = () => {
   return (
     <motion.div

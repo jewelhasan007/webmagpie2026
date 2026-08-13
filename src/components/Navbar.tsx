@@ -634,7 +634,7 @@ const Navbar = () => {
           </div>
           <div className="flex flex-col leading-none">
             <span className="text-lg lg:text-xl font-extrabold text-white tracking-wide">
-              Web <span className='text-[#22C55E]'>Magpie</span>
+              Web<span className='text-[#22C55E]'>Magpie</span>
             </span>
             <div className="relative h-[14px] overflow-hidden mt-1 hidden xl:block">
               <motion.div
