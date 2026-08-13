@@ -20,7 +20,7 @@ export const pricingCategories = [
         name: 'Basic Package',
         description:
           'Ideal for startups needing a fast, professional, and fully responsive web presence.',
-        price: '$1,499',
+        price: '$499',
         priceNote: 'ONE-TIME',
         features: [
           '3-Page Premium Responsive Design',
@@ -36,7 +36,7 @@ export const pricingCategories = [
         name: 'Premium Package',
         description:
           'Perfect for growing brands requiring custom CMS controls, integrations, and animations.',
-        price: '$3,499',
+        price: '$1,499',
         priceNote: 'ONE-TIME',
         features: [
           'Up to 10 Pages Bespoke Web App',
@@ -53,7 +53,7 @@ export const pricingCategories = [
         name: 'Advanced Package',
         description:
           'Enterprise full-stack platform with custom databases, subscriptions, and security.',
-        price: '$5,999',
+        price: '$2,999',
         priceNote: 'ONE-TIME',
         features: [
           'Custom Full-Stack SaaS Architecture',

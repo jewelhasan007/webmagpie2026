@@ -29,6 +29,7 @@ import ResourcesPage from './pages/Resourcespage';
 import MessagesPage from './pages/MessagesPage';
 import DigitalMarketingConsulting from './pages/MarketingConsulting2';
 import Pricing from './pages/Pricing';
+import FAQ from './Faq';
 
 
 
@@ -90,6 +91,7 @@ export default function App() {
               <Route path="/subscriber-list" element={<SubscriberList />} />
               <Route path="/process/:id" element={<ProcessDetail />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/faq" element={<FAQ />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/resources" element={<ResourcesPage />} />

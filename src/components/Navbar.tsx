@@ -192,7 +192,7 @@ export const navLinks = [
       { name: 'Search Engine Optimisation', path: '/pricing#seo', desc: 'Rankings, traffic, and technical SEO' },
       { name: 'Digital Marketing & PPC', path: '/pricing#digital-marketing-ppc', desc: 'Paid campaigns across every channel' },
       { name: 'UI/UX & Branding', path: '/pricing#ui-ux-branding', desc: 'Identity systems and product design' },
-       ],
+    ],
     cta: {
       heading: 'Need A Custom Quote?',
       sub: "Every business is different — let's scope a plan around your goals.",
@@ -200,26 +200,27 @@ export const navLinks = [
       path: '/contact',
     },
   },
-  {
-    name: 'FAQs',
-    path: '/faq',
-    megaMenu: true,
-    layout: 'two-col',
-    heading: 'Resources',
-    description:
-      'Stay informed with the latest insights, success stories, and industry news from the WebMagpie team.',
-    links: [
-      { name: 'Blogs', path: '/blog', desc: 'Tips, trends, and industry insights' },
-      { name: 'Case Studies', path: '/portfolio', desc: "See how we've helped clients grow" },
-      { name: 'News', path: '/resources/news', desc: 'Latest updates from WebMagpie' },
-    ],
-    cta: {
-      heading: 'Want Fresh Insights?',
-      sub: 'Subscribe to our newsletter and never miss an update.',
-      label: 'Subscribe Now',
-      path: '/contact',
-    },
+ {
+  name: 'FAQs',
+  path: '/faq',
+  megaMenu: false,
+  layout: 'two-col',
+  heading: 'Frequently Asked Questions',
+  description:
+    "Answers to the questions we hear most — organized by service so you can jump straight to what you're curious about.",
+  links: [
+    { name: 'Web Development', path: '/faq#web-development', desc: 'Timelines, tech stack, and maintenance' },
+    { name: 'Search Engine Optimisation', path: '/faq#seo', desc: 'Results, rankings, and what\'s included' },
+    { name: 'Digital Marketing & PPC', path: '/faq#digital-marketing-ppc', desc: 'Platforms, budgets, and optimization' },
+    { name: 'Working With Us', path: '/faq#working-with-us', desc: 'Our process, pricing, and getting started' },
+  ],
+  cta: {
+    heading: "Can't Find Your Answer?",
+    sub: "Reach out directly and our team will get back to you fast.",
+    label: 'Contact Us',
+    path: '/contact',
   },
+},
   { name: 'Contact', path: '/contact' },
 ];
 
