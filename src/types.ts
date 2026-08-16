@@ -10,6 +10,7 @@ export interface Service {
   description: string;
   icon: string;
   slug: string;
+   image?: string;
   packages: ServicePackage[];
 }
 export interface Project {

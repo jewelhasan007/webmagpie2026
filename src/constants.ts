@@ -7,6 +7,7 @@ export const SERVICES: Service[] = [
     description: 'High-performance, scalable web applications built with modern frameworks like React and Next.js.',
     icon: 'Code2',
     slug: 'web-development',
+    image: '/raw/mag-web.png',
     packages: [
   {
     name: "Basic",
@@ -60,6 +61,7 @@ export const SERVICES: Service[] = [
     description: 'Custom online stores designed to convert visitors into loyal customers with seamless checkout experiences.',
     icon: 'ShoppingBag',
     slug: 'ecommerce',
+     image: '/raw/mag-ecommerce.png',
    packages: [
   {
     name: "Basic",
@@ -119,6 +121,7 @@ export const SERVICES: Service[] = [
     description: 'Data-driven strategies to boost your online visibility and drive organic growth through search engines.',
     icon: 'TrendingUp',
     slug: 'seo-marketing',
+    image: '/raw/mag-digital.png',
   packages: [
   {
     name: "Basic",
@@ -172,6 +175,7 @@ export const SERVICES: Service[] = [
     description: 'User-centric designs that blend aesthetics with functionality to provide intuitive digital experiences.',
     icon: 'Palette',
     slug: 'ui-ux-design',
+     image: '/raw/mag-ux.png',
   packages: [
   {
     name: "Basic",
@@ -223,6 +227,7 @@ export const SERVICES: Service[] = [
     description: 'Crafting unique brand stories and visual identities that resonate with your target audience.',
     icon: 'Zap',
     slug: 'branding',
+     image: '/raw/mag-brand.png',
   packages: [
   {
     name: "Basic",

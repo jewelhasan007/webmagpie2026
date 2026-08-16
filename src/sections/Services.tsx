@@ -15,8 +15,7 @@ const Services = () => {
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#D0E6FD]/5 blur-[120px] rounded-full" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-20">
-      
+        <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -37,33 +36,57 @@ const Services = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
           {SERVICES.map((service, index) => {
             const Icon = iconMap[service.icon];
             if (!Icon) return null;
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="bg-white/5 border border-[#D0E6FD]/15 p-10 rounded-3xl group hover:border-[#D0E6FD]/40 hover:bg-white/10 transition-all duration-300"
+                transition={{ delay: index * 0.06, duration: 0.5 }}
+                whileHover={{ y: -6 }}
+                className="relative h-64 rounded-2xl overflow-hidden group cursor-pointer shadow-[0_8px_30px_rgb(0,0,0,0.25)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.45)] transition-shadow duration-500"
               >
-                <div className="w-16 h-16 bg-[#D0E6FD]/15 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#D0E6FD] transition-colors">
-                  <Icon size={32} className="text-[#D0E6FD] group-hover:text-[#162660] transition-colors" />
+                {/* Image, subtle zoom + slight dim on hover */}
+                {service.image && (
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-110 group-hover:brightness-[0.4] transition-all duration-700 ease-out"
+                  />
+                )}
+
+                {/* Constant bottom gradient for legibility, always present, no color shift */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                {/* Faint top hairline for glass edge feel */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-white/25 transition-all duration-500" />
+
+                {/* Content */}
+                <div className="relative z-10 h-full flex flex-col justify-end p-5">
+                  <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-3 group-hover:bg-[#D0E6FD] transition-colors duration-300">
+                    <Icon size={16} className="text-white group-hover:text-[#162660] transition-colors duration-300" />
+                  </div>
+
+                  <h3 className="text-base font-semibold text-white tracking-tight leading-snug">
+                    {service.title}
+                  </h3>
+
+                  {/* Description hidden by default, fades/slides in on hover */}
+                  <p className="text-white/70 text-xs leading-relaxed mt-0 max-h-0 opacity-0 overflow-hidden group-hover:max-h-24 group-hover:opacity-100 group-hover:mt-2 transition-all duration-500 ease-out line-clamp-3">
+                    {service.description}
+                  </p>
+
+                  <Link
+                    to={`/services/${service.slug}`}
+                    className="text-[#D0E6FD] text-xs font-medium flex items-center gap-1 mt-0 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:mt-3 transition-all duration-500 delay-100 ease-out"
+                  >
+                    Learn More <TrendingUp size={12} />
+                  </Link>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-white">{service.title}</h3>
-                <p className="text-white/60 leading-relaxed mb-8">
-                  {service.description}
-                </p>
-                <Link
-                  to={`/services/${service.slug}`}
-                  className="text-[#D0E6FD] font-bold flex items-center gap-2 group-hover:gap-3 transition-all"
-                >
-                  Learn More <TrendingUp size={16} />
-                </Link>
               </motion.div>
             );
           })}
