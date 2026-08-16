@@ -48,45 +48,42 @@ const Services = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06, duration: 0.5 }}
                 whileHover={{ y: -6 }}
-                className="relative h-64 rounded-2xl overflow-hidden group cursor-pointer shadow-[0_8px_30px_rgb(0,0,0,0.25)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.45)] transition-shadow duration-500"
               >
-                {/* Image, subtle zoom + slight dim on hover */}
-                {service.image && (
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-110 group-hover:brightness-[0.4] transition-all duration-700 ease-out"
-                  />
-                )}
+                <Link
+                  to={`/services/${service.slug}`}
+                  className="relative h-64 rounded-2xl overflow-hidden group cursor-pointer block shadow-[0_8px_30px_rgb(0,0,0,0.25)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.45)] active:shadow-[0_20px_50px_rgb(0,0,0,0.45)] transition-shadow duration-500"
+                >
+                  {/* Image, subtle zoom + slight dim on hover/tap */}
+                  {service.image && (
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-110 group-hover:brightness-[0.4] group-active:scale-110 group-active:brightness-[0.4] transition-all duration-700 ease-out"
+                    />
+                  )}
 
-                {/* Constant bottom gradient for legibility, always present, no color shift */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  {/* Bottom gradient for legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent md:from-black/80 md:via-black/10" />
 
-                {/* Faint top hairline for glass edge feel */}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-white/25 transition-all duration-500" />
+                  {/* Faint hairline for glass edge feel */}
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-white/25 group-active:ring-white/25 transition-all duration-500" />
 
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col justify-end p-5">
-                  <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-3 group-hover:bg-[#D0E6FD] transition-colors duration-300">
-                    <Icon size={16} className="text-white group-hover:text-[#162660] transition-colors duration-300" />
+                  {/* Content */}
+                  <div className="relative z-10 h-full flex flex-col justify-end p-5">
+                    <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-3 group-hover:bg-[#D0E6FD] group-active:bg-[#D0E6FD] transition-colors duration-300">
+                      <Icon size={16} className="text-white group-hover:text-[#162660] group-active:text-[#162660] transition-colors duration-300" />
+                    </div>
+
+                    <h3 className="text-base font-semibold text-white tracking-tight leading-snug group-hover:text-[#D0E6FD] transition-colors duration-300">
+                      {service.title}
+                    </h3>
+
+                    {/* Description: hidden on mobile, hidden until hover on desktop */}
+                    <p className="hidden md:block text-white/70 text-xs leading-relaxed mt-0 max-h-0 opacity-0 overflow-hidden line-clamp-3 group-hover:max-h-24 group-hover:opacity-100 group-hover:mt-2 transition-all duration-500 ease-out">
+                      {service.description}
+                    </p>
                   </div>
-
-                  <h3 className="text-base font-semibold text-white tracking-tight leading-snug">
-                    {service.title}
-                  </h3>
-
-                  {/* Description hidden by default, fades/slides in on hover */}
-                  <p className="text-white/70 text-xs leading-relaxed mt-0 max-h-0 opacity-0 overflow-hidden group-hover:max-h-24 group-hover:opacity-100 group-hover:mt-2 transition-all duration-500 ease-out line-clamp-3">
-                    {service.description}
-                  </p>
-
-                  <Link
-                    to={`/services/${service.slug}`}
-                    className="text-[#D0E6FD] text-xs font-medium flex items-center gap-1 mt-0 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:mt-3 transition-all duration-500 delay-100 ease-out"
-                  >
-                    Learn More <TrendingUp size={12} />
-                  </Link>
-                </div>
+                </Link>
               </motion.div>
             );
           })}
