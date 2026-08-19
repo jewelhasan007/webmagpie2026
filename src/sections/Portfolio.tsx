@@ -28,7 +28,7 @@ const Portfolio = () => {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-5xl font-display font-bold mt-4 text-[#162660]"
             >
-              Case Studies of <span className="text-gradient">Success</span>
+              Check out our <span className="text-gradient">work</span>
             </motion.h2>
           </div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>

@@ -9,6 +9,8 @@ import Testimonials from '../sections/Testimonials';
 import BlogPreview from '../sections/BlogPreview';
 import CTA from '../sections/CTA';
 import Hero2 from '../sections/Hero2';
+import Hero3 from '../sections/Hero3';
+import Hero4 from '../sections/Hero4';
 
 
 const Home = () => {
@@ -19,8 +21,7 @@ const Home = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-     
-      <Hero2 />
+      <Hero4 />
       <Services />
       <Portfolio />
       <About />

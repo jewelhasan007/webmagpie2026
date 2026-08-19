@@ -110,7 +110,7 @@ export const navLinks = [
     },
   },
   {
-    name: 'How & Who',
+    name: 'How & Who We Help',
     path: '/how',
     megaMenu: true,
     layout: 'split-two-col',
