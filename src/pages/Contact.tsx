@@ -77,8 +77,8 @@ const Contact = () => {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-6xl font-extrabold text-[#162660] mt-2 mb-5 leading-tight"
           >
-            Let's Start A{" "}
-            <span className="text-[#22C55E]">Project</span>
+            Tell us what you {" "}
+            <span className="text-[#22C55E]">Need</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
