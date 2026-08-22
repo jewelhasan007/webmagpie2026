@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { Rocket, Twitter, Github, Linkedin, Mail, Phone, MapPin, Loader2, Facebook, Instagram, Youtube } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { navLinks } from './Navbar';
@@ -41,12 +42,26 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
     <footer className="bg-[#162660] border-t border-[#D0E6FD]/10 pt-20 pb-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
         <div className="space-y-6">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-[#D0E6FD]/20 rounded-xl flex items-center justify-center">
-              <Rocket className="text-[#D0E6FD] w-6 h-6" />
-            </div>
-            <span className="text-xl font-display font-bold text-white">WebMagpie</span>
-          </Link>
+   <Link
+  to="/"
+  className="flex items-center gap-2.5 whitespace-nowrap group flex-shrink-0"
+>
+  <div className="relative flex-shrink-0">
+    <div className="relative w-9 h-9 lg:w-10 lg:h-10 flex items-center justify-center">
+      <img
+        src="/logo/logo.png"
+        alt="WebMagpie Logo"
+        className="w-full h-full object-contain transition-transform duration-500 group-hover:rotate-180"
+      />
+    </div>
+  </div>
+
+  <div className="flex flex-col leading-none">
+    <span className="text-lg lg:text-xl font-extrabold text-white tracking-wide">
+      Web<span className="text-[#22C55E]">Magpie</span>
+    </span>
+  </div>
+</Link>
           <p className="text-white/60 leading-relaxed">
             Empowering brands through innovative digital solutions. We build high-performance products that drive growth and engagement.
           </p>
