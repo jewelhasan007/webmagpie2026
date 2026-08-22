@@ -625,35 +625,48 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between flex-nowrap gap-4">
 
         {/* ── LOGO ── */}
-        <Link to="/" className="flex items-center gap-2.5 whitespace-nowrap group flex-shrink-0">
-          <div className="relative flex-shrink-0">
-            <div className="absolute inset-0 bg-[#22C55E]/30 blur-xl rounded-full" />
-            <div className="relative w-9 h-9 lg:w-10 lg:h-10 bg-[#22C55E]/15 rounded-2xl flex items-center justify-center border border-[#22C55E]/20 transition-transform duration-500 group-hover:rotate-180">
-              <Rocket className="text-[#22C55E] w-5 h-5 lg:w-5.5 lg:h-5.5" />
-            </div>
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="text-lg lg:text-xl font-extrabold text-white tracking-wide">
-              Web<span className='text-[#22C55E]'>Magpie</span>
-            </span>
-            <div className="relative h-[14px] overflow-hidden mt-1 hidden xl:block">
-              <motion.div
-                animate={{ y: ['0%', '-100%'] }}
-                transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-                className="flex flex-col"
-              >
-                {[...brandTitles, ...brandTitles].map((title, index) => (
-                  <span
-                    key={index}
-                    className="text-[10px] uppercase tracking-[3px] h-[14px] leading-[14px] text-[#22C55E]"
-                  >
-                    {title}
-                  </span>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </Link>
+{/* ── LOGO ── */}
+<Link
+  to="/"
+  className="flex items-center gap-2.5 whitespace-nowrap group flex-shrink-0"
+>
+  <div className="relative flex-shrink-0">
+    <div className="relative w-9 h-9 lg:w-10 lg:h-10 flex items-center justify-center">
+      <img
+        src="/logo/logo.png"
+        alt="WebMagpie Logo"
+        className="w-full h-full object-contain transition-transform duration-500 group-hover:rotate-180"
+      />
+    </div>
+  </div>
+
+  <div className="flex flex-col leading-none">
+    <span className="text-lg lg:text-xl font-extrabold text-white tracking-wide">
+      Web<span className="text-[#22C55E]">Magpie</span>
+    </span>
+
+    <div className="relative h-[14px] overflow-hidden mt-1 hidden xl:block">
+      <motion.div
+        animate={{ y: ['0%', '-100%'] }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="flex flex-col"
+      >
+        {[...brandTitles, ...brandTitles].map((title, index) => (
+          <span
+            key={index}
+            className="text-[10px] uppercase tracking-[3px] h-[14px] leading-[14px] text-[#22C55E]"
+          >
+            {title}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  </div>
+</Link>
 
         {/* ── DESKTOP MENU ── */}
         <div className="hidden lg:flex items-center gap-5 xl:gap-7 flex-nowrap">
