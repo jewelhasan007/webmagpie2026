@@ -4,7 +4,7 @@ import { BLOG_POSTS } from '../constants';
 import { Plus, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const CATEGORIES = ['All', 'Technology', 'Marketing', 'Design', 'Business', 'Agency News'];
+const CATEGORIES = ['All', 'Technology', 'Marketing', 'Design', 'Business', 'Agency News', 'Entrepreneurship'];
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = React.useState('All');
