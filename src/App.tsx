@@ -30,6 +30,8 @@ import MessagesPage from './pages/MessagesPage';
 import DigitalMarketingConsulting from './pages/MarketingConsulting2';
 import Pricing from './pages/Pricing';
 import FAQ from './Faq';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsAndConditionsPage from './pages/Termsandconditionspage';
 
 
 
@@ -97,6 +99,8 @@ export default function App() {
               <Route path="/admin/resources" element={<ResourcesPage />} />
               <Route path="/admin/messages" element={<MessagesPage />} />
               <Route path="/how/marketing" element={<DigitalMarketingConsulting></DigitalMarketingConsulting>} />
+              <Route path="/privacy" element={<PrivacyPolicyPage></PrivacyPolicyPage>} />
+              <Route path="/terms" element={<TermsAndConditionsPage></TermsAndConditionsPage>} />
               
             </Routes>
           </AnimatePresence>

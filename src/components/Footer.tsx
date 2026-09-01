@@ -293,8 +293,8 @@ const Footer = ({ onNewSubscriber }: { onNewSubscriber?: () => void }) => {
           © {new Date().getFullYear()} WebMagpie Digital Agency. All rights reserved.
         </p>
         <div className="flex gap-8 text-sm text-white/40">
-          <a href="#" className="hover:text-[#D0E6FD] transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-[#D0E6FD] transition-colors">Terms of Service</a>
+          <a href="/privacy" className="hover:text-[#D0E6FD] transition-colors">Privacy Policy</a>
+          <a href="/terms" className="hover:text-[#D0E6FD] transition-colors">Terms of Service</a>
 
            {/* ✅ Hidden admin link - almost invisible, only you know it's there */}
           <Link
