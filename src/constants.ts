@@ -622,77 +622,114 @@ export const PROJECTS: Project[] = [
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
-  {
+
+ {
     id: '1',
-    title: 'The Future of Web Development in 2025',
-    excerpt1: 'Exploring how AI and edge computing are reshaping the way we build for the web.',
-    excerpt2: 'Exploring how AI and edge computing are reshaping the way we build for the web.',
-    date: 'March 15, 2024',
-    author: 'Alex Rivers',
-    image: 'https://picsum.photos/seed/future/800/500',
-    category: 'Technology',
+    title: 'You Don’t Need Everything to Start',
+    excerpt1:
+      'You don’t need more money, perfect connections, or the perfect time to start a business. Sometimes, you simply need a problem worth solving, a clear opportunity, and the courage to take the first step.',
+    excerpt2:
+      'Entrepreneurship rarely begins with perfect conditions. Start with what you have, learn as you go, improve along the way, and turn a simple idea into something real.',
+    date: 'September 1, 2026',
+    author: 'Jewel Hasan',
+    image: '/blogs/startup.jpg',
+    category: 'Entrepreneurship',
     features: [
-  "In-depth market research to identify profitable products",
-  "Competitor analysis and pricing strategy",
-  "Trend analysis to spot high-demand opportunities",
-  "Evaluation of product viability and sales potential",
-  "Recommendations for sourcing and listing optimization"
-]
+      'You don’t need to have everything figured out before you start',
+      'More money is not always the answer',
+      'Look for a problem worth solving',
+      'Identify gaps and opportunities in the market',
+      'Start with the resources you already have',
+      'Learn by doing instead of waiting for perfection',
+      'Start small and improve along the way',
+      'Focus on building instead of waiting for the perfect time',
+      'Turn ideas into action through consistent execution',
+      'The biggest difference between an idea and a business is deciding to start',
+    ],
   },
   {
     id: '2',
     title: 'Mastering SEO: Beyond Keywords',
-    excerpt1: 'Why user intent and semantic search are the new pillars of digital visibility.',
-    excerpt2: 'Why user intent and semantic search are the new pillars of digital visibility.',
+    excerpt1:
+      'Why user intent, semantic search, technical SEO, and helpful content are becoming the new pillars of digital visibility.',
+    excerpt2:
+      'Why user intent, semantic search, technical SEO, and helpful content are becoming the new pillars of digital visibility.',
     date: 'March 10, 2024',
     author: 'Sarah Chen',
     image: 'https://picsum.photos/seed/seo/800/500',
     category: 'Marketing',
     features: [
-  "In-depth market research to identify profitable products",
-  "Competitor analysis and pricing strategy",
-  "Trend analysis to spot high-demand opportunities",
-  "Evaluation of product viability and sales potential",
-  "Recommendations for sourcing and listing optimization"
-]
+      'Understanding search intent',
+      'Building topical authority',
+      'Creating genuinely helpful content',
+      'Technical SEO and website performance',
+      'Optimizing content for modern search engines',
+    ],
   },
+
   {
     id: '3',
     title: 'Designing for Accessibility',
-    excerpt1: 'How to create inclusive digital products that everyone can use effectively.',
-    excerpt2: 'How to create inclusive digital products that everyone can use effectively.',
+    excerpt1:
+      'How to create inclusive digital products that are easier, clearer, and more enjoyable for everyone to use.',
+    excerpt2:
+      'How to create inclusive digital products that are easier, clearer, and more enjoyable for everyone to use.',
     date: 'March 5, 2024',
     author: 'Marcus Thorne',
-    image: 'https://picsum.photos/seed/design/800/500',
+    image: 'https://picsum.photos/seed/accessibility/800/500',
     category: 'Design',
     features: [
-  "In-depth market research to identify profitable products",
-  "Competitor analysis and pricing strategy",
-  "Trend analysis to spot high-demand opportunities",
-  "Evaluation of product viability and sales potential",
-  "Recommendations for sourcing and listing optimization"
-]
+      'Accessible navigation and interactions',
+      'Readable typography and color contrast',
+      'Keyboard-friendly user experiences',
+      'Responsive design for different devices',
+      'Inclusive UX principles',
+    ],
   },
+
   {
     id: '4',
     title: 'People Don’t Buy Websites — They Buy Trust',
-    excerpt1: 'A typical freelancer sells a website. A strong digital agency sells trust, professionalism, strategy, and brand value. When clients choose a premium agency, they are not just paying for code.',
-    excerpt2: 'A typical freelancer sells a website. A strong digital agency sells trust, professionalism, strategy, and brand value. When clients choose a premium agency, they are not just paying for code.',
+    excerpt1:
+      'A typical freelancer sells a website. A strong digital agency sells trust, professionalism, strategy, and brand value. Clients are not simply paying for code—they are investing in confidence and business growth.',
+    excerpt2:
+      'A typical freelancer sells a website. A strong digital agency sells trust, professionalism, strategy, and brand value. Clients are not simply paying for code—they are investing in confidence and business growth.',
     date: 'May 18, 2026',
     author: 'Jewel Hasan',
-    image: 'https://picsum.photos/seed/design/800/500',
-    category: 'Design',
+    image: 'https://picsum.photos/seed/trust/800/500',
+    category: 'Business',
     features: [
- "Professional client communication",
-  "Clean presentations and branding",
-  "SEO optimization",
-  "Fast support & maintenance",
-  "Premium UI/UX experience",
-  "Digital marketing strategy",
-  "Business growth consultation",
-  "Long-term reliability"
-]
-  }
+      'Professional client communication',
+      'Clean presentations and strong branding',
+      'SEO and conversion optimization',
+      'Fast support and maintenance',
+      'Premium UI/UX experience',
+      'Digital marketing strategy',
+      'Business growth consultation',
+      'Long-term reliability',
+    ],
+  },
+
+ 
+    {
+    id: '5',
+    title: 'The Future of Web Development in 2025',
+    excerpt1:
+      'Exploring how AI, edge computing, and modern frameworks are reshaping the way we build for the web.',
+    excerpt2:
+      'Exploring how AI, edge computing, and modern frameworks are reshaping the way we build for the web.',
+    date: 'March 15, 2024',
+    author: 'Alex Rivers',
+    image: 'https://picsum.photos/seed/future/800/500',
+    category: 'Technology',
+    features: [
+      'AI-powered development workflows',
+      'Edge computing and faster web experiences',
+      'Modern JavaScript frameworks and tools',
+      'Scalable and performance-focused architecture',
+      'The growing importance of developer experience',
+    ],
+  },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [

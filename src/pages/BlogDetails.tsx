@@ -2,14 +2,14 @@ import React from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { BLOG_POSTS } from '../constants';
-import { ArrowLeft, Calendar, User, Tag, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import CTA from '../sections/CTA';
 
 const BlogDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const project = BLOG_POSTS.find((p) => p.id === id);
+  const post = BLOG_POSTS.find((p) => p.id === id);
 
-  if (!project) {
+  if (!post) {
     return <Navigate to="/blog" replace />;
   }
 
@@ -18,69 +18,85 @@ const BlogDetails = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-32"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <Link
-          to="/portfolio"
-          className="inline-flex items-center gap-2 text-[#475569] hover:text-[#162660] transition-colors mb-12 group"
-        >
-          <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-          Back to Blog
-        </Link>
+      {/* Fonts: move this <link> tag to index.html if you already load fonts elsewhere.
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"> */}
+      <style>{`
+        .font-display { font-family: 'Ubuntu', sans-serif; font-weight: 700; }
+        .font-sans { font-family: 'Ubuntu', sans-serif; }
+      `}</style>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+      {/* Hero band */}
+      <div className="bg-[#162660] pt-28 pb-10 px-6 font-sans">
+        <div className="max-w-4xl mx-auto">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-sm text-[#F1E4D1]/70 hover:text-[#F1E4D1] transition-colors mb-6 group"
           >
-            <span className="text-[#162660] font-bold uppercase tracking-widest text-sm">
-              {project.category}
-            </span>
-            <h1 className="text-5xl md:text-6xl font-display font-extrabold mt-4 mb-8">
-              {project.title}
+            <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+            Back to blog
+          </Link>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="flex items-center gap-2.5 text-xs text-[#F1E4D1] font-semibold mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F1E4D1]" />
+              {post.category}
+            </div>
+            <h1 className="font-display text-3xl md:text-4xl text-[#F1E4D1] leading-tight mb-4">
+              {post.title}
             </h1>
-            <p className="text-xl text-[#475569] leading-relaxed mb-10">
-              {project.excerpt1} We delivered a comprehensive solution that exceeded client expectations and set new industry standards for performance and design.
-            </p>
-
-         
-
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-white mb-4">Key Features</h3>
-              {project.features?.map((feature) => (
-                <div key={feature} className="flex items-center gap-3 text-white/80">
-                  <CheckCircle2 size={18} className="text-[#162660]" />
-                  <span>{feature}</span>
-                </div>
-              ))}
+            <div className="text-sm text-[#F1E4D1]/60">
+              <span>{post.author}</span>
+              <span className="mx-2">·</span>
+              <span>{post.date}</span>
             </div>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="rounded-[40px] overflow-hidden shadow-2xl border border-[#162660]/10">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-auto"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-[#D0E6FD]/50 blur-[100px] rounded-full -z-10" />
-          </motion.div>
-
-           <p className="text-xl text-[#475569] leading-relaxed mb-10">
-              {project.excerpt2} We delivered a comprehensive solution that exceeded client expectations and set new industry standards for performance and design.
-            </p>
         </div>
-
       </div>
+
+      {/* Article body */}
+      <div className="max-w-4xl mx-auto px-6 py-14 font-sans">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="rounded-xl overflow-hidden mb-10"
+        >
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-auto max-h-[360px] object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-10">
+          <div className="md:col-span-2 space-y-5 text-[#475569] leading-relaxed">
+            <p>{post.excerpt1}</p>
+            <p>{post.excerpt2}</p>
+          </div>
+
+          {post.features && post.features.length > 0 && (
+            <div className="md:col-span-1">
+              <h3 className="text-sm font-semibold text-[#162660] mb-4">Key takeaways</h3>
+              <div className="space-y-3">
+                {post.features.map((feature) => (
+                  <div key={feature} className="flex items-start gap-2.5 text-sm text-[#475569]">
+                    <CheckCircle2 size={15} className="text-[#162660] mt-0.5 shrink-0" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
       <CTA />
     </motion.div>
   );
