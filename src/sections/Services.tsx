@@ -53,12 +53,14 @@ const Services = () => {
                   to={`/services/${service.slug}`}
                   className="relative h-64 rounded-2xl overflow-hidden group cursor-pointer block shadow-[0_8px_30px_rgb(0,0,0,0.25)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.45)] active:shadow-[0_20px_50px_rgb(0,0,0,0.45)] transition-shadow duration-500"
                 >
-                  {/* Image, subtle zoom + slight dim on hover/tap */}
+                  {/* Image – cart uses object-contain so it fits fully */}
                   {service.image && (
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-110 group-hover:brightness-[0.4] group-active:scale-110 group-active:brightness-[0.4] transition-all duration-700 ease-out"
+                      className={`absolute inset-0 w-full h-full scale-100 group-hover:scale-110 group-hover:brightness-[0.4] group-active:scale-110 group-active:brightness-[0.4] transition-all duration-700 ease-out ${
+                        service.icon === 'ShoppingBag' ? 'object-contain' : 'object-cover'
+                      }`}
                     />
                   )}
 
@@ -71,14 +73,17 @@ const Services = () => {
                   {/* Content */}
                   <div className="relative z-10 h-full flex flex-col justify-end p-5">
                     <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center mb-3 group-hover:bg-[#D0E6FD] group-active:bg-[#D0E6FD] transition-colors duration-300">
-                      <Icon size={16} className="text-white group-hover:text-[#162660] group-active:text-[#162660] transition-colors duration-300" />
+                      <Icon
+                        size={16}
+                        className="text-white group-hover:text-[#162660] group-active:text-[#162660] transition-colors duration-300"
+                      />
                     </div>
 
                     <h3 className="text-base font-semibold text-white tracking-tight leading-snug group-hover:text-[#D0E6FD] transition-colors duration-300">
                       {service.title}
                     </h3>
 
-                    {/* Description: hidden on mobile, hidden until hover on desktop */}
+                    {/* Description: hidden on mobile, appears on hover (desktop) */}
                     <p className="hidden md:block text-white/70 text-xs leading-relaxed mt-0 max-h-0 opacity-0 overflow-hidden line-clamp-3 group-hover:max-h-24 group-hover:opacity-100 group-hover:mt-2 transition-all duration-500 ease-out">
                       {service.description}
                     </p>

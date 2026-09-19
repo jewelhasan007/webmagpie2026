@@ -7,7 +7,7 @@ export const SERVICES: Service[] = [
     description: 'High-performance, scalable web applications built with modern frameworks like React and Next.js.',
     icon: 'Code2',
     slug: 'web-development',
-    image: '/raw/mag-web.png',
+    image: '/raw/mag-web2.png',
     packages: [
   {
     name: "Basic",
@@ -623,8 +623,33 @@ export const PROJECTS: Project[] = [
 
 export const BLOG_POSTS: BlogPost[] = [
 
- {
+  {
     id: '1',
+    title: 'Self Improvement Challenge (4 Months)',
+    excerpt1:
+      'A simple, no-excuses 4-month challenge built around small daily habits that compound into real change—your body, mind, and career all growing together.',
+    excerpt2:
+      'You don’t need a complete life overhaul to transform yourself. Ten consistent daily habits, followed for four months, can reshape your health, mindset, and future.',
+    date: 'September 12, 2026',
+    author: 'Jewel Hasan',
+    image: '/blogs/self-improvement.jpg',
+    category: 'Self Improvement',
+    features: [
+      'Wake up early',
+      '30 min for your body',
+      'Read 15 pages daily',
+      'Eat healthy food',
+      'Learn something new',
+      'Focus on studies/career',
+      'Spend time with yourself',
+      'Explore new things',
+      'Reduce screen time',
+      'Make daily targets',
+    ],
+  },
+
+  {
+    id: '2',
     title: 'You Don’t Need Everything to Start',
     excerpt1:
       'You don’t need more money, perfect connections, or the perfect time to start a business. Sometimes, you simply need a problem worth solving, a clear opportunity, and the courage to take the first step.',
@@ -647,8 +672,9 @@ export const BLOG_POSTS: BlogPost[] = [
       'The biggest difference between an idea and a business is deciding to start',
     ],
   },
+
   {
-    id: '2',
+    id: '3',
     title: 'Mastering SEO: Beyond Keywords',
     excerpt1:
       'Why user intent, semantic search, technical SEO, and helpful content are becoming the new pillars of digital visibility.',
@@ -668,7 +694,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
 
   {
-    id: '3',
+    id: '4',
     title: 'Designing for Accessibility',
     excerpt1:
       'How to create inclusive digital products that are easier, clearer, and more enjoyable for everyone to use.',
@@ -688,7 +714,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
 
   {
-    id: '4',
+    id: '5',
     title: 'People Don’t Buy Websites — They Buy Trust',
     excerpt1:
       'A typical freelancer sells a website. A strong digital agency sells trust, professionalism, strategy, and brand value. Clients are not simply paying for code—they are investing in confidence and business growth.',
@@ -710,9 +736,8 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
   },
 
- 
-    {
-    id: '5',
+  {
+    id: '6',
     title: 'The Future of Web Development in 2025',
     excerpt1:
       'Exploring how AI, edge computing, and modern frameworks are reshaping the way we build for the web.',

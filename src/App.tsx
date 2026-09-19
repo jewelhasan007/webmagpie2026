@@ -32,6 +32,7 @@ import Pricing from './pages/Pricing';
 import FAQ from './Faq';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsAndConditionsPage from './pages/Termsandconditionspage';
+import DailyEntryComposer from './pages/Dailyentrycomposer';
 
 
 
@@ -98,6 +99,7 @@ export default function App() {
               <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/resources" element={<ResourcesPage />} />
               <Route path="/admin/messages" element={<MessagesPage />} />
+              <Route path="/admin/post" element={<DailyEntryComposer />} />
               <Route path="/how/marketing" element={<DigitalMarketingConsulting></DigitalMarketingConsulting>} />
               <Route path="/privacy" element={<PrivacyPolicyPage></PrivacyPolicyPage>} />
               <Route path="/terms" element={<TermsAndConditionsPage></TermsAndConditionsPage>} />
