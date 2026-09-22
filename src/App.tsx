@@ -33,9 +33,7 @@ import FAQ from './Faq';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsAndConditionsPage from './pages/Termsandconditionspage';
 import DailyEntryComposer from './pages/Dailyentrycomposer';
-
-
-
+import CourseArchive from './sections/CourseArchieve';
 
 
 const ScrollToTop = () => {
@@ -100,6 +98,7 @@ export default function App() {
               <Route path="/admin/resources" element={<ResourcesPage />} />
               <Route path="/admin/messages" element={<MessagesPage />} />
               <Route path="/admin/post" element={<DailyEntryComposer />} />
+              <Route path="/admin/course-archieve" element={<CourseArchive />} />
               <Route path="/how/marketing" element={<DigitalMarketingConsulting></DigitalMarketingConsulting>} />
               <Route path="/privacy" element={<PrivacyPolicyPage></PrivacyPolicyPage>} />
               <Route path="/terms" element={<TermsAndConditionsPage></TermsAndConditionsPage>} />

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Rocket, LogOut, BookOpen, MessageSquare, Mail,
-  Building2, User, Search, RefreshCw, Inbox, StickyNote
+  Building2, User, Search, RefreshCw, Inbox, StickyNote,
+  ChevronUpSquare
 } from "lucide-react";
 
 // ─── Page loader ──────────────────────────────────────────────────────────────
@@ -133,6 +134,14 @@ const AdminDashboard = () => {
               <StickyNote size={15} />
          
               New Post
+            </button>
+            <button
+              onClick={() => navigate("/admin/course-archieve")}
+              className="flex items-center gap-2 px-4 py-2 bg-[#162660]/10 text-[#162660] rounded-xl hover:bg-[#162660]/20 transition-colors font-medium text-sm"
+            >
+              <ChevronUpSquare size={15} />
+         
+              Course All
             </button>
             <button
               onClick={handleLogout}

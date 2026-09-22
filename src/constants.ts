@@ -1,120 +1,123 @@
 import { Service, Project, BlogPost, Testimonial } from './types';
 
+
 export const SERVICES: Service[] = [
   {
     id: '1',
-    title: 'Web Development',
+    title: 'Web Design & Development',
     description: 'High-performance, scalable web applications built with modern frameworks like React and Next.js.',
     icon: 'Code2',
     slug: 'web-development',
     image: '/raw/mag-web2.png',
     packages: [
-  {
-    name: "Basic",
-    price: "$199",
-    features: [
-      "1–3 Page Website",
-      "Responsive Design (Mobile Friendly)",
-      "Basic UI Design",
-      "Contact Form",
-      "Basic SEO Setup",
-      "3–5 Days Delivery",
-      "1 Revision"
+      {
+        name: "Basic",
+        price: "$199",
+        features: [
+          "1–3 Page Website",
+          "Responsive Design (Mobile Friendly)",
+          "Basic UI Design",
+          "Contact Form",
+          "Basic SEO Setup",
+          "3–5 Days Delivery",
+          "1 Revision"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$499",
+        features: [
+          "Up to 8 Pages Website",
+          "Custom UI/UX Design",
+          "Responsive Design",
+          "SEO Optimization",
+          "Speed Optimization",
+          "Blog Integration",
+          "Admin Dashboard (Basic)",
+          "7–10 Days Delivery",
+          "3 Revisions"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$999+",
+        features: [
+          "Unlimited Pages",
+          "Fully Custom Web Application",
+          "Advanced UI/UX Design",
+          "Authentication System",
+          "Database Integration",
+          "API Integration",
+          "Performance Optimization",
+          "Full SEO Setup",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
     ]
   },
-  {
-    name: "Premium",
-    price: "$499",
-    features: [
-      "Up to 8 Pages Website",
-      "Custom UI/UX Design",
-      "Responsive Design",
-      "SEO Optimization",
-      "Speed Optimization",
-      "Blog Integration",
-      "Admin Dashboard (Basic)",
-      "7–10 Days Delivery",
-      "3 Revisions"
-    ]
-  },
-  {
-    name: "Unlimited",
-    price: "$999+",
-    features: [
-      "Unlimited Pages",
-      "Fully Custom Web Application",
-      "Advanced UI/UX Design",
-      "Authentication System",
-      "Database Integration",
-      "API Integration",
-      "Performance Optimization",
-      "Full SEO Setup",
-      "Priority Support",
-      "Unlimited Revisions"
-    ]
-  }
-]
-  },
+
   {
     id: '2',
     title: 'E-commerce Solutions',
     description: 'Custom online stores designed to convert visitors into loyal customers with seamless checkout experiences.',
     icon: 'ShoppingBag',
     slug: 'ecommerce',
-     image: '/raw/mag-ecommerce.png',
-   packages: [
-  {
-    name: "Basic",
-    price: "$299",
-    features: [
-      "E-commerce Website Setup",
-      "Up to 20 Products",
-      "Responsive Design",
-      "Product Categories",
-      "Shopping Cart",
-      "Basic Payment Integration",
-      "Basic SEO Setup",
-      "5–7 Days Delivery",
-      "1 Revision"
+    image: '/raw/mag-ecommerce.png',
+    packages: [
+      {
+        name: "Basic",
+        price: "$299",
+        features: [
+          "E-commerce Website Setup",
+          "Up to 20 Products",
+          "Responsive Design",
+          "Product Categories",
+          "Shopping Cart",
+          "Basic Payment Integration",
+          "Basic SEO Setup",
+          "5–7 Days Delivery",
+          "1 Revision"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$699",
+        features: [
+          "Custom E-commerce Website",
+          "Up to 100 Products",
+          "Advanced UI/UX Design",
+          "Secure Payment Gateway",
+          "Order Management System",
+          "Inventory Management",
+          "Discount & Coupon System",
+          "SEO Optimization",
+          "Speed Optimization",
+          "10–14 Days Delivery",
+          "3 Revisions"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$1299+",
+        features: [
+          "Fully Custom E-commerce Platform",
+          "Unlimited Products",
+          "Custom UI/UX Design",
+          "Multiple Payment Gateways",
+          "Advanced Inventory System",
+          "Customer Accounts & Dashboard",
+          "Analytics & Sales Reports",
+          "Email Notifications System",
+          "API Integrations",
+          "Performance Optimization",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
     ]
   },
-  {
-    name: "Premium",
-    price: "$699",
-    features: [
-      "Custom E-commerce Website",
-      "Up to 100 Products",
-      "Advanced UI/UX Design",
-      "Secure Payment Gateway",
-      "Order Management System",
-      "Inventory Management",
-      "Discount & Coupon System",
-      "SEO Optimization",
-      "Speed Optimization",
-      "10–14 Days Delivery",
-      "3 Revisions"
-    ]
-  },
-  {
-    name: "Unlimited",
-    price: "$1299+",
-    features: [
-      "Fully Custom E-commerce Platform",
-      "Unlimited Products",
-      "Custom UI/UX Design",
-      "Multiple Payment Gateways",
-      "Advanced Inventory System",
-      "Customer Accounts & Dashboard",
-      "Analytics & Sales Reports",
-      "Email Notifications System",
-      "API Integrations",
-      "Performance Optimization",
-      "Priority Support",
-      "Unlimited Revisions"
-    ]
-  }
-]
-  },
+
   {
     id: '3',
     title: 'SEO & Digital Marketing',
@@ -122,215 +125,219 @@ export const SERVICES: Service[] = [
     icon: 'TrendingUp',
     slug: 'seo-marketing',
     image: '/raw/mag-digital.png',
-  packages: [
-  {
-    name: "Basic",
-    price: "$199 / month",
-    features: [
-      "Website SEO Audit",
-      "Keyword Research (10 Keywords)",
-      "On-Page SEO Optimization",
-      "Meta Tags & Image Optimization",
-      "Google Search Console Setup",
-      "Basic Analytics Setup",
-      "Monthly SEO Report"
+    packages: [
+      {
+        name: "Basic",
+        price: "$199 / month",
+        features: [
+          "Website SEO Audit",
+          "Keyword Research (10 Keywords)",
+          "On-Page SEO Optimization",
+          "Meta Tags & Image Optimization",
+          "Google Search Console Setup",
+          "Basic Analytics Setup",
+          "Monthly SEO Report"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$499 / month",
+        features: [
+          "Complete SEO Strategy",
+          "Keyword Research (30 Keywords)",
+          "On-Page & Technical SEO",
+          "Content Optimization",
+          "Competitor Analysis",
+          "Backlink Building",
+          "Local SEO Optimization",
+          "Google Analytics & Search Console",
+          "Bi-Weekly Performance Report"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$999+ / month",
+        features: [
+          "Full Digital Marketing Strategy",
+          "Unlimited Keyword Targeting",
+          "Advanced Technical SEO",
+          "Content Marketing Strategy",
+          "High Authority Backlink Building",
+          "Local & International SEO",
+          "Conversion Rate Optimization",
+          "Paid Ads Strategy (Google/Facebook)",
+          "Weekly Performance Reports",
+          "Priority Support"
+        ]
+      }
     ]
   },
-  {
-    name: "Premium",
-    price: "$499 / month",
-    features: [
-      "Complete SEO Strategy",
-      "Keyword Research (30 Keywords)",
-      "On-Page & Technical SEO",
-      "Content Optimization",
-      "Competitor Analysis",
-      "Backlink Building",
-      "Local SEO Optimization",
-      "Google Analytics & Search Console",
-      "Bi-Weekly Performance Report"
-    ]
-  },
-  {
-    name: "Unlimited",
-    price: "$999+ / month",
-    features: [
-      "Full Digital Marketing Strategy",
-      "Unlimited Keyword Targeting",
-      "Advanced Technical SEO",
-      "Content Marketing Strategy",
-      "High Authority Backlink Building",
-      "Local & International SEO",
-      "Conversion Rate Optimization",
-      "Paid Ads Strategy (Google/Facebook)",
-      "Weekly Performance Reports",
-      "Priority Support"
-    ]
-  }
-]
-  },
+
   {
     id: '4',
     title: 'UI/UX Design',
     description: 'User-centric designs that blend aesthetics with functionality to provide intuitive digital experiences.',
     icon: 'Palette',
     slug: 'ui-ux-design',
-     image: '/raw/mag-ux.png',
-  packages: [
-  {
-    name: "Basic",
-    price: "$149",
-    features: [
-      "UI Design for 1–2 Screens",
-      "Basic Wireframe",
-      "Modern & Clean Layout",
-      "Mobile Responsive Design",
-      "Figma Design File",
-      "2 Revisions",
-      "3–5 Days Delivery"
+    image: '/raw/mag-ux.png',
+    packages: [
+      {
+        name: "Basic",
+        price: "$149",
+        features: [
+          "UI Design for 1–2 Screens",
+          "Basic Wireframe",
+          "Modern & Clean Layout",
+          "Mobile Responsive Design",
+          "Figma Design File",
+          "2 Revisions",
+          "3–5 Days Delivery"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$399",
+        features: [
+          "UI/UX Design for up to 8 Screens",
+          "User Flow & Wireframing",
+          "High-Fidelity UI Design",
+          "Interactive Prototype (Figma)",
+          "Mobile & Tablet Responsive Layout",
+          "Design System Basics",
+          "5 Revisions",
+          "7–10 Days Delivery"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$799+",
+        features: [
+          "Complete Product UI/UX Design",
+          "User Research & Competitor Analysis",
+          "Full Design System",
+          "Unlimited Screens",
+          "Advanced Interactive Prototypes",
+          "Developer Handoff (Figma Specs)",
+          "Usability Improvements",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
     ]
   },
-  {
-    name: "Premium",
-    price: "$399",
-    features: [
-      "UI/UX Design for up to 8 Screens",
-      "User Flow & Wireframing",
-      "High-Fidelity UI Design",
-      "Interactive Prototype (Figma)",
-      "Mobile & Tablet Responsive Layout",
-      "Design System Basics",
-      "5 Revisions",
-      "7–10 Days Delivery"
-    ]
-  },
-  {
-    name: "Unlimited",
-    price: "$799+",
-    features: [
-      "Complete Product UI/UX Design",
-      "User Research & Competitor Analysis",
-      "Full Design System",
-      "Unlimited Screens",
-      "Advanced Interactive Prototypes",
-      "Developer Handoff (Figma Specs)",
-      "Usability Improvements",
-      "Priority Support",
-      "Unlimited Revisions"
-    ]
-  }
-]
-  },
+
   {
     id: '5',
     title: 'Branding & Identity',
     description: 'Crafting unique brand stories and visual identities that resonate with your target audience.',
     icon: 'Zap',
     slug: 'branding',
-     image: '/raw/mag-brand.png',
-  packages: [
-  {
-    name: "Basic",
-    price: "$199",
-    features: [
-      "2 Logo Concepts",
-      "Basic Brand Color Palette",
-      "Typography Selection",
-      "High Resolution Logo Files",
-      "PNG, JPG, SVG Formats",
-      "3 Revisions",
-      "3–5 Days Delivery"
+    image: '/raw/mag-brand.png',
+    packages: [
+      {
+        name: "Basic",
+        price: "$199",
+        features: [
+          "2 Logo Concepts",
+          "Basic Brand Color Palette",
+          "Typography Selection",
+          "High Resolution Logo Files",
+          "PNG, JPG, SVG Formats",
+          "3 Revisions",
+          "3–5 Days Delivery"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$499",
+        features: [
+          "4 Logo Concepts",
+          "Complete Brand Color Palette",
+          "Typography System",
+          "Business Card Design",
+          "Social Media Profile Graphics",
+          "Brand Style Guide (Mini)",
+          "Source Files Included",
+          "5 Revisions",
+          "7–10 Days Delivery"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$899+",
+        features: [
+          "Full Brand Identity Design",
+          "6+ Logo Concepts",
+          "Complete Brand Guidelines",
+          "Logo Variations & Icons",
+          "Stationery Design (Card, Letterhead)",
+          "Social Media Brand Kit",
+          "Marketing Asset Templates",
+          "Brand Strategy Consultation",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
     ]
   },
-  {
-    name: "Premium",
-    price: "$499",
-    features: [
-      "4 Logo Concepts",
-      "Complete Brand Color Palette",
-      "Typography System",
-      "Business Card Design",
-      "Social Media Profile Graphics",
-      "Brand Style Guide (Mini)",
-      "Source Files Included",
-      "5 Revisions",
-      "7–10 Days Delivery"
-    ]
-  },
-  {
-    name: "Unlimited",
-    price: "$899+",
-    features: [
-      "Full Brand Identity Design",
-      "6+ Logo Concepts",
-      "Complete Brand Guidelines",
-      "Logo Variations & Icons",
-      "Stationery Design (Card, Letterhead)",
-      "Social Media Brand Kit",
-      "Marketing Asset Templates",
-      "Brand Strategy Consultation",
-      "Priority Support",
-      "Unlimited Revisions"
-    ]
-  }
-]
-  },
+
   {
     id: '6',
     title: 'Mobile App Development',
     description: 'Native and cross-platform mobile applications that deliver exceptional performance on all devices.',
     icon: 'Smartphone',
     slug: 'mobile-apps',
-   packages: [
-  {
-    name: "Basic",
-    price: "$499",
-    features: [
-      "Simple Mobile App",
-      "Up to 5 Screens",
-      "Basic UI Design",
-      "Android or iOS (Single Platform)",
-      "API Integration (Basic)",
-      "App Testing",
-      "7–10 Days Delivery",
-      "2 Revisions"
+    packages: [
+      {
+        name: "Basic",
+        price: "$499",
+        features: [
+          "Simple Mobile App",
+          "Up to 5 Screens",
+          "Basic UI Design",
+          "Android or iOS (Single Platform)",
+          "API Integration (Basic)",
+          "App Testing",
+          "7–10 Days Delivery",
+          "2 Revisions"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$999",
+        features: [
+          "Custom Mobile App",
+          "Up to 12 Screens",
+          "Advanced UI/UX Design",
+          "Android & iOS (Cross Platform)",
+          "Backend Integration",
+          "User Authentication System",
+          "Push Notifications",
+          "App Performance Optimization",
+          "14–21 Days Delivery",
+          "4 Revisions"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$1999+",
+        features: [
+          "Full-Scale Mobile Application",
+          "Unlimited Screens",
+          "Custom UI/UX Design",
+          "Advanced Backend System",
+          "API & Third-Party Integrations",
+          "Real-Time Features (Chat, Notifications)",
+          "Admin Dashboard",
+          "App Store & Play Store Deployment",
+          "Performance Optimization",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
     ]
   },
-  {
-    name: "Premium",
-    price: "$999",
-    features: [
-      "Custom Mobile App",
-      "Up to 12 Screens",
-      "Advanced UI/UX Design",
-      "Android & iOS (Cross Platform)",
-      "Backend Integration",
-      "User Authentication System",
-      "Push Notifications",
-      "App Performance Optimization",
-      "14–21 Days Delivery",
-      "4 Revisions"
-    ]
-  },
-  {
-    name: "Unlimited",
-    price: "$1999+",
-    features: [
-      "Full-Scale Mobile Application",
-      "Unlimited Screens",
-      "Custom UI/UX Design",
-      "Advanced Backend System",
-      "API & Third-Party Integrations",
-      "Real-Time Features (Chat, Notifications)",
-      "Admin Dashboard",
-      "App Store & Play Store Deployment",
-      "Performance Optimization",
-      "Priority Support",
-      "Unlimited Revisions"
-    ]
-  }
-]
-  },
+
   {
     id: '7',
     title: 'Logo Design',
@@ -375,6 +382,7 @@ export const SERVICES: Service[] = [
       }
     ]
   },
+
   {
     id: '8',
     title: 'Amazon FBA Consultation',
@@ -421,7 +429,8 @@ export const SERVICES: Service[] = [
       }
     ]
   },
- {
+
+  {
     id: '9',
     title: 'Landing Page Design',
     description: 'High-converting, visually appealing landing pages designed to capture leads and drive sales.',
@@ -469,48 +478,258 @@ export const SERVICES: Service[] = [
         ]
       }
     ]
-  } 
+  },
 
+  {
+    id: '10',
+    title: 'SaaS (Software-as-a-Service)',
+    description: 'Scalable cloud-based SaaS platforms designed to automate business processes, serve users, and grow with your business.',
+    icon: 'Cloud',
+    slug: 'saas-development',
+    packages: [
+      {
+        name: "Basic",
+        price: "$799",
+        features: [
+          "SaaS MVP Development",
+          "Modern Responsive UI",
+          "User Registration & Login",
+          "Basic User Dashboard",
+          "Database Integration",
+          "REST API Integration",
+          "Basic Admin Panel",
+          "Basic Security Setup",
+          "14–21 Days Delivery",
+          "2 Revisions"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$1999",
+        features: [
+          "Custom SaaS Application",
+          "Advanced UI/UX Design",
+          "User Authentication & Authorization",
+          "Subscription & Payment Integration",
+          "Admin Dashboard",
+          "Database Architecture",
+          "REST / GraphQL API",
+          "Email & Notification System",
+          "Analytics Dashboard",
+          "Cloud Deployment",
+          "30–45 Days Delivery",
+          "4 Revisions"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$3999+",
+        features: [
+          "Enterprise-Grade SaaS Platform",
+          "Multi-Tenant Architecture",
+          "Advanced Role-Based Access",
+          "Subscription & Billing System",
+          "Advanced Admin Dashboard",
+          "Third-Party API Integrations",
+          "Real-Time Features",
+          "Advanced Analytics & Reporting",
+          "Scalable Cloud Infrastructure",
+          "Security & Performance Optimization",
+          "CI/CD Deployment",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: '11',
+    title: 'Enterprise Resource Planning (ERP)',
+    description: 'Integrated ERP systems that connect finance, sales, inventory, HR, operations, and other core business processes in one platform.',
+    icon: 'Building2',
+    slug: 'erp-solutions',
+    packages: [
+      {
+        name: "Basic",
+        price: "$1499",
+        features: [
+          "Custom ERP Dashboard",
+          "User Authentication",
+          "Role-Based Access Control",
+          "Basic HR Module",
+          "Inventory Management",
+          "Customer Management",
+          "Basic Reports",
+          "Database Integration",
+          "Admin Panel",
+          "21–30 Days Delivery",
+          "2 Revisions"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$3499",
+        features: [
+          "Custom ERP System",
+          "HR & Employee Management",
+          "Inventory & Warehouse Management",
+          "Sales & Customer Management",
+          "Purchase Management",
+          "Accounting & Finance Module",
+          "Advanced Reports & Analytics",
+          "Role-Based Permissions",
+          "API Integrations",
+          "Automated Notifications",
+          "Cloud Deployment",
+          "45–60 Days Delivery",
+          "4 Revisions"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$6999+",
+        features: [
+          "Enterprise ERP Platform",
+          "Multi-Branch / Multi-Company Support",
+          "Advanced HR & Payroll",
+          "Accounting & Financial Management",
+          "Inventory & Warehouse Management",
+          "Procurement & Purchase Management",
+          "Sales & CRM",
+          "Production / Operations Management",
+          "Advanced Business Intelligence",
+          "Custom Workflow Automation",
+          "Third-Party Integrations",
+          "Advanced Security & Permissions",
+          "Scalable Cloud Infrastructure",
+          "Priority Support",
+          "Unlimited Revisions"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: '12',
+    title: 'Custom Software Development',
+    description: 'Tailor-made software solutions engineered around your unique business requirements, workflows, and growth objectives.',
+    icon: 'Terminal',
+    slug: 'custom-software-development',
+    packages: [
+      {
+        name: "Basic",
+        price: "$799",
+        features: [
+          "Business Software MVP",
+          "Requirement Analysis",
+          "Custom UI Design",
+          "User Authentication",
+          "Database Integration",
+          "Basic Admin Panel",
+          "API Integration",
+          "Responsive Interface",
+          "14–21 Days Delivery",
+          "2 Revisions"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$1999",
+        features: [
+          "Fully Custom Software",
+          "Business Workflow Automation",
+          "Custom UI/UX Design",
+          "Advanced Authentication",
+          "Database Architecture",
+          "API & Third-Party Integrations",
+          "Admin Dashboard",
+          "Reporting & Analytics",
+          "Cloud Deployment",
+          "Security & Performance Optimization",
+          "30–45 Days Delivery",
+          "4 Revisions"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$3999+",
+        features: [
+          "Enterprise Custom Software",
+          "Complex Business Logic",
+          "Advanced Workflow Automation",
+          "Multi-User & Role Management",
+          "Advanced Database Architecture",
+          "Microservices / API Architecture",
+          "Third-Party Integrations",
+          "Real-Time Features",
+          "Advanced Analytics & Reporting",
+          "Cloud Infrastructure",
+          "Security Hardening",
+          "CI/CD Pipeline",
+          "Dedicated Support",
+          "Unlimited Revisions"
+        ]
+      }
+    ]
+  },
+
+  {
+    id: '13',
+    title: 'IT Consultancy',
+    description: 'Strategic IT consulting to help businesses choose the right technologies, improve systems, strengthen security, and plan digital transformation.',
+    icon: 'BriefcaseBusiness',
+    slug: 'it-consultancy',
+    packages: [
+      {
+        name: "Basic",
+        price: "$149",
+        features: [
+          "Initial IT Assessment",
+          "Technology Stack Review",
+          "Business Requirements Analysis",
+          "1 Consultation Session",
+          "Technology Recommendations",
+          "Basic Action Plan",
+          "Email Support"
+        ]
+      },
+      {
+        name: "Premium",
+        price: "$399",
+        features: [
+          "Complete IT Assessment",
+          "Software & Architecture Review",
+          "Cloud & Infrastructure Consultation",
+          "Cybersecurity Review",
+          "Technology Roadmap",
+          "Digital Transformation Strategy",
+          "3 Consultation Sessions",
+          "Detailed Recommendations",
+          "Email Support"
+        ]
+      },
+      {
+        name: "Unlimited",
+        price: "$999+",
+        features: [
+          "Comprehensive IT Strategy",
+          "Enterprise Architecture Consulting",
+          "Cloud Migration Strategy",
+          "Cybersecurity & Risk Assessment",
+          "Software & Infrastructure Audit",
+          "Digital Transformation Roadmap",
+          "System Integration Planning",
+          "Technology Cost Optimization",
+          "Ongoing Strategic Consulting",
+          "Priority Support",
+          "Unlimited Consultation Sessions"
+        ]
+      }
+    ]
+  }
 ];
 
-// export const PROJECTS: Project[] = [
-//   {
-//     id: '1',
-//     title: 'Lumina SaaS Platform',
-//     category: 'Web Development',
-//     image: 'https://picsum.photos/seed/lumina/800/600',
-//     description: 'A comprehensive analytics dashboard for enterprise teams.',
-//     client: 'Lumina Tech',
-//     year: '2024'
-//   },
-//   {
-//     id: '2',
-//     title: 'EcoStore E-commerce',
-//     category: 'E-commerce',
-//     image: 'https://picsum.photos/seed/ecostore/800/600',
-//     description: 'Sustainable fashion marketplace with integrated carbon tracking.',
-//     client: 'EcoCollective',
-//     year: '2023'
-//   },
-//   {
-//     id: '3',
-//     title: 'Pulse Fitness App',
-//     category: 'Mobile Design',
-//     image: 'https://picsum.photos/seed/pulse/800/600',
-//     description: 'AI-powered personal trainer and nutrition tracker.',
-//     client: 'Pulse Global',
-//     year: '2024'
-//   },
-//   {
-//     id: '4',
-//     title: 'Zenith Branding',
-//     category: 'Branding',
-//     image: 'https://picsum.photos/seed/zenith/800/600',
-//     description: 'Complete visual identity overhaul for a luxury watchmaker.',
-//     client: 'Zenith Horology',
-//     year: '2023'
-//   }
-// ];
 
 export const PROJECTS: Project[] = [
   {
