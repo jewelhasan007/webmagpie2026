@@ -8,7 +8,7 @@ export const SERVICES: Service[] = [
     description: 'High-performance, scalable web applications built with modern frameworks like React and Next.js.',
     icon: 'Code2',
     slug: 'web-development',
-    image: '/raw/mag-web2.png',
+    image: 'services/web.jpg',
     packages: [
       {
         name: "Basic",
@@ -63,7 +63,7 @@ export const SERVICES: Service[] = [
     description: 'Custom online stores designed to convert visitors into loyal customers with seamless checkout experiences.',
     icon: 'ShoppingBag',
     slug: 'ecommerce',
-    image: '/raw/mag-ecommerce.png',
+    image: '/services/ecommerce.jpg',
     packages: [
       {
         name: "Basic",
@@ -124,7 +124,7 @@ export const SERVICES: Service[] = [
     description: 'Data-driven strategies to boost your online visibility and drive organic growth through search engines.',
     icon: 'TrendingUp',
     slug: 'seo-marketing',
-    image: '/raw/mag-digital.png',
+    image: '/services/seo.jpg',
     packages: [
       {
         name: "Basic",
@@ -179,7 +179,7 @@ export const SERVICES: Service[] = [
     description: 'User-centric designs that blend aesthetics with functionality to provide intuitive digital experiences.',
     icon: 'Palette',
     slug: 'ui-ux-design',
-    image: '/raw/mag-ux.png',
+    image: '/services/uxui.png',
     packages: [
       {
         name: "Basic",
@@ -232,7 +232,7 @@ export const SERVICES: Service[] = [
     description: 'Crafting unique brand stories and visual identities that resonate with your target audience.',
     icon: 'Zap',
     slug: 'branding',
-    image: '/raw/mag-brand.png',
+    image: '/services/branding.jpg',
     packages: [
       {
         name: "Basic",
@@ -287,6 +287,7 @@ export const SERVICES: Service[] = [
     description: 'Native and cross-platform mobile applications that deliver exceptional performance on all devices.',
     icon: 'Smartphone',
     slug: 'mobile-apps',
+      image: '/services/saas.jpg',
     packages: [
       {
         name: "Basic",
@@ -344,6 +345,7 @@ export const SERVICES: Service[] = [
     description: 'Professional logo designs that capture your brand’s essence and make it memorable.',
     icon: 'Image',
     slug: 'logo-design',
+      image: '/services/logo.jpg',
     packages: [
       {
         name: "Basic",
@@ -389,6 +391,7 @@ export const SERVICES: Service[] = [
     description: 'Expert guidance to launch, optimize, and scale your Amazon FBA business for maximum profit.',
     icon: 'ShoppingCart',
     slug: 'amazon-fba-consultation',
+      image: '/services/amazon.jpg',
     packages: [
       {
         name: "Basic",
@@ -436,6 +439,7 @@ export const SERVICES: Service[] = [
     description: 'High-converting, visually appealing landing pages designed to capture leads and drive sales.',
     icon: 'Window',
     slug: 'landing-page',
+      image: '/services/sales-growth.jpg',
     packages: [
       {
         name: "Basic",
@@ -486,6 +490,7 @@ export const SERVICES: Service[] = [
     description: 'Scalable cloud-based SaaS platforms designed to automate business processes, serve users, and grow with your business.',
     icon: 'Cloud',
     slug: 'saas-development',
+      image: '/services/saas.jpg',
     packages: [
       {
         name: "Basic",
@@ -549,6 +554,7 @@ export const SERVICES: Service[] = [
     description: 'Integrated ERP systems that connect finance, sales, inventory, HR, operations, and other core business processes in one platform.',
     icon: 'Building2',
     slug: 'erp-solutions',
+    image: '/services/growth.jpg',
     packages: [
       {
         name: "Basic",
@@ -616,6 +622,7 @@ export const SERVICES: Service[] = [
     description: 'Tailor-made software solutions engineered around your unique business requirements, workflows, and growth objectives.',
     icon: 'Terminal',
     slug: 'custom-software-development',
+      image: '/services/growth.jpg',
     packages: [
       {
         name: "Basic",
@@ -680,6 +687,7 @@ export const SERVICES: Service[] = [
     description: 'Strategic IT consulting to help businesses choose the right technologies, improve systems, strengthen security, and plan digital transformation.',
     icon: 'BriefcaseBusiness',
     slug: 'it-consultancy',
+      image: '/services/uxui2.jpg',
     packages: [
       {
         name: "Basic",
